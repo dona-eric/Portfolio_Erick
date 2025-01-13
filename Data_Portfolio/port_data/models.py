@@ -104,3 +104,12 @@ class Newsletter(models.Model):
 
     def __str__(self):
         return self.email
+    
+    
+class SocialMedia(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+    icon = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
