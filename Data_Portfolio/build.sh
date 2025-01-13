@@ -8,5 +8,12 @@ pip install -r requirements.txt
 # Convert static asset files
 python manage.py collectstatic --no-input
 
+
+python manage.py migrate --noinput
+
+# Crée un super utilisateur (en utilisant des variables d'environnement)
+python manage.py createsuperuser --noinput \
+    --username admin \
+    --email admin@example.com || true
 # Apply any outstanding database migrations
-python manage.py migrate
+#python manage.py migrate
