@@ -26,7 +26,7 @@ services:
         value: 4
 
       - key: DJANGO_SUPERUSER_USERNAME
-        value: "erick"
+        value: "Donatien"
       - key: DJANGO_SUPERUSER_EMAIL
         value: "donaerickoulodji@email.com"
       - key: DJANGO_SUPERUSER_PASSWORD
