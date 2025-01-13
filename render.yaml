@@ -9,8 +9,12 @@ services:
     plan: free
     name: portfolio
     runtime: python
-    buildCommand: "./build.sh"
-    startCommand: "python -m gunicorn Data_Portfolio.asgi:application -k uvicorn.workers.UvicornWorker"
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn Data_Portfolio.asgi:application -k uvicorn.workers.UvicornWorker
     envVars:
       - key: DATABASE_URL
         fromDatabase:
