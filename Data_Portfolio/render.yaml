@@ -25,5 +25,9 @@ services:
       - key: WEB_CONCURRENCY
         value: 4
 
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: "erick"
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: "donaerickoulodji@email.com"
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: "votre_mot_de_passe"
+        value: "erick0151"
