@@ -510,6 +510,88 @@ button[type="submit"]:active {
   }
 }
 
+/* styles pour about*/
+/* Styles de base */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Titre et en-têtes */
+h1, h2, h3 {
+  color: #333;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Card container */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Experience, Education, and Skills Boxes */
+.experience-box, .education-box {
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.date {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.position, .school, .department, .degree {
+  font-size: 14px;
+  color: #555;
+}
+
+.description {
+  font-size: 14px;
+  color: #777;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skill {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+
 
 /* styles pour projects*/
 
@@ -751,4 +833,118 @@ a.linku-projects1:hover {
   .card {
       margin-bottom: 1rem;
   }
+}
+
+
+/* styles pour base*/
+
+/* Styles de base */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navigation */
+.navbar {
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  margin-right: 15px;
+}
+
+.navbar a:hover {
+  color: #007bff;
+}
+
+/* Main Content */
+.content {
+  margin-top: 40px;
+  padding: 20px;
+}
+
+/* Info Section */
+.info-section {
+  background-color: #007bff;
+  color: white;
+  padding: 40px 20px;
+}
+
+.info-section .section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.info-section p {
+  font-size: 18px;
+}
+
+.info-section .link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.info-section .link:hover {
+  text-decoration: underline;
+}
+
+.news-letters {
+  font-style: italic;
+}
+
+/* Footer */
+.footer {
+  background-color: white;
+  padding: 20px 0;
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 14px;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-right {
+  flex: 1;
+  text-align: right;
+}
+
+.footer-link {
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.footer-link:hover {
+  color: #007bff;
+}
+
+.separator {
+  margin: 0 5px;
+  color: #999;
 }
