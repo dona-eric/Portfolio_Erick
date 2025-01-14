@@ -1,31 +1,39 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 {% block content %}
-            </nav>
-            <!--Projects articlces-->
-            <section class="py-5">
-                <div class="container px-5 mb-5">
-                    <div class="text-center mb-5">
-                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Articles</span></h1>
-                    </div>
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-11 col-xl-9 col-xxl-8">
-                            <!-- Project Card 1-->
-                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                                <div class="card-body p-0">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-5">
-                                            <h2 class="fw-bolder">Article 1: Imputation des valeurs manquantes </h2>
-                                            <p>Remplissez les valeurs manquantes à l'aide des cartes thermiques lors de l'analyse de données.</p>
-                                            <a class="linku-projects1" href="https://medium.com/@koulodjiric/">Voir plus</a>
-                                        </div>
-                                        <img class="img-fluid" src="assets/impute.png" width="300" alt="..." />
-                                    </div>
-                                </div>
+<section class="py-5 bg-gray-50">
+    <div class="container px-5">
+        <!-- Section Title -->
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Articles</span></h1>
+            <p class="text-muted">Découvrez mes dernières réflexions et analyses sur divers sujets.</p>
+        </div>
+
+        {% if articles %}
+            <div class="row gx-5 justify-content-center">
+                {% for article in articles %}
+                    <!-- Article Card -->
+                    <div class="col-lg-6 col-xl-4 mb-4">
+                        <div class="card shadow-sm rounded-lg border-0 h-100">
+                            <img 
+                                src="{{ article.image_url|default:'assets/impute.png' }}" 
+                                class="card-img-top img-fluid rounded-top" 
+                                alt="{{ article.title }}">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bolder text-indigo-600">{{ article.title }}</h3>
+                                <p class="card-text text-gray-700">{{ article.description }}</p>
+                                <a href="{{ article.url }}" target="_blank" class="btn btn-outline-indigo mt-3">
+                                    Lire l'article
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <script src="{% static 'js/articles.js' %}"></script>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-600">Aucun article disponible pour le moment.</p>
+        {% endif %}
+    </div>
+</section>
+<script src="{% static 'js/articles.js' %}"></script>
 {% endblock content %}
