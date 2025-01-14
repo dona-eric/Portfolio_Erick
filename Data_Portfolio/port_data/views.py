@@ -59,7 +59,6 @@ def projects(request):
 
 
 
-
 # Page des contacts
 def contacts(request):
     if request.method == 'POST':
@@ -69,25 +68,33 @@ def contacts(request):
             email = form.cleaned_data['email']
             subject_message = form.cleaned_data['subject_message']
             content_message = form.cleaned_data['content_message']
-             # Assemblage du message
+
+            # Assemblage du message
             full_message = f"Message de {name} ({email}):\n\n{content_message}"
 
-            # Envoi de l'email
+            # Envoi de l'email à l'administrateur
             try:
                 send_mail(
                     subject=f"Message from {name} via Contact Us: {email}",
                     message=full_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list= settings.EMAIL_LIST,
+                    recipient_list=settings.EMAIL_LIST,  # Liste des emails de l'administrateur
                     fail_silently=False,
                 )
-                return HttpResponse('Email envoyé avec suucès !')
+                # Message pour l'utilisateur
+                messages.success(request, "Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.")
+                return redirect('')  # Redirige vers la page d'accueil ou la page souhaitée
             except Exception as e:
-                return HttpResponse(f"Erreur lors de l'email, veuillez ressayez; {e}")
+                print("Erreur lors de l'envoi de l'email :", e)
+                messages.error(request, "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.")
+                return render(request, 'portfolio/contacts.html', {'form': form})
+        else:
+            # Formulaire invalide
+            messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
         form = ContactForms()
-    return render(request, 'portfolio/contacts.html', 
-                  {'form': form})
+
+    return render(request, 'portfolio/contacts.html', {'form': form})
 
 
 # page des services
@@ -135,8 +142,6 @@ def services_request(request, id_service=None):  # Paramètre service_id ajouté
 
 """vue pour les newsletters """
 
-from django.http import HttpResponse
-
 def newsletters(request):
     if request.method == 'POST':
         form = NewsletterForms(request.POST)
@@ -156,7 +161,16 @@ def newsletters(request):
                     news.save()
                     messages.success(request, f"Merci {nom} ! Vous êtes inscrit à la newsletter")
                     print("Nouvelle inscription :", news)
-                return redirect('home')  # Assurez-vous que 'home' est défini dans vos URLs
+
+                    # Envoi d'un email à l'administrateur
+                    send_mail(
+                        'Nouvelle inscription à la newsletter',
+                        f'Nom: {nom}\nPrénom: {prenom}\nEmail: {email}',
+                        settings.DEFAULT_FROM_EMAIL,
+                        ['admin@exemple.com'],  # Remplace par l'email de l'administrateur
+                        fail_silently=False,
+                    )
+                return redirect('')  # Assurez-vous que 'home' est défini dans vos URLs
             except ValidationError:
                 messages.error(request, "Veuillez fournir une adresse email valide.")
             except Exception as e:
@@ -169,13 +183,11 @@ def newsletters(request):
         form = NewsletterForms()
 
     # Rendu de la page avec le formulaire
-    return render(request, 'portfolio/newsletters.html',
-        {
+    return render(request, 'portfolio/newsletters.html', {
         'form': form,
         'title': 'Inscription à la newsletter',
         "description": "Restez informé de nos dernières actualités"
     })
-
 
 
             
