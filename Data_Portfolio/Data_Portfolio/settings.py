@@ -21,15 +21,16 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Exemple avec Gmail
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "votre_email@example.com"
-EMAIL_HOST_PASSWORD = "votre_mot_de_passe"
-DEFAULT_FROM_EMAIL = "votre_email@example.com"
-DEFAULT_TO_EMAIL = "destinataire@example.com"
-EMAIL_FILE_PATH = "/tmp/app-messages"
+EMAIL_HOST_USER = 'donaerickoulodji@gmail.com'  # Ton email
+EMAIL_HOST_PASSWORD = 'Einstein51@#'  # Mot de passe de l'email
+DEFAULT_FROM_EMAIL = 'donaerickoulodji@gmail.com'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -46,7 +47,7 @@ EMAIL_LIST = os.getenv("EMAIL_LIST")
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.65.42", ".onrender.com", ".herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.65.42", ".onrender.com"]
 
 # Application definition
 

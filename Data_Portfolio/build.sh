@@ -12,7 +12,7 @@ python manage.py collectstatic --no-input
 python manage.py migrate --noinput
 
 # Crée un super utilisateur (en utilisant des variables d'environnement)
-python manage.py createsuperuser --noinput \
+#python manage.py createsuperuser --noinput \
     --username Donatien \
     --email donaerickoulodji@gmail.com || true \
     --password erick0151 || true
