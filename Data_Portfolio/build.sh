@@ -13,8 +13,8 @@ python manage.py migrate --noinput
 
 # Crée un super utilisateur (en utilisant des variables d'environnement)
 #python manage.py createsuperuser --noinput \
-    --username Donatien \
-    --email donaerickoulodji@gmail.com || true \
-    --password erick0151 || true
+ #   --username Donatien \
+  #  --email donaerickoulodji@gmail.com || true \
+   # --password erick0151 || true
 # Apply any outstanding database migrations
 #python manage.py migrate

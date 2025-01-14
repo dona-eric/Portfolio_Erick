@@ -6,6 +6,7 @@ from django.core.validators import validate_email
 from django.urls import reverse
 from django.views.generic.edit import FormView
 from django.conf import settings
+import warnings
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -224,7 +225,4 @@ class FormValidationMixin:
         return reverse('home')
 
 
-
-
-
-
+warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
