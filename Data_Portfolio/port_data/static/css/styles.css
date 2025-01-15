@@ -42,7 +42,7 @@ nav ul li {
 }
 
 nav ul li a {
-  color: white;
+  color: rgb(10, 3, 3);
   text-decoration: none;
 }
 
@@ -57,7 +57,8 @@ main {
 
 /* Sections d'information et newsletter */
 .info-section {
-  background-color: #ffffff; /* Fond blanc pour les sections */
+  background: linear-gradient(135deg, #0d1117, #1a1f2b);
+  ; /* Fond blanc pour les sections */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -69,7 +70,7 @@ main {
 
 /* Liens */
 .link, .news-letters {
-  color: #0f1a27; /* Liens en bleu */
+  color: #2a7481; /* Liens en bleu */
 }
 
 .link:hover, .news-letters:hover {
@@ -276,7 +277,7 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 50px 20px;
-  background-image: url('{% static "assets/hero-background.jpg" %}'); /* Image de fond (ajoutez votre image) */
+  background-image: url('{% static "images/data_science_2.jpg" %}'); /* Image de fond (ajoutez votre image) */
   background-size: cover;
   color: white;
 }
@@ -362,7 +363,7 @@ a:hover {
 .container {
   max-width: 1200px; /* Largeur maximale du conteneur */
   margin: 0 auto; /* Centrer le conteneur */
-  padding: 20px; /* Espacement intérieur */
+  padding: 40px; /* Espacement intérieur */
 }
 
 /* Titres */
@@ -372,6 +373,7 @@ h1, h2, h3 {
 
 h1 {
   margin-bottom: 20px; /* Espacement en bas du titre principal */
+  text-align: center;
 }
 
 .section-header {
@@ -397,7 +399,7 @@ h1 {
 
 /* Cartes pour l'expérience et l'éducation */
 .card {
-  background-color: white; /* Fond blanc pour les cartes */
+  background-color: #667a73; /* Fond blanc pour les cartes */
   border-radius: 8px; /* Coins arrondis des cartes */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre pour les cartes */
   margin-bottom: 20px; /* Espacement entre les cartes */
@@ -409,7 +411,7 @@ h1 {
 
 /* Boîtes d'expérience et d'éducation */
 .experience-box, .education-box {
-  margin-bottom: 10px; /* Espacement entre les éléments à l'intérieur des boîtes */
+  margin-bottom: 15px; /* Espacement entre les éléments à l'intérieur des boîtes */
 }
 
 .date {
@@ -422,18 +424,18 @@ h1 {
 
 /* Description des expériences et de l'éducation */
 .description {
-  color: #666; /* Couleur du texte pour la description (gris) */
+  color: #31414b; /* Couleur du texte pour la description (gris) */
 }
 
 /* Section des compétences */
 .skills-list {
   display: flex;
-  flex-wrap: wrap; /* Permet aux compétences de passer à la ligne suivante si nécessaire */
+  flex-flow: wrap; /* Permet aux compétences de passer à la ligne suivante si nécessaire */
 }
 
 .skill {
   background-color: rgba(0, 123, 255, 0.1); /* Fond léger pour les compétences */
-  color: #007bff; /* Couleur du texte des compétences */
+  color: #305b7e; /* Couleur du texte des compétences */
   padding: 10px;
   border-radius: 20px;
   margin-right: 10px;
@@ -474,7 +476,7 @@ h1 {
 /* Carte de projet */
 .project-card {
   background-color: white; /* Fond blanc pour les cartes */
-  border-radius: 8px; /* Coins arrondis des cartes */
+  border-radius: 15px; /* Coins arrondis des cartes */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre pour les cartes */
   margin: 15px; /* Espacement entre les cartes */
   overflow: hidden; /* Cache le débordement */
@@ -518,7 +520,7 @@ h1 {
 
 .btn {
   text-decoration: none; /* Supprime le soulignement par défaut des liens */
-  padding: 10px 15px; /* Espacement intérieur des boutons */
+  padding: 10px 20px; /* Espacement intérieur des boutons */
   border-radius: 5px; /* Coins arrondis des boutons */
 }
 
@@ -543,9 +545,9 @@ h1 {
 }
 
 /* Section d'appel à l'action */
+/*
 .bg-indigo-600 {
-  background-color: #4c51bf !important; /* Couleur de fond indigo pour la section d'appel à l'action */
-}
+  background-color: #4c51bf !important; /* Couleur de fond indigo pour la section d'appel à l'action */} */
 
 .text-white {
   color: white !important; /* Couleur blanche pour le texte dans la section d'appel à l'action */
@@ -583,6 +585,7 @@ h1 {
 
 .text-indigo-600 {
   color: #4c51bf; /* Couleur indigo pour le titre */
+  text-align: center;
 }
 
 .text-lg {
