@@ -20,23 +20,13 @@
         {% block content %} {% endblock content %}
     </main>
 
-    <!-- Info Section and Newsletter -->
-    <section class="info-section">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h3 class="section-title">Pour plus d'informations</h3>
-                    <p>Contactez-moi : <a href="{% url 'contacts-us' %}" class="link">Contactez-moi</a></p>
-                    <p>Pour vos demandes de services : <a href="{% url 'services_request' %}" class="link">Demandez un service</a></p>
-                </div>
-                <div class="col">
-                    <h3 class="section-title">Newsletters</h3>
-                    <p>Pour recevoir des nouvelles, inscrivez-vous à notre newsletter :</p>
-                    <i><a class="news-letters" href="{% url 'news' %}">Des nouvelles chaque semaine</a></i>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Info Social links -->
+    <div class="social-links">
+        <a href="https://x.com" title="Twitter/X"><i class="bi bi-twitter"></i></a>
+        <a href="www.linkedin.com/in/dona-erick" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="www.github.com/dona-erick" title="GitHub"><i class="bi bi-github"></i></a>
+        <a href="mailto:donaerickoulodji@gmail.com" title="Email"><i class="bi bi-envelope"></i></a>
+    </div>
 
     <!-- Footer-->
     <footer class="footer">
