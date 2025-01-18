@@ -1,311 +1,15 @@
-/* Styles personnalisés pour le portfolio */
-
-/* Style pour base */
-
-/* Styles globaux */
-body {
-  font-family: 'Ubuntu condensed', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  color: #333;
-}
-
-/* En-tête */
-header {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.5em;
-}
-
-/* Navigation */
-nav {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  padding: 10px 0;
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 20px;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* Sections */
-section {
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 800px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  color: #007bff;
-}
-
-/* Formulaires */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form input, form textarea {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-form button {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #0d1418; /* Couleur au survol */
-}
-
-/* Pied de page */
-footer {
-  text-align: center;
-  padding: 20px 0;
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  color: white;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  nav ul li {
-      display: block; /* Navigation en colonne sur petits écrans */
-      margin-bottom: 10px; 
-      text-align: center; 
-  }
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  color: #d1d5db;
-  height: 100vh;
-}
-
-/* En-tête principal */
-.custom-navbar {
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 30px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
-
-/* Navigation */
-.nav-links {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  margin: 0 20px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #d1d5db;
-  font-size: 16px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #58a6ff;
-}
-
-/* Bouton de bascule (thème) */
-.theme-toggle {
-  width: 40px;
-  height: 20px;
-  border: 2px solid #d1d5db;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
-}
-
-.toggle-circle {
-  width: 16px;
-  height: 16px;
-  background-color: #d1d5db;
-  border-radius: 50%;
-  position: absolute;
-  left: 2px;
-  transition: all 0.3s ease;
-}
-
-.theme-toggle:hover .toggle-circle {
-  background-color: #58a6ff;
-}
-
-/* Section héros */
-.hero-section {
-  text-align: center;
-  margin-top: 100px;
-  padding: 20px;
-}
-
-.hero-section h1 {
-  font-size: 48px;
-  font-weight: bold;
-  color: #d1d5db;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.hero-section p {
-  margin-top: 20px;
-  font-size: 18px;
-  color: #a0aec0;
-  line-height: 1.5;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* En-tête */
-header {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b); /* Couleur d'arrière-plan bleu */
-  color: white;
-  padding: 20px 0;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.5em;
-}
-
-/* Navigation */
-nav {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  padding: 10px 0;
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 20px;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-}
-
-nav ul li a:hover {
-  text-decoration: underline; /* Souligner au survol */
-}
-
-/* Contenu principal */
-main {
-  padding: 20px;
-}
-
-/* Sections d'information et newsletter */
-.info-section {
-  background-color: #ffffff; /* Fond blanc pour les sections */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.section-title {
-  color: #007bff; /* Titre en bleu */
-  text-align: center;
-}
-
-/* Liens */
-.link, .news-letters {
-  color: #007bff; /* Liens en bleu */
-}
-
-.link:hover, .news-letters:hover {
-  text-decoration: underline; /* Souligner au survol des liens */
-}
-
-/* Pied de page */
-.footer {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
-  color: white;
-  padding: 20px 0;
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-between; /* Espacement entre les éléments du pied de page */
-}
-
-.footer-left, .footer-right {
-  margin-left: 20px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  nav ul li {
-      display: block; /* Navigation en colonne sur petits écrans */
-      margin-bottom: 10px; 
-      text-align: center; 
-  }
-
-  .footer-content {
-      flex-direction: column; /* Pied de page en colonne sur petits écrans */
-      align-items: center; 
-      text-align: center; 
-  }
-}
-
-
 /* Styles de la barre de navigation */
 .navbar {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
+  background: linear-gradient(135deg, #0d1117, #1a1f2b);/* Dégradé pour la barre de navigation */
+  padding: 15px 30px; /* Espacement intérieur */
+  text-decoration: none;
 }
 
 .navbar-brand {
-  font-size: 1.8em; /* Taille du texte du nom */
+  font-size: 24px; /* Taille du texte du nom */
   font-weight: bold; /* Texte en gras */
   color: white; /* Couleur du texte */
+  text-decoration: none; /* Supprime le soulignement par défaut */
 }
 
 .navbar-toggler {
@@ -313,225 +17,282 @@ main {
 }
 
 .navbar-toggler-icon {
-  background-color: white; /* Couleur de l'icône du bouton */
+  background-color: rgb(8, 5, 5); /* Couleur de l'icône du bouton */
 }
 
 .nav-link {
   color: white; /* Couleur des liens */
-  font-weight: 500; /* Poids du texte des liens */
-  padding: 15px 20px; /* Espacement autour des liens */
-  transition: background-color 0.3s, color 0.3s; /* Transition douce pour les effets au survol */
+  font-size: 18px; /* Taille du texte des liens */
+  margin-right: 20px; /* Espacement entre les liens */
+  text-decoration: none;
+  transition: color 0.3s ease; /* Transition douce pour le changement de couleur */
 }
 
-.nav-link:hover, .nav-link.active {
-  background-color: rgba(255, 255, 255, 0.2); /* Fond clair au survol ou actif */
-  color: #ffffff; /* Couleur du texte au survol */
+.nav-link:hover {
+  color: #58a6ff; /* Couleur au survol des liens */
 }
 
 /* Styles pour les éléments collapsibles sur mobile */
 .collapse {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b); /* Couleur de fond pour le menu déroulant */
+  background-color: #2d3748; /* Couleur de fond pour le menu déroulant */
 }
 
-.collapse .nav-link {
-  padding-left: 30px; /* Espacement à gauche pour les éléments du menu déroulant */
+/* Espacement et alignement */
+.container-fluid {
+  display: flex;
+  justify-content: center; /* Espacement entre les éléments de la barre de navigation */
+  align-items: self-start;
+  padding: 10px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .navbar-brand {
-      padding-right: 0; /* Supprime l'espacement à droite sur mobile */
-  }
+/* Styles pour les éléments actifs */
+.nav-link.active {
+  font-weight: bold; /* Mettre en gras le lien actif */
+  border-bottom: 2px solid #030405f6; /* Souligner le lien actif */
 }
 
 
-/* Section Héro */
+/* Styles pour la base.html */
+
+/* Styles globaux */
+body {
+  font-family: 'Ubuntu Condensed', sans-serif;
+  background-color: #f4f4f4; /* Couleur de fond claire */
+  color: #343a40; /* Couleur du texte par défaut */
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Styles pour les éléments actifs */
+.nav-link.active {
+  font-weight:900; /* Mettre en gras le lien actif */
+  border-bottom: 2px solid #58a6ff; /* Souligner le lien actif */
+}
+
+/* Contenu principal */
+.main-content {
+  padding: 50px;
+  text-align: center;
+}
+
+/* Styles des liens sociaux */
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.social-links a {
+  color: #4c51bf; /* Couleur des icônes sociales */
+  font-size: 24px; /* Taille des icônes sociales */
+  margin: 0 10px; /* Espacement entre les icônes sociales */
+}
+
+.social-links a:hover {
+  color: #58a6ff; /* Couleur au survol des icônes sociales */
+}
+
+/* Styles du pied de page */
+.footer {
+  background: linear-gradient(135deg, #0d1117, #1a1f2b); /* Dégradé pour le pied de page */
+  color: white;
+  padding: 20px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-link {
+  color: white; /* Couleur des liens dans le pied de page */
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline; /* Souligner au survol des liens du pied de page */
+}
+
+
+/* Styles pour la page home.html */
+
+/* Section Héros */
 .hero-section {
   display: flex;
-  justify-content:space-evenly;
-  align-items: center;
-  padding: 50px 30px;
-  background-size:cover;
-  color: white;
+  justify-content: space-between; /* Espace entre le contenu et l'image */
+  align-items: center; /* Centrer verticalement */
+  padding: 50px; /* Espacement intérieur */
+  background-color: #fcf5f5; /* Fond blanc pour la section héros */
 }
 
 .hero-content {
-  max-width: 900px;
+  max-width: 500px; /* Limite la largeur du contenu héro */
 }
 
 .skills-container {
   display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+  flex-wrap: wrap; /* Permet aux badges de passer à la ligne suivante */
+  margin-bottom: 20px; /* Espacement en bas des badges */
 }
 
 .skill-badge {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 20px 25px;
-  border-radius: 20px;
-  margin-right: 10px;
-  font-size: 0.9rem;
+  background-color: rgba(76, 81, 191, 0.1); /* Fond léger pour les badges de compétences */
+  color: #4c51bf; /* Couleur indigo pour le texte des badges */
+  padding: 10px 15px; /* Espacement intérieur des badges */
+  border-radius: 20px; /* Coins arrondis pour les badges */
+  margin-right: 10px; /* Espacement entre les badges */
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #0d1117, #1a1f2b);
+  background: linear-gradient(90deg, #4c51bf, #2d3748);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Liens des boutons */
+/* Boutons dans la section héro */
 a {
-  text-decoration: none; /* Supprime le soulignement par défaut */
+  display: inline-block;
+  margin-top: 20px; /* Espacement au-dessus des boutons */
 }
 
-a:hover {
-  transform: scale(1.05); /* Effet d'agrandissement au survol */
+a.btn-learn-more,
+a.btn-learn-more:hover {
+  background-color: #4c51bf; /* Couleur de fond pour le bouton "About-me" */
+  color: white; /* Couleur du texte blanc pour le bouton */
+  padding: 0.8rem 1.5rem; /* Espacement intérieur du bouton */
+  border-radius: 5px; /* Coins arrondis du bouton */
+  text-decoration: none; /* Supprime le soulignement par défaut du lien */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
 }
 
-/* Profil */
+a.btn-learn-more:hover {
+  background-color: #58a6ff; /* Couleur au survol du bouton "About-me" */
+}
+
+/* Image de profil */
 .profile-container {
-  flex-shrink: 0; /* Empêche l'image de se réduire */
+  display: flex;
+  justify-content: center; /* Centre l'image horizontalement */
 }
 
 .profile-image {
-  width: 400px; /* Largeur de l'image de profil */
-  border-radius: 60%; /* Arrondir l'image pour un effet circulaire */
+  width: 250px; /* Largeur de l'image de profil */
+  border-radius: 50%; /* Arrondir l'image pour un effet circulaire */
 }
 
 /* Section À propos */
 .about-section {
-  max-width: 800px;
-  margin: 40px auto; /* Centrer la section */
-  text-align: center; /* Centrer le texte */
+  padding: 50px;
 }
 
-.social-links a {
-  margin-right: 15px; /* Espacement entre les icônes sociales */
+.about-section h2 {
+  text-align: center; /* Centrer le titre de la section À propos */
 }
 
-.social-links i {
-  font-size: 1.5rem; /* Taille des icônes sociales */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hero-section {
-      flex-direction: column; /* Alignement vertical sur petits écrans */
-      text-align: center; /* Centrer le texte sur petits écrans */
-      padding: 30px 10px; /* Ajuster le padding pour mobiles */
-  }
-
-  .profile-image {
-      width: 200px; /* Réduire la taille de l'image sur mobile */
-      margin-top: 20px; /* Ajouter un espacement au-dessus de l'image sur mobile */
-  }
+.about-section p {
+  max-width: 800px; /* Limite la largeur du texte descriptif */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
-/* Conteneur principal */
-.container {
-  max-width: 1200px; /* Largeur maximale du conteneur */
-  margin: 0 auto; /* Centrer le conteneur */
-  padding: 20px; /* Espacement intérieur */
-}
+/* Styles pour la page about.html */
 
-/* Titres */
-h1, h2, h3 {
-  color: #007bff; /* Couleur des titres */
-}
 
+/* Titre de la section About */
 h1 {
-  margin-bottom: 20px; /* Espacement en bas du titre principal */
+  text-align: center; /* Centrer le titre */
+  font-size: 2.5rem; /* Taille du titre */
+  margin-top: 50px; /* Espacement au-dessus du titre */
+  color: #4c51bf; /* Couleur indigo pour le titre */
 }
 
+/* Section d'expérience et d'éducation */
+section {
+  margin: 40px 0; /* Espacement vertical entre les sections */
+}
+
+/* En-tête de section */
 .section-header {
-  display: flex;
-  justify-content: space-between; /* Espacement entre le titre et le bouton */
-  align-items: center;
-  margin-bottom: 20px; /* Espacement en bas de la section */
+  text-align:start;
+   /* Centrer les en-têtes de section */
+  margin-bottom: 20px; /* Espacement en bas des en-têtes */
 }
 
-/* Bouton de téléchargement */
-.button {
-  background-color: #007bff; /* Couleur de fond du bouton */
-  color: white; /* Couleur du texte du bouton */
-  padding: 10px 20px; /* Espacement intérieur du bouton */
-  border-radius: 5px; /* Coins arrondis du bouton */
-  text-decoration: none; /* Supprime le soulignement */
-  transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur */
+.section-header h2,
+.section-header h3 {
+  color: #4c51bf; /* Couleur indigo pour les titres des sections */
 }
 
-.button:hover {
-  background-color: #0056b3; /* Couleur au survol du bouton */
-}
-
-/* Cartes pour l'expérience et l'éducation */
+/* Cartes d'expérience et d'éducation */
 .card {
   background-color: white; /* Fond blanc pour les cartes */
-  border-radius: 10px; /* Coins arrondis des cartes */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre pour les cartes */
+  border-radius: 8px; /* Coins arrondis des cartes */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour des cartes */
   margin-bottom: 20px; /* Espacement entre les cartes */
-}
-
-.card-body {
   padding: 20px; /* Espacement intérieur des cartes */
+  transition: transform 0.3s ease; /* Transition douce pour l'effet d'agrandissement */
 }
 
-/* Boîtes d'expérience et d'éducation */
-.experience-box, .education-box {
-  margin-bottom: 10px; /* Espacement entre les éléments à l'intérieur des boîtes */
+.card:hover {
+  transform: translateY(-5px); /* Effet d'élévation au survol des cartes */
 }
 
-.date {
-  font-weight: bold; /* Mettre en gras la date */
+/* Alignement des colonnes dans les cartes */
+.row {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux colonnes de passer à la ligne suivante si nécessaire */
 }
 
-.position, .company, .location {
-  font-size: 1.1rem; /* Taille de police pour les informations supplémentaires */
+/* Styles pour la boîte d'expérience et d'éducation */
+.experience-box,
+.education-box {
+  flex-basis: 30%; /* Largeur des colonnes (ajustez selon vos besoins) */
 }
 
-/* Description des expériences et de l'éducation */
 .description {
-  color: #666; /* Couleur du texte pour la description (gris) */
+  color: #6c757d; /* Couleur plus claire pour la description */
 }
 
-/* Section des compétences */
+/* Liste des compétences professionnelles et langues */
 .skills-list {
   display: flex;
   flex-wrap: wrap; /* Permet aux compétences de passer à la ligne suivante si nécessaire */
+  justify-content: center; /* Centre les compétences horizontalement */
 }
 
 .skill {
-  background-color: rgba(0, 123, 255, 0.1); /* Fond léger pour les compétences */
-  color: #007bff; /* Couleur du texte des compétences */
-  padding: 10px;
-  border-radius: 20px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  background-color: rgba(76, 81, 191, 0.1); /* Fond léger pour les badges de compétences */
+  color: #4c51bf; /* Couleur indigo pour le texte des badges */
+  padding: 10px 15px; /* Espacement intérieur des badges */
+  border-radius: 20px; /* Coins arrondis pour les badges */
+  margin: 5px; /* Espacement entre les badges */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .section-header {
-      flex-direction: column; /* Alignement vertical sur petits écrans */
-      align-items: flex-start; 
-      margin-bottom: 15px;
-  }
-
-  .button {
-      margin-top: 10px; /* Marge supérieure pour le bouton sur mobile */
-      width: 100%; /* Bouton prend toute la largeur sur mobile */
-      text-align: center;
-  }
+/* Bouton "Plus sur mes projets" */
+.btn-learn-more {
+  display: inline-block;
+  background-color: #4c51bf; /* Couleur de fond pour le bouton "Plus sur mes projets" */
+  color: white; /* Couleur du texte blanc pour le bouton */
+  padding: 10px 20px; /* Espacement intérieur du bouton */
+  border-radius: 5px; /* Coins arrondis du bouton */
+  text-decoration: none; /* Supprime le soulignement par défaut du lien */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
 }
+
+.btn-learn-more:hover {
+  background-color: #58a6ff; /* Couleur au survol du bouton "Plus sur mes projets" */
+}
+
+/* Styles pour la page projects.html */
 
 
 /* Section des Projets */
 .py-5 {
-  text-align: center;
-  padding-top: 2rem !important;
-  padding-bottom: 2rem !important;
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
 }
 
 .projects-container {
@@ -544,551 +305,184 @@ h1 {
 .project-card {
   background-color: white; /* Fond blanc pour les cartes */
   border-radius: 8px; /* Coins arrondis des cartes */
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1); /* Ombre pour les cartes */
-  margin: 20px; /* Espacement entre les cartes */
-  overflow: hidden; /* Cache le débordement */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour des cartes */
+  margin: 15px; /* Espacement entre les cartes */
+  padding: 20px; /* Espacement intérieur des cartes */
   transition: transform 0.3s ease; /* Transition douce pour l'effet d'agrandissement */
-  width: calc(30% - 20px); /* Largeur des cartes (3 par ligne) */
+  width: calc(30% - 30px); /* Largeur des cartes (3 par ligne) */
 }
 
 .project-card:hover {
   transform: translateY(-5px); /* Effet d'élévation au survol */
 }
 
-/* Contenu de la carte */
-.project-content {
-  padding: 20px; /* Espacement intérieur des cartes */
-}
-
+/* Titre et description du projet */
 .project-title {
   font-size: 1.5rem; /* Taille du titre du projet */
-  color: #007bff; /* Couleur du titre */
+  color: #4c51bf; /* Couleur indigo pour le titre du projet */
 }
 
 .project-description {
-  margin: 10px 10; /* Espacement vertical autour de la description */
-}
-
-.project-skills {
-  font-weight: bold; /* Mettre en gras les compétences utilisées */
+  margin-top: 10px; /* Espacement au-dessus de la description */
 }
 
 /* Image du projet */
 .project-image {
-  width: 100%; /* Image prend toute la largeur de la carte */
-  height: auto; /* Conserve le ratio d'aspect de l'image */
+  width: 100%; /* Largeur de l'image (responsive) */
+  border-radius: 5px; /* Coins arrondis pour l'image */
+  margin-top: 10px; /* Espacement au-dessus de l'image */
 }
 
-/* Liens des projets */
+/* Liens vers le projet */
 .project-links {
   display: flex;
-  justify-content: space-between; /* Espacement entre les liens */
+  flex-direction: column; /* Aligne les liens verticalement */
 }
 
 .btn {
-  text-decoration: none; /* Supprime le soulignement par défaut des liens */
-  padding: 10px 10px; /* Espacement intérieur des boutons */
-  border-radius: 3px; /* Coins arrondis des boutons */
+  display: inline-block;
+  margin-top: 10px; /* Espacement au-dessus des boutons */
 }
 
+/* Boutons spécifiques aux projets */
 .btn-outline-indigo {
-  border: 2px solid #007bff; /* Bordure bleue pour le bouton Github */
-  color: #007bff; /* Couleur du texte bleue pour le bouton Github */
+  border-color: #4c51bf; /* Bordure indigo pour le bouton "Voir sur Github" */
+  color: #4c51bf; /* Couleur du texte indigo pour le bouton "Voir sur Github" */
 }
 
 .btn-outline-indigo:hover {
-  background-color: #007bff; /* Fond bleu au survol du bouton Github */
-  color: white; /* Texte blanc au survol du bouton Github */
+  background-color: #4c51bf; /* Fond indigo au survol du bouton "Voir sur Github" */
+  color: white; /* Texte blanc au survol du bouton "Voir sur Github" */
 }
 
 .btn-outline-secondary {
-  border: 2px solid #6c757d; /* Bordure grise pour le bouton de démo */
-  color: #6c757d; /* Couleur du texte grise pour le bouton de démo */
+  border-color: #6c757d; /* Bordure grise pour le bouton "Voir la démo" */
 }
 
 .btn-outline-secondary:hover {
-  background-color: #6c757d; /* Fond gris au survol du bouton de démo */
-  color: white; /* Texte blanc au survol du bouton de démo */
+  background-color: #6c757d; /* Fond gris au survol du bouton "Voir la démo" */
+  color: white; /* Texte blanc au survol du bouton "Voir la démo" */
 }
 
-/* Section d'appel à l'action */
-.bg-indigo-600 {
-  background-color: #4c51bf !important; /* Couleur de fond indigo pour la section d'appel à l'action */
-}
-
-.text-white {
-  color: white !important; /* Couleur blanche pour le texte dans la section d'appel à l'action */
-}
-
-/* Responsive Design */
+/* Responsive Design pour les cartes de projet */
 @media (max-width: 768px) {
   .project-card {
-      width: calc(50% - 30px); /* Largeur des cartes (2 par ligne sur mobile) */
-      margin-bottom: 20px;
+      width: calc(45% - 30px); /* Largeur des cartes (2 par ligne sur petits écrans) */
+      margin-bottom: 20px; /* Espacement en bas des cartes sur petits écrans */
   }
 }
 
 @media (max-width: 480px) {
   .project-card {
       width: calc(100% - 30px); /* Largeur des cartes (1 par ligne sur très petits écrans) */
-      margin-bottom: 20px;
+      margin-bottom: 20px; 
   }
 }
 
+/* Bouton "Contactez-moi" en bas de page */
+.btn-learn-more {
+  display: inline-block;
+  background-color: #4c51bf; /* Couleur de fond pour le bouton "Contactez-moi" */
+  color: white; /* Couleur du texte blanc pour le bouton "Contactez-moi" */
+  padding: 10px 20px; /* Espacement intérieur du bouton */
+  border-radius: 5px; /* Coins arrondis du bouton */
+  text-decoration: none; /* Supprime le soulignement par défaut du lien */
+}
+
+.btn-learn-more:hover {
+  background-color: #58a6ff; /* Couleur au survol du bouton "Contactez-moi" */
+}
 
 
-/* Section de contact */
+/* Styles pour la page contact.html */
+
+/* Styles globaux */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f4f4f4; /* Couleur de fond claire */
+    color: #343a40; /* Couleur du texte par défaut */
+    margin: 0;
+    padding: 0;
+}
+
+/* Section Contact */
 .max-w-4xl {
-  max-width: 1000px; /* Largeur maximale de la section */
+    max-width: 800px; /* Limite la largeur de la section contact */
 }
 
-.py-12 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
+h2 {
+    font-size: 2.5rem; /* Taille du titre */
+    color: #4c51bf; /* Couleur indigo pour le titre */
 }
 
-.text-indigo-600 {
-  color: #4c51bf; /* Couleur indigo pour le titre */
-}
-
+/* Texte d'introduction */
 .text-lg {
-  font-size: 1.125rem; /* Taille du texte pour les paragraphes */
-  text-align: center; /* Centrer le texte */
-}
-
-.text-gray-700 {
-  color: #191b1b; /* Couleur gris foncé pour le texte */
+    font-size: 1.125rem; /* Taille du texte d'introduction */
 }
 
 .text-sm {
-  font-size: 0.875rem; /* Taille du texte pour les petits paragraphes */
+    font-size: 0.875rem; /* Taille du texte plus petit */
 }
 
 /* Formulaire de contact */
 form {
-  background-color: white; /* Fond blanc pour le formulaire */
-  padding: 2rem; /* Espacement intérieur du formulaire */
-  border-radius: 8px; /* Coins arrondis du formulaire */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre pour le formulaire */
+    background-color: white; /* Fond blanc pour le formulaire */
+    padding: 30px; /* Espacement intérieur du formulaire */
+    border-radius: 8px; /* Coins arrondis du formulaire */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour du formulaire */
 }
 
 /* Étiquettes et champs de saisie */
 label {
-  display: block; /* Affichage en bloc pour les étiquettes */
-  margin-bottom: 0.5rem; /* Espacement en bas des étiquettes */
-  font-weight: bold; /* Texte en gras pour les étiquettes */
+    display: block; /* Affichage en bloc pour les étiquettes */
+    margin-bottom: 5px; /* Espacement en bas des étiquettes */
 }
 
 input[type="text"],
 input[type="email"],
 textarea {
-  width: 80%; /* Champs prennent toute la largeur disponible */
-  padding: 10px; /* Espacement intérieur des champs */
-  border-radius: 5px; /* Coins arrondis des champs */
-  border: 1px solid #ccc; /* Bordure grise claire des champs */
-  transition: border-color 0.3s ease; /* Transition douce pour la bordure */
+    width: 100%; /* Champs prennent toute la largeur disponible */
+    padding: 10px; /* Espacement intérieur des champs */
+    border-radius: 5px; /* Coins arrondis des champs */
+    border: 1px solid #ccc; /* Bordure grise claire des champs */
+    transition: border-color 0.3s ease; /* Transition douce pour la bordure au focus */
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-textarea:focus {
-  border-color: #007bff; /* Bordure bleue au focus */
+textarea:hover {
+    border-color: #4c51bf; /* Bordure bleue au focus des champs */
 }
 
 /* Bouton d'envoi */
 input[type="submit"] {
-  background-color: #007bff; /* Couleur de fond bleue pour le bouton */
-  color: white; /* Couleur du texte blanc pour le bouton */
-  padding: 10px; /* Espacement intérieur du bouton */
-  border-radius: 5px; /* Coins arrondis du bouton */
-  border: none; /* Supprime la bordure par défaut du bouton */
-  cursor: pointer; /* Curseur en main au survol du bouton */
-  transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur */
+    width: 100%; /* Bouton prend toute la largeur disponible */
+    background-color: #4c51bf; /* Couleur de fond indigo pour le bouton */
+    color: white; /* Couleur du texte blanc pour le bouton */
+    padding: 10px; /* Espacement intérieur du bouton */
+    border-radius: 5px; /* Coins arrondis du bouton */
+    border: none; /* Supprime la bordure par défaut du bouton */
+    cursor: pointer; /* Curseur en main au survol du bouton */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
 }
 
 input[type="submit"]:hover {
-  background-color: #0056b3; /* Couleur plus foncée au survol du bouton */
+    background-color: #58a6ff; /* Couleur au survol du bouton "Envoyer" */
 }
 
-/* Responsive Design */
+/* Responsive Design pour les formulaires et les sections */
 @media (max-width: 768px) {
-  .max-w-4xl {
-      padding-left: 20px;
-      padding-right: 20px;
-  }
-
-  form {
-      padding: 1.5rem; /* Réduire l'espacement intérieur sur mobile */
-  }
-}
-
-
-/* Section de la newsletter */
-.min-h-screen {
-  min-height: 100vh; /* Assure que la section occupe toute la hauteur de l'écran */
-}
-
-.bg-gray-50 {
-  background-color: #f9fafb; /* Couleur de fond gris clair */
-}
-
-.max-w-md {
-  max-width: 600px; /* Largeur maximale du conteneur */
-}
-
-.p-8 {
-  padding: 2rem; /* Espacement intérieur du conteneur */
-}
-
-.text-gray-900 {
-  color: #1f2937; /* Couleur gris foncé pour le titre */
-}
-
-.text-gray-600 {
-  color: #4b5563; /* Couleur gris pour le texte descriptif */
-}
-
-/* Messages d'erreur et de succès */
-.mb-4 {
-  margin-bottom: 1rem; /* Espacement en bas des messages */
-}
-
-.rounded-md {
-  border-radius: 0.375rem; /* Coins arrondis pour les messages */
-}
-
-.bg-green-100 {
-  background-color: #d1fae5; /* Fond vert clair pour succès */
-}
-
-.text-green-700 {
-  color: #065f46; /* Couleur du texte vert foncé pour succès */
-}
-
-.bg-red-100 {
-  background-color: #fee2e2; /* Fond rouge clair pour erreur */
-}
-
-.text-red-700 {
-  color: #b91c1c; /* Couleur du texte rouge foncé pour erreur */
-}
-
-.bg-blue-100 {
-  background-color: #bfdbfe; /* Fond bleu clair pour info */
-}
-
-.text-blue-700 {
-  color: #1e3a8a; /* Couleur du texte bleu foncé pour info */
-}
-
-/* Formulaire de newsletter */
-form {
-  background-color: white; /* Fond blanc pour le formulaire */
-  padding: 2rem; /* Espacement intérieur du formulaire */
-  border-radius: 8px; /* Coins arrondis du formulaire */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour du formulaire */
-}
-
-/* Étiquettes et champs de saisie */
-label {
-  display: block; /* Affichage en bloc pour les étiquettes */
-  margin-bottom: 0.5rem; /* Espacement en bas des étiquettes */
-  font-weight: bold; /* Texte en gras pour les étiquettes */
-}
-
-input[type="text"],
-input[type="email"] {
-  width: 100%; /* Champs prennent toute la largeur disponible */
-  padding: 10px; /* Espacement intérieur des champs */
-  border-radius: 5px; /* Coins arrondis des champs */
-  border: 1px solid #ccc; /* Bordure grise claire des champs */
-  transition: border-color 0.3s ease; /* Transition douce pour la bordure au focus */
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus {
-  border-color: #007bff; /* Bordure bleue au focus des champs */
-}
-
-/* Case à cocher des termes d'utilisation */
-.flex.items-start {
-  align-items: center; /* Aligne verticalement les éléments dans le conteneur flex */
-}
-
-/* Bouton d'envoi */
-button[type="submit"] {
-  width: 100%; /* Bouton prend toute la largeur disponible */
-  padding: 10px; /* Espacement intérieur du bouton */
-  border-radius: 5px; /* Coins arrondis du bouton */
-  background-color: #007bff; /* Couleur de fond bleue pour le bouton */
-  color: white; /* Couleur du texte blanc pour le bouton */
-  border: none; /* Supprime la bordure par défaut du bouton */
-  cursor: pointer; /* Curseur en main au survol du bouton */
-  transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur au survol */
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3; /* Couleur plus foncée au survol du bouton */
-}
-
-/* Liens vers la politique de confidentialité et conditions d'utilisation */
-.text-indigo-600 {
-  color: #4c51bf !important; /* Couleur indigo pour les liens importants */;
-}
-
-.hover\:text-indigo-500:hover {
-  color: #434190 !important; /* Couleur indigo plus claire au survol des liens */;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .max-w-md {
-      padding-left: 20px;
-      padding-right: 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      width: calc(100% - 40px); 
-      box-shadow:none;
-      border-radius:none;
-      background-color:none;
-      border:none;
-      padding-top:none;
-      padding-bottom:none;
-      
-}
-}
-
-
-/* Titre de la section des services */
-h2 {
-  font-size: 2rem; /* Taille du titre */
-  color: #4c51bf; /* Couleur indigo pour le titre */
-}
-
-/* Section des services */
-.section-services {
-  background-color: #f9fafb; /* Couleur de fond gris clair pour la section */
-}
-
-.services-container {
-  display: flex;
-  flex-wrap: wrap; /* Permet aux cartes de passer à la ligne suivante */
-  justify-content: center; /* Centre les cartes horizontalement */
-}
-
-/* Carte de service */
-.service-card {
-  background-color: white; /* Fond blanc pour les cartes */
-  border-radius: 8px; /* Coins arrondis des cartes */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour des cartes */
-  margin: 15px; /* Espacement entre les cartes */
-  padding: 20px; /* Espacement intérieur des cartes */
-  text-align: center; /* Centre le texte dans les cartes */
-  transition: transform 0.3s ease; /* Transition douce pour l'effet d'agrandissement */
-  width: calc(30% - 30px); /* Largeur des cartes (3 par ligne) */
-}
-
-.service-card:hover {
-  transform: translateY(-5px); /* Effet d'élévation au survol */
-}
-
-/* Icône du service */
-.service-icon {
-  font-size: 3rem; /* Taille de l'icône */
-  color: #4c51bf; /* Couleur indigo pour l'icône */
-  margin-bottom: 10px; /* Espacement en bas de l'icône */
-}
-
-/* Titre et description du service */
-.service-title {
-  font-size: 1.5rem; /* Taille du titre du service */
-  color: #333; /* Couleur du texte pour le titre du service */
-}
-
-.service-description {
-  margin: 10px 0; /* Espacement vertical autour de la description */
-}
-
-/* Prix du service */
-.service-price {
-  font-weight: bold; /* Mettre en gras le prix */
-}
-
-/* Bouton d'action pour demander le service */
-.service-request-btn {
-  display: inline-block; /* Affichage en bloc pour le bouton */
-  background-color: #007bff; /* Couleur de fond bleue pour le bouton */
-  color: white; /* Couleur du texte blanc pour le bouton */
-  padding: 10px 15px; /* Espacement intérieur du bouton */
-  border-radius: 5px; /* Coins arrondis du bouton */
-  text-decoration: none; /* Supprime le soulignement par défaut du lien */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
-}
-
-.service-request-btn:hover {
-  background-color: #0056b3; /* Couleur plus foncée au survol du bouton */
-  transform: scale(1.05); /* Légère augmentation de taille au survol du bouton */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .service-card {
-      width: calc(45% - 30px); /* Largeur des cartes (2 par ligne sur petits écrans) */
-      margin-bottom: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .service-card {
-      width: calc(100% - 30px); /* Largeur des cartes (1 par ligne sur très petits écrans) */
-      margin-bottom: 20px;
-  }
-}
-
-
-/* Titre de la section de demande de service */
-h2 {
-  font-size: 2rem; /* Taille du titre */
-  color: #4c51bf; /* Couleur indigo pour le titre */
-}
-
-/* Formulaire de demande de service */
-form {
-  max-width: 600px; /* Largeur maximale du formulaire */
-  margin: 0 auto; /* Centre le formulaire horizontalement */
-  background-color: white; /* Fond blanc pour le formulaire */
-  padding: 2rem; /* Espacement intérieur du formulaire */
-  border-radius: 8px; /* Coins arrondis du formulaire */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour du formulaire */
-}
-
-/* Espacement en bas des éléments du formulaire */
-.mb-4 {
-  margin-bottom: 1rem; /* Espacement en bas des éléments */
-}
-
-/* Bouton d'envoi */
-button[type="submit"] {
-  width: 100%; /* Bouton prend toute la largeur disponible */
-  padding: 10px; /* Espacement intérieur du bouton */
-  border-radius: 5px; /* Coins arrondis du bouton */
-  background-color: #007bff; /* Couleur de fond bleue pour le bouton */
-  color: white; /* Couleur du texte blanc pour le bouton */
-  border: none; /* Supprime la bordure par défaut du bouton */
-  cursor: pointer; /* Curseur en main au survol du bouton */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3; /* Couleur plus foncée au survol du bouton */
-  transform: scale(1.05); /* Légère augmentation de taille au survol du bouton */
-}
-
-/* Messages d'erreur et de succès dans le formulaire */
-.text-red-600 {
-  color: #b91c1c; /* Couleur rouge pour les messages d'erreur */
-}
-
-.text-indigo-600 {
-  color: #4c51bf; /* Couleur indigo pour les textes importants (ex : titre) */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  form {
-      padding: 1.5rem; /* Réduire l'espacement intérieur sur mobile */
-      margin-left: 10px;
-      margin-right: 10px;
-      box-shadow:none;
-      border-radius:none;
-      background-color:none;
-      border:none;
-      padding-top:none;
-      padding-bottom:none;
-      
-}
-}
-
-
-/* Titre de la section des articles */
-h1.display-5 {
-  font-size: 2.5rem; /* Taille du titre */
-  color: #4c51bf; /* Couleur indigo pour le titre */
-}
-
-/* Section des articles */
-.py-5 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
-}
-
-.bg-gray-50 {
-  background-color: #f9fafb; /* Couleur de fond gris clair pour la section */
-}
-
-/* Conteneur des articles */
-.row.gx-5 {
-  margin-left: -15px; /* Espacement négatif pour aligner les colonnes */
-  margin-right: -15px;
-}
-
-/* Carte d'article */
-.card {
-  background-color: white; /* Fond blanc pour les cartes */
-  border-radius: 8px; /* Coins arrondis des cartes */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour des cartes */
-  transition: transform 0.3s ease; /* Transition douce pour l'effet d'agrandissement */
-}
-
-.card:hover {
-  transform: translateY(-5px); /* Effet d'élévation au survol */
-}
-
-/* Image de l'article */
-.card-img-top {
-  border-top-left-radius: 8px; /* Arrondi du coin supérieur gauche */
-  border-top-right-radius: 8px; /* Arrondi du coin supérieur droit */
-}
-
-/* Corps de la carte d'article */
-.card-body {
-  padding: 20px; /* Espacement intérieur des cartes */
-}
-
-/* Titre et description de l'article */
-.card-title {
-  font-size: 1.5rem; /* Taille du titre de l'article */
-  color: #4c51bf; /* Couleur indigo pour le titre de l'article */
-}
-
-.card-text {
-  color: #4a5568; /* Couleur gris foncé pour la description de l'article */
-}
-
-/* Bouton d'action pour lire l'article */
-.btn-outline-indigo {
-  border-color: #4c51bf; /* Bordure indigo pour le bouton */
-  color: #4c51bf; /* Couleur du texte indigo pour le bouton */
-}
-
-.btn-outline-indigo:hover {
-  background-color: #4c51bf; /* Fond indigo au survol du bouton */
-  color: white; /* Texte blanc au survol du bouton */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .col-lg-6,
-  .col-xl-4 {
-      flex-basis: calc(50% - 30px); /* Largeur des cartes (2 par ligne sur petits écrans) */
-      margin-bottom: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .col-lg-6,
-  .col-xl-4 {
-      flex-basis: calc(100% - 30px); /* Largeur des cartes (1 par ligne sur très petits écrans) */
-      margin-bottom: 20px;
-  }
+    .max-w-4xl {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: calc(100% - 40px);
+        box-shadow: none;
+        border-radius: none;
+        background-color: none;
+        border: none;
+        padding-top: none;
+        padding-bottom: none;
+    }
 }
