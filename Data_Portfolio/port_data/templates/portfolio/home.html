@@ -11,10 +11,10 @@
                 <span class="skill-badge">Développement Web</span>
             </div>
             <h2 class="gradient-text" style="font-size: 2.5rem; margin: 1.5rem 0;">Get online and grow fast</h2>
-            <p style="font-size: 1.2rem; color: var(--text); margin-bottom: 2rem;">Can I help you?</p>
+            <p style="font-size: 1.5rem; color: var(--text); margin-bottom: 5rem;">Can I help you?</p>
             <div style="display: flex; gap: 1rem; justify-content: flex-start;">
-                <a href="{% url 'about' %}" style="background: var(--primary); color: white; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: transform 0.3s ease;">About-me</a>
-                <a href="{% url 'projects' %}" style="border: 2px solid var(--primary); color: var(--primary); padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: transform 0.3s ease;">Projects</a>
+                <a href="{% url 'about' %}" style="background: var(--primary); color: rgb(7, 6, 6); padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: transform 0.3s ease;">About-me</a>
+                <a href="{% url 'projects' %}" style="border: 2px solid var(--primary); color: var(--primary); padding: 0.9rem 1.5rem; border-radius: 5px; text-decoration: none; transition: transform 0.3s ease;">Projects</a>
             </div>
         </div>
         
@@ -25,16 +25,28 @@
 
     <section class="about-section">
         <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Who am i ?</h2>
+            <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Qui Suis-Je ?</h2>
             <p style="font-size: 1.5rem; margin-bottom: 1rem;">Hey! I'm Eric KOULODJI Dona.</p>
-            <p style="color: var(--text); line-height: 1.8;">Data Scientist passionné, avec une double casquette en Physique-Chimie et en Sciences des données. Mes compétences acquises me permettent de concevoir des solutions simples et efficaces, de résoudre des problèmes et d'apporter un plus-value à la nation africaine. Toujours à la recherche de nouveaux défis, j'aime créer des projets innovants où je peux combiner data science et développement.</p>
-            
+            <p style="color: var(--text); line-height: 1.8;">Data Scientist passionné, avec une double casquette en Physique-Chimie et 
+                en Sciences des données. Mes compétences acquises me permettent de concevoir
+                des solutions simples et efficaces, de résoudre des problèmes et d'apporter un 
+                plus-value à la nation africaine. Toujours à la recherche de nouveaux défis, 
+                j'aime créer des projets innovants où je peux combiner data science et développement.</p>  
         </div>
     </section>
 
-    <div class="content">
-        <a href="{% url 'about' %}" class="btn-learn-more">Plus sur moi --> </a>
-      </div>
+
+            <!-- Info Social links -->
+    <div class="social-links">
+        <a href="https://x.com" title="Twitter/X"><i class="bi bi-twitter"></i></a>
+        <a href="www.linkedin.com/in/dona-erick" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="www.github.com/dona-erick" title="GitHub"><i class="bi bi-github"></i></a>
+        <a href="mailto:donaerickoulodji@gmail.com" title="Email"><i class="bi bi-envelope"></i></a>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: flex-start;">
+        <a href="{% url 'about' %}" class="btn-learn-more">About-me</a>
+    </div>
 
     <script src="{% static 'js/scripts.js' %}"></script>
 {% endblock content %}
