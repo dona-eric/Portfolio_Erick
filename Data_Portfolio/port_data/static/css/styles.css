@@ -1,7 +1,7 @@
 /* Styles de la barre de navigation */
 .navbar {
   background: linear-gradient(135deg, #0d1117, #1a1f2b);/* Dégradé pour la barre de navigation */
-  padding: 15px 30px; /* Espacement intérieur */
+  padding: 10px 10px; /* Espacement intérieur */
   text-decoration: none;
 }
 
