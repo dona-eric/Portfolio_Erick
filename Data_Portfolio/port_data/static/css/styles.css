@@ -1,13 +1,15 @@
 /* Styles de la barre de navigation */
 .navbar {
   background: linear-gradient(135deg, #0d1117, #1a1f2b);/* Dégradé pour la barre de navigation */
-  padding: 10px 10px; /* Espacement intérieur */
+  padding: 10px 5px; /* Espacement intérieur */
   text-decoration: none;
+  margin:  0 auto;
 }
 
 .navbar-brand {
   font-size: 24px; /* Taille du texte du nom */
-  font-weight: bold; /* Texte en gras */
+  font-weight:bold; /* Texte en gras */
+  float: left;
   color: white; /* Couleur du texte */
   text-decoration: none; /* Supprime le soulignement par défaut */
 }
@@ -22,10 +24,15 @@
 
 .nav-link {
   color: white; /* Couleur des liens */
-  font-size: 18px; /* Taille du texte des liens */
+  font-size: 12px; /* Taille du texte des liens */
   margin-right: 20px; /* Espacement entre les liens */
   text-decoration: none;
+  justify-content: space-between;
   transition: color 0.3s ease; /* Transition douce pour le changement de couleur */
+}
+.navbar-nav {
+  display: flex;
+  align-items: center;
 }
 
 .nav-link:hover {
@@ -57,7 +64,7 @@
 /* Styles globaux */
 body {
   font-family: 'Ubuntu Condensed', sans-serif;
-  background-color: #f4f4f4; /* Couleur de fond claire */
+  background-color: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(51, 51, 51, 0.8)); /* Couleur de fond claire */
   color: #343a40; /* Couleur du texte par défaut */
   margin: 0;
   padding: 0;
@@ -184,7 +191,7 @@ a.btn-learn-more:hover {
 
 /* Section À propos */
 .about-section {
-  padding: 50px;
+  padding: 5px;
 }
 
 .about-section h2 {
@@ -348,11 +355,13 @@ section {
 .btn-outline-indigo {
   border-color: #4c51bf; /* Bordure indigo pour le bouton "Voir sur Github" */
   color: #4c51bf; /* Couleur du texte indigo pour le bouton "Voir sur Github" */
+  text-decoration: none;
 }
 
 .btn-outline-indigo:hover {
   background-color: #4c51bf; /* Fond indigo au survol du bouton "Voir sur Github" */
   color: white; /* Texte blanc au survol du bouton "Voir sur Github" */
+  text-decoration: none;
 }
 
 .btn-outline-secondary {
@@ -362,6 +371,7 @@ section {
 .btn-outline-secondary:hover {
   background-color: #6c757d; /* Fond gris au survol du bouton "Voir la démo" */
   color: white; /* Texte blanc au survol du bouton "Voir la démo" */
+  text-decoration: none;
 }
 
 /* Responsive Design pour les cartes de projet */
@@ -395,15 +405,6 @@ section {
 
 
 /* Styles pour la page contact.html */
-
-/* Styles globaux */
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #f4f4f4; /* Couleur de fond claire */
-    color: #343a40; /* Couleur du texte par défaut */
-    margin: 0;
-    padding: 0;
-}
 
 /* Section Contact */
 .max-w-4xl {
@@ -485,4 +486,65 @@ input[type="submit"]:hover {
         padding-top: none;
         padding-bottom: none;
     }
+}
+
+
+
+/* Styles pour la section des badges */
+.badges-container {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux cartes de passer à la ligne suivante */
+  justify-content:flex-start; /* Centre les cartes horizontalement */
+}
+
+.badge-card {
+  background-color: white; /* Fond blanc pour les cartes */
+  border-radius: 8px; /* Coins arrondis des cartes */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour des cartes */
+  margin: 15px; /* Espacement entre les cartes */
+  padding: 10px; /* Espacement intérieur des cartes */
+  text-align: center; /* Centrer le texte dans les cartes */
+  width: calc(20% - 10px); /* Largeur des cartes (4 par ligne) */
+}
+
+.badge-image {
+  width: 90px; /* Largeur réduite pour les images du badge */
+  height: auto; /* Hauteur automatique pour garder le ratio */
+}
+
+/* Liens vers le badge */
+.badge-link {
+  color: #4c51bf; /* Couleur indigo pour le lien du badge */
+  justify-content: center;
+  text-decoration: none; /* Supprime le soulignement par défaut du lien */
+}
+
+.badge-link:hover {
+  text-decoration: underline; /* Souligner au survol du lien du badge */
+}
+.badge-title {
+  font-size: 1.5rem;
+  color: #4c51bf;
+
+}
+
+/* Description du badge */
+.badge-description {
+  margin-top: 10px; /* Espacement au-dessus de la description */
+  color: #6c757d; /* Couleur plus claire pour la description */
+}
+
+/* Responsive Design pour les cartes de badge */
+@media (max-width: 768px) {
+  .badge-card {
+      width: calc(45% - 30px); /* Largeur des cartes (2 par ligne sur petits écrans) */
+      margin-bottom: 20px; /* Espacement en bas des cartes sur petits écrans */
+  }
+}
+
+@media (max-width: 480px) {
+  .badge-card {
+      width: calc(100% - 30px); /* Largeur des cartes (1 par ligne sur très petits écrans) */
+      margin-bottom: 20px;
+  }
 }

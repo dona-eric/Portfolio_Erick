@@ -137,4 +137,43 @@
     <div class="content">
         <a href="{% url 'projects' %}" class="btn-learn-more">Plus sur mes projets →</a>
       </div>
+
+
+
+    <!--classes des badges-->
+    <section class="py-5">
+        <div class="container px-5 mb-5">
+            <div class="text-center mb-5">
+                <h1 class="display-4 font-bold text-indigo-600 mb-4">Mes Badges</h1>
+                <p class="text-lg text-gray-700">En voici quelques badges reçus pour mes compétences et réalisations.</p>
+            </div>
+    
+            <div class="badges-container">
+                <!-- Badge 1 -->
+                <div class="badge-card">
+                    <img src="{% static 'images/badge1.png' %}" alt="Badge 1" class="badge-image">
+                    <a href="https://www.credly.com/org/ibm/badge/data-science-orientation" class="badge-link">Recognition IBM</a>
+                    <h2 class="badge-title">Data Science Orientation IBM</h2>
+                    <p class="badge-description">
+                        Bonne compréhension des raisons pour lesquelles la science des données, 
+                        l'intelligence artificielle (IA) et l'apprentissage automatique révolutionnent la façon dont les gens font des affaires et font de la recherche dans le monde entier.
+                    </p>
+                </div>
+    
+                <!-- Badge 2 -->
+                <div class="badge-card">
+                    <img src="{% static 'images/badge2.png' %}" alt="Badge 2" class="badge-image">
+                    <a href="https://www.credly.com/org/ibm/badge/data-analysis-with-python" class="badge-link">IBM Analysis Data</a>
+                    <h2 class="badge-title">Data Analysis with Python</h2>
+                    <p class="badge-description">Je possède les compétences de base en analyse de données à l'aide de Python.
+                        Il peut facilement nettoyer, visualiser et résumer les données à l'aide de Pandas. 
+                        À l'aide de Scikit-learn, le détenteur peut développer des pipelines de données, 
+                        construire des modèles d'apprentissage automatique pour la régression et évaluer ces modèles.
+                    </p>
+                </div>
+    
+                <!-- Ajoutez d'autres badges ici -->
+            </div>
+        </div>
+    </section>
 {% endblock %}
