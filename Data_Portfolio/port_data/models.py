@@ -45,16 +45,18 @@ class Skill(models.Model):
 
 """models for articles """
 
+
 class Article(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
-    #image_blog = models.ImageField(upload_to='portfolio_articles/', blank=True, null=True)
     url_blog = models.URLField(blank=True, null=True)
-    author_articles = models.CharField(max_length=200, verbose_name='auteur', null=True)
-    date_published = models.DateTimeField(auto_now_add=True,null=True, verbose_name='Date de publication')
-    categorie = models.TextField(blank=True, null = True)
+    author_articles = models.CharField(max_length=200, verbose_name='Auteur', null=True)
+    date_published = models.DateTimeField(null=True, verbose_name='Date de publication')
+    categorie = models.CharField(max_length=255, blank=True, null=True)
+
     def __str__(self):
         return self.title
+
 
 
 """models for contacts: i would like to use the forms of django 

@@ -40,10 +40,14 @@ def article(request):
 
 def article_list(request, id_article):
     try:
-        blog_list = Article.objects.get(pk=id_article) 
+        blog_list = Article.objects.get(pk=id_article)
         return render(request, 'portfolio/blog_list.html', {'blog_list': blog_list})
-    except Exception as e:
-        return render(request, 'portfolio/blog.html', {'blog_article': blog_list})
+    except Article.DoesNotExist:
+        return render(request, 'portfolio/blog.html', {
+            'blog_article': Article.objects.all().order_by('-date_published'),
+            'error_message': "L'article demandé n'existe pas."
+        })
+
 
 
 # Page des compétences
