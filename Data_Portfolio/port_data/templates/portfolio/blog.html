@@ -9,22 +9,25 @@
             <p class="text-muted">Découvrez mes dernières réflexions et analyses sur divers sujets.</p>
         </div>
 
-        {% if articles %}
+        {% if blog_article %}
             <div class="row gx-5 justify-content-center">
-                {% for article in articles %}
+                {% for article in blog_article %}
                     <!-- Article Card -->
                     <div class="col-lg-6 col-xl-4 mb-4">
                         <div class="card shadow-sm rounded-lg border-0 h-100">
                             <img 
-                                src="{{ article.image_url|default:'assets/impute.png' }}" 
+                                src="{% static 'assets/impute.png' %}" 
                                 class="card-img-top img-fluid rounded-top" 
                                 alt="{{ article.title }}">
                             <div class="card-body">
                                 <h3 class="card-title fw-bolder text-indigo-600">{{ article.title }}</h3>
-                                <p class="card-text text-gray-700">{{ article.description }}</p>
-                                <a href="{{ article.url }}" target="_blank" class="btn btn-outline-indigo mt-3">
+                                <p class="card-text text-gray-700">{{ article.content|truncatechars:150 }}</p>
+                                <a href="{{ article.url_blog }}" target="_blank" class="btn btn-outline-indigo mt-3">
                                     Lire l'article
                                 </a>
+                                <p class="mt-2 text-sm text-muted">
+                                    Publié par {{ article.author_articles }} le {{ article.date_published|date:"d M Y" }}
+                                </p>
                             </div>
                         </div>
                     </div>
