@@ -551,16 +551,17 @@ input[type="submit"]:hover {
 
 
 /* General Styles */
+
 .container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
   padding: 20px;
 }
 
-/* Section Title */
+/* Titre de la section */
 h1.display-5 {
-  font-size: 2.5rem; /* Large title size */
-  color: #4a4a4a; /* Dark gray color */
+  font-size: 2.5rem; /* Taille du titre */
+  color: #4a4a4a; /* Couleur sombre */
 }
 
 .text-gradient {
@@ -569,7 +570,7 @@ h1.display-5 {
   -webkit-text-fill-color: transparent;
 }
 
-/* Article Cards */
+/* Cartes d'articles */
 .card {
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -585,43 +586,43 @@ h1.display-5 {
   border-top-right-radius: 10px;
 }
 
-/* Card Body */
+/* Corps de la carte */
 .card-title {
-  font-size: 1.5rem; /* Title size */
-  color: #4b0082; /* Indigo color */
+  font-size: 1.5rem; /* Taille du titre */
+  color: #4b0082; /* Couleur indigo */
 }
 
 .card-text {
-  font-size: 1rem; /* Content size */
+  font-size: 1rem; /* Taille du texte */
 }
 
-/* Button Styles */
+/* Styles des boutons */
 .btn-outline-indigo {
-  border-color: #6a11cb; /* Indigo border */
-  color: #6a11cb; /* Indigo text */
+  border-color: #6a11cb; /* Bordure indigo */
+  color: #6a11cb; /* Texte indigo */
 }
 
 .btn-outline-indigo:hover {
-  background-color: #6a11cb; /* Indigo background on hover */
-  color: white; /* White text on hover */
+  background-color: #6a11cb; /* Fond indigo au survol */
+  color: white; /* Texte blanc au survol */
 }
 
-/* Footer and Miscellaneous Styles */
+/* Styles supplémentaires */
 .mt-2.text-sm.text-muted {
-  font-size: 0.875rem; /* Smaller text for publication details */
+  font-size: 0.875rem; /* Texte plus petit pour les détails de publication */
 }
 
 .text-muted {
-  color: #6c757d; /* Muted text color */
+  color: #6c757d; /* Couleur de texte atténuée */
 }
 
 .text-center {
-  text-align: center; /* Center align text */
+  text-align: center; /* Centrer le texte */
 }
 
-/* Responsive Styles */
+/* Styles Responsifs */
 @media (max-width: 768px) {
   .card-title {
-      font-size: 1.25rem; /* Smaller title on mobile */
+      font-size: 1.25rem; /* Réduire la taille du titre sur mobile */
   }
 }
