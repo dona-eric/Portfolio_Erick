@@ -49,5 +49,5 @@ class SkillAdmin(admin.ModelAdmin):
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'subject_message', 'content_message', 'sent_at', 'is_read')
     list_filter = ('is_read', 'sent_at')
-    search_fields = ('name', 'email', 'subject_message', 'content_message')
+    search_fields = ('name', 'email', 'content_message', 'subject_message')
 
