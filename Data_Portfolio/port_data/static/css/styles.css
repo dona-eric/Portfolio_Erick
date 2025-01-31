@@ -425,50 +425,57 @@ h2 {
     font-size: 0.875rem; /* Taille du texte plus petit */
 }
 
-/* Formulaire de contact */
-form {
-    background-color: white; /* Fond blanc pour le formulaire */
-    padding: 30px; /* Espacement intérieur du formulaire */
-    border-radius: 8px; /* Coins arrondis du formulaire */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour du formulaire */
+/* contacts.css */
+
+/* Section principale */
+section {
+  background-color: #ffffff; /* Fond blanc pour le formulaire */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre douce */
 }
 
-/* Étiquettes et champs de saisie */
+/* Titre */
+h2 {
+  font-size: 2rem; /* Taille du titre */
+  color: #4c51bf; /* Couleur indigo */
+}
+
+/* Labels des champs de formulaire */
 label {
-    display: block; /* Affichage en bloc pour les étiquettes */
-    margin-bottom: 5px; /* Espacement en bas des étiquettes */
+  display: block;
+  margin-bottom: 0.5rem; /* Espacement sous les labels */
 }
 
+/* Champs de formulaire */
 input[type="text"],
 input[type="email"],
 textarea {
-    width: 100%; /* Champs prennent toute la largeur disponible */
-    padding: 10px; /* Espacement intérieur des champs */
-    border-radius: 5px; /* Coins arrondis des champs */
-    border: 1px solid #ccc; /* Bordure grise claire des champs */
-    transition: border-color 0.3s ease; /* Transition douce pour la bordure au focus */
+  width: 100%; /* Largeur complète */
+  border: 1px solid #cbd5e0; /* Bordure grise claire */
+  border-radius: 5px; /* Coins arrondis */
+  padding: 0.75rem; /* Remplissage interne */
+  transition: border-color 0.3s ease; /* Transition pour la bordure */
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-textarea:hover {
-    border-color: #4c51bf; /* Bordure bleue au focus des champs */
+textarea:focus {
+  border-color: #4c51bf; /* Bordure indigo au focus */
 }
 
-/* Bouton d'envoi */
+/* Bouton Envoyer */
 input[type="submit"] {
-    width: 100%; /* Bouton prend toute la largeur disponible */
-    background-color: #4c51bf; /* Couleur de fond indigo pour le bouton */
-    color: white; /* Couleur du texte blanc pour le bouton */
-    padding: 10px; /* Espacement intérieur du bouton */
-    border-radius: 5px; /* Coins arrondis du bouton */
-    border: none; /* Supprime la bordure par défaut du bouton */
-    cursor: pointer; /* Curseur en main au survol du bouton */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
+  background-color: #4c51bf; /* Couleur du bouton */
+  color: white;
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transition pour le bouton */
 }
 
 input[type="submit"]:hover {
-    background-color: #58a6ff; /* Couleur au survol du bouton "Envoyer" */
+  background-color: #434190; /* Couleur plus sombre au survol */
 }
 
 /* Responsive Design pour les formulaires et les sections */
