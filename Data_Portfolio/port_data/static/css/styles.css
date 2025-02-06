@@ -10,7 +10,7 @@
   font-size: 24px; /* Taille du texte du nom */
   font-weight:bold; /* Texte en gras */
   float: left;
-  color: white; /* Couleur du texte */
+  color: #34a3a4; /* Couleur du texte */
   text-decoration: none; /* Supprime le soulignement par défaut */
 }
 
@@ -23,7 +23,7 @@
 }
 
 .nav-link {
-  color: white; /* Couleur des liens */
+  color: #34a3a4; /* Couleur des liens */
   font-size: 12px; /* Taille du texte des liens */
   margin-right: 20px; /* Espacement entre les liens */
   text-decoration: none;
@@ -41,8 +41,8 @@
 
 /* Styles pour les éléments collapsibles sur mobile */
 .collapse {
-  background-color: #2d3748; /* Couleur de fond pour le menu déroulant */
-}
+  background-color:; /* Couleur de fond pour le menu déroulant */
+} */
 
 /* Espacement et alignement */
 .container-fluid {
@@ -64,8 +64,8 @@
 /* Styles globaux */
 body {
   font-family: 'Ubuntu Condensed', sans-serif;
-  background-color: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(51, 51, 51, 0.8)); /* Couleur de fond claire */
-  color: #343a40; /* Couleur du texte par défaut */
+  background: linear-gradient(120deg, #0d1117, #1a1e2d); /* Couleur de fond claire */
+  color: #34a3a4; /* Couleur du texte par défaut */
   margin: 0;
   padding: 0;
 }
@@ -83,17 +83,34 @@ body {
   text-align: center;
 }
 
-/* Styles des liens sociaux */
+/* Liens sociaux */
 .social-links {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  align-items: center;
+  gap: 20px; /* Espacement entre les icônes */
+  margin-bottom: 20px;
 }
 
 .social-links a {
-  color: #4c51bf; /* Couleur des icônes sociales */
-  font-size: 24px; /* Taille des icônes sociales */
-  margin: 0 10px; /* Espacement entre les icônes sociales */
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.social-links i {
+  font-size: 28px; /* Taille des icônes */
+  color: #007bff; /* Couleur des icônes */
+  text-decoration: none;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.social-links span {
+  display: block; /* Pour afficher le texte sous l'icône */
+  text-decoration: none;
+  font-size: 12px;
 }
 
 .social-links a:hover {
@@ -104,7 +121,7 @@ body {
 .footer {
   background: linear-gradient(135deg, #0d1117, #1a1f2b); /* Dégradé pour le pied de page */
   color: white;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .footer-content {
@@ -131,8 +148,7 @@ body {
   justify-content: space-between; /* Espace entre le contenu et l'image */
   align-items: center; /* Centrer verticalement */
   padding: 50px; /* Espacement intérieur */
-  background-color: #fcf5f5; /* Fond blanc pour la section héros */
-}
+  background: linear-gradient(120deg,#0d1117, #1a1f2b);
 
 .hero-content {
   max-width: 500px; /* Limite la largeur du contenu héro */
@@ -171,8 +187,15 @@ a.btn-learn-more:hover {
   padding: 0.8rem 1.5rem; /* Espacement intérieur du bouton */
   border-radius: 5px; /* Coins arrondis du bouton */
   text-decoration: none; /* Supprime le soulignement par défaut du lien */
-  transition: transform 0.3s ease, background-color 0.3s ease; /* Transition douce pour le changement de couleur et d'échelle au survol */
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
 
 a.btn-learn-more:hover {
   background-color: #58a6ff; /* Couleur au survol du bouton "About-me" */
@@ -185,15 +208,15 @@ a.btn-learn-more:hover {
 }
 
 .profile-image {
-  width: 250px; /* Largeur de l'image de profil */
-  border-radius: 50%; /* Arrondir l'image pour un effet circulaire */
+  width: 260px; /* Largeur de l'image de profil */
+  border-radius: 65%; /* Arrondir l'image pour un effet circulaire */
 }
 
 /* Section À propos */
-.about-section {
+/*.about-section {
   padding: 5px;
 }
-
+*/
 .about-section h2 {
   text-align: center; /* Centrer le titre de la section À propos */
 }
@@ -411,10 +434,6 @@ section {
     max-width: 800px; /* Limite la largeur de la section contact */
 }
 
-h2 {
-    font-size: 2.5rem; /* Taille du titre */
-    color: #4c51bf; /* Couleur indigo pour le titre */
-}
 
 /* Texte d'introduction */
 .text-lg {
@@ -425,11 +444,9 @@ h2 {
     font-size: 0.875rem; /* Taille du texte plus petit */
 }
 
-/* contacts.css */
 
-/* Section principale */
 section {
-  background-color: #ffffff; /* Fond blanc pour le formulaire */
+  background-color: #d1b9b9; /* Fond blanc pour le formulaire */
   border-radius: 10px; /* Coins arrondis */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre douce */
 }
