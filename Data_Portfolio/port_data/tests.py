@@ -1,3 +1,7 @@
+import os, django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Data_Portfolio.settings')
+django.setup()
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from .models import Article, Service, Newsletter

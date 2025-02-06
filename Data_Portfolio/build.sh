@@ -17,4 +17,4 @@ python manage.py migrate --noinput
   #  --email donaerickoulodji@gmail.com || true \
    # --password erick0151 || true
 # Apply any outstanding database migrations
-#python manage.py migrate
+python manage.py migrate
