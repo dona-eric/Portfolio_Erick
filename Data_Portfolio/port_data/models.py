@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 """ Here we create other that the models of database of website
 portfolio """
@@ -7,11 +8,11 @@ portfolio """
 """Models  for About"""
 
 class About(models.Model):
-    nom = models.CharField(max_length=100)
-    prenoms = models.CharField(max_length=150)
-    biography = models.TextField()
-    profil_pictures = models.ImageField(upload_to='portfolio/', blank=True, null=True)
-    resume_link = models.URLField(blank=True, null=True) # url vers mon cv
+    nom = models.CharField(max_length=100, verbose_name="Nom", help_text="Votre nom de famille")
+    prenoms = models.CharField(max_length=150, verbose_name="Prénoms", help_text="Vos prénoms")
+    biography = models.TextField(verbose_name="Biographie", help_text="Une brève description de vous")
+    profil_pictures = models.ImageField(upload_to='portfolio/', blank=True, null=True, verbose_name="Photo de profil", help_text="Téléchargez une photo de profil")
+    resume_link = models.URLField(blank=True, null=True, verbose_name="Lien vers le CV", help_text="URL vers votre CV en ligne")
 
     def __str__(self):
         return self.nom
@@ -19,27 +20,46 @@ class About(models.Model):
 """models for projects"""
 
 class Project(models.Model):
-    title = models.CharField(max_length=500)
-    description = models.TextField()
-    skills_used = models.CharField(max_length=500) ## les compétences techniques utilisées
-    image_project = models.ImageField(upload_to='portfolio_projects/',blank=True, null=True)
-    github_link = models.URLField(blank=True, null=True) ## lien vers le repo github
-    url_project = models.URLField(blank=True, null=True) ## lien vers un demo ou application deployée
-    date_project_update = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=500, verbose_name="Titre")
+    description = models.TextField(verbose_name="Description")
+    skills_used = models.ManyToManyField("Skill", related_name="projects", verbose_name="Compétences utilisées")
+    image_project = models.ImageField(upload_to='portfolio_projects/', blank=True, null=True, verbose_name="Image du projet")
+    github_link = models.URLField(blank=True, null=True, verbose_name="Lien GitHub")
+    url_project = models.URLField(blank=True, null=True, verbose_name="URL du projet")
+    date_project_update = models.DateTimeField(auto_now_add=True, verbose_name="Date de mise à jour")
+
+    def has_github_link(self):
+        return bool(self.github_link)
+
+    def has_demo_link(self):
+        return bool(self.url_project)
 
     def __str__(self):
-        return f" {self.title} ({self.description})"
+        return f"{self.title} ({self.description})"
 
 
 """models for skills"""
 
 class Skill(models.Model):
-    category = models.CharField(max_length=200)
-    skills_name = models.CharField(max_length=100)
-    level = models.IntegerField(default=50)
-    description = models.TextField(null=True)
+    CATEGORY_CHOICES = [
+        ('FRONTEND', 'Frontend'),
+        ('BACKEND', 'Backend'),
+        ('DEVOPS', 'DevOps'),
+        ('DATABASE', 'Base de données'),
+        ('OTHER', 'Autre'),
+    ]
+    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, verbose_name="Catégorie")
+    skills_name = models.CharField(max_length=100, verbose_name="Nom de la compétence")
+    level = models.IntegerField(
+        default=50,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        verbose_name="Niveau de maîtrise",
+        help_text="Niveau de maîtrise en pourcentage (0-100)"
+    )
+    description = models.TextField(null=True, blank=True, verbose_name="Description")
+
     def __str__(self):
-        return f" {self.skills_name} ({self.category})"
+        return f"{self.skills_name} ({self.category})"
 
 
 
@@ -63,17 +83,18 @@ class Article(models.Model):
 to create it """
 
 class Contact(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField(unique = True)
-    subject_message = models.TextField()
-    content_message = models.TextField()
-    sent_at = models.DateTimeField(auto_now_add=True, null=True)
-    is_read = models.BooleanField(default=True)
+    name = models.CharField(max_length=200, verbose_name="Nom")
+    email = models.EmailField(verbose_name="Adresse email")
+    phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Téléphone")
+    subject = models.CharField(max_length=200, verbose_name="Sujet du message")
+    message = models.TextField(verbose_name="Message")
+    sent_at = models.DateTimeField(auto_now_add=True, verbose_name="Envoyé à")
+    is_read = models.BooleanField(default=False, verbose_name="Lu")
 
     def __str__(self):
-        content=f"Vous avez reçu un message de : {self.email}"
-        return content
-
+        return f"Message de {self.name} ({self.email})"
+    
+    
 # mes services 
 class Service(models.Model):
     title = models.CharField(max_length = 200)
@@ -85,24 +106,29 @@ class Service(models.Model):
 ## models pour permettre à un client de demander des services
 
 class ServiceRequest(models.Model):
-    service = models.ForeignKey("Service", on_delete=models.CASCADE, related_name='request')
-    name_client = models.CharField(max_length=150)
-    email_client = models.EmailField(unique = True)
-    message = models.TextField()
-    date_requested = models.DateTimeField(auto_now_add=True, null=True)
+    service = models.ForeignKey("Service", on_delete=models.CASCADE, related_name='requests')
+    client = models.ForeignKey("Contact", on_delete=models.CASCADE, related_name='service_requests')
+    message = models.TextField(verbose_name="Message")
+    date_requested = models.DateTimeField(auto_now_add=True, verbose_name="Date de la demande")
 
     def __str__(self):
-        return f"Demande de service de {self.name_client} ({self.email_client}) pour {self.service}"
+        return f"Demande de service de {self.client.name} pour {self.service.title}"
 
 
 
 ## models pour la newsletter 
+
+
 class Newsletter(models.Model):
-    nom = models.CharField(max_length=100, verbose_name='name')
-    prenom = models.CharField(max_length=200, verbose_name = 'surname')
-    email = models.EmailField(unique=True, blank=True, null=False)
-    subscribed_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(auto_created=True)
+    nom = models.CharField(max_length=100, verbose_name="Nom")
+    prenom = models.CharField(max_length=200, verbose_name="Prénom")
+    email = models.EmailField(unique=True, verbose_name="Adresse email")
+    subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name="Date d'inscription")
+    is_active = models.BooleanField(default=True, verbose_name="Actif")
+
+    def clean(self):
+        if Newsletter.objects.filter(email=self.email).exclude(pk=self.pk).exists():
+            raise ValidationError("Cet email est déjà inscrit à la newsletter.")
 
     def __str__(self):
         return self.email

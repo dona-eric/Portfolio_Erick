@@ -18,13 +18,13 @@ admin.site.register(Service)
 
 @admin.register(ServiceRequest)
 class ServiceRequestdmin(admin.ModelAdmin):
-    list_display = ("name_client","email_client", "message", "date_requested")
-    list_filter =("name_client", "email_client", 'message')
-    search_fields = ("name_client", "email_client")
+    list_display = ("client","service", "message", "date_requested")
+    list_filter =("service", "client", 'message')
+    search_fields = ("client", "service")
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author_articles', 'date_published', 'categorie', 'content')
+    list_display = ('title', 'author_articles', 'date_published', 'categorie', 'content', 'url_blog')
     list_filter = ('author_articles', 'categorie', 'date_published')
     search_fields = ('title', 'content', 'author_articles')
     date_hierarchy = 'date_published'
@@ -33,9 +33,9 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'email', 'subscribed_at', 'is_active')
+    list_display = ('nom', 'prenom', 'email', 'subscribed_at', 'is_active')
     list_filter = ('subscribed_at', "is_active")
-    search_fields = ('email', 'nom')
+    search_fields = ('email', 'nom', "prenom")
 
 
 @admin.register(Skill)
@@ -47,7 +47,7 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'subject_message', 'content_message', 'sent_at', 'is_read')
+    list_display = ('name', 'email', 'phone', 'subject', 'message', 'sent_at', 'is_read')
     list_filter = ('is_read', 'sent_at')
-    search_fields = ('name', 'email', 'content_message', 'subject_message')
+    search_fields = ('name', 'email', 'phone', 'subject', 'message')
 

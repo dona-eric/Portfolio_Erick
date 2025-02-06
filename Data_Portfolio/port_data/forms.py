@@ -5,12 +5,13 @@ from django import forms
 class ContactForms(forms.ModelForm):
     class Meta:
         model = Contact
-        fields= ['name', "email", "subject_message", "content_message"]
+        fields= ['name', "email", "phone", "subject", "message"]
     widgets = {
         'name' :forms.TextInput(attrs={"class": "form-control"}),
         'email' : forms.EmailInput(attrs={'class': "form-control"}),
-        "subject_message": forms.TextInput(attrs={'class':"form-control"}),
-        'content_message' : forms.TextInput(attrs={"class": "form-control"})
+        'phone':forms.TextInput(attrs={"class": "form-control"}),
+        "subject": forms.TextInput(attrs={'class':"form-control"}),
+        'message' : forms.TextInput(attrs={"class": "form-control"})
     }
 
 
@@ -30,14 +31,12 @@ class ServicesForms(forms.ModelForm):
 class ServiceRequestForms(forms.ModelForm):
     class Meta:
         model = ServiceRequest
-        fields = ['name_client', "email_client", "message"]
-
-    widgets = {
-        'name_client': forms.TextInput(attrs={"placeholder": 'Nom client', "class": 'form-control'}),
-        'email_client': forms.EmailInput(attrs={"placeholder": 'Email client', "class": 'form-control'}),
-        'message': forms.Textarea(attrs={"placeholder": 'Message', "class": 'form-control'})
-    }
-
+        fields = ['service', 'client', 'message']
+        widgets = {
+            'client': forms.Select(attrs={"class": "form-control"}),  # Utilisation de Select pour ForeignKey
+            'service': forms.Select(attrs={"class": "form-control"}),  # Utilisation correcte
+            'message': forms.Textarea(attrs={"class": "form-control", "placeholder": "Votre message", "rows": 4}),
+        }
 class NewsletterForms(forms.ModelForm):
     class Meta:
         model  = Newsletter
