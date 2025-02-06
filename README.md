@@ -24,7 +24,7 @@ Je suis **KOULODJI Dona Eric**, un **data scientist** et **physicien** passionn�
 
 ## 📌 Mes Projets Principaux
 
-### 🚑 1. **Système de reservation des vols **
+### 🚋 1. **Système de reservation des vols **
 **Description** : Mettre en place une api pour la gestion des clients, rendez-vous, reservations  et services.
 - 🔹 **Tech Stack** : Django, PostgreSQL, API REST (FastAPI), Frontend interactif
 - 🔹 **Objectif** : Optimiser la gestion des vols dans les aéroports et faciliter la prise de rendez-vous en ligne.
