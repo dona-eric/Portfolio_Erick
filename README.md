@@ -66,8 +66,9 @@ Je suis **KOULODJI Dona Eric**, un **data scientist** et **physicien** passionn�
 📧 Email : **donaerickoulodji@gmail.com**  
 💼 LinkedIn : [Mon Profil](https://www.linkedin.com/in/dona-erick)  
 🌍 Portfolio : [www.erickdona.com](https://portfolio-erick.onrender.com/)  
-🐦 Twitter : [@ErickDona](https://twitter.com/ErickDona)
-💼 Medium : [@erickoulodji](https://medium.com/@koulodjiric)
+🐦 Twitter : [@ErickDona](https://twitter.com/ErickDona)  
+📜 Medium : [@erickoulodji](https://medium.com/@koulodjiric)
+
 
 Pour en savoir plus sur moi, vous visitez mon site web : [www.erickdona.com](https://portfolio-erick.onrender.com/) 
 
