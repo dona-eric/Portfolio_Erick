@@ -11,6 +11,7 @@
         <p class="text-sm text-gray-500">Comment puis-je vous assister ?</p>
     </div>
 
+<<<<<<< HEAD
     <form action="post" method="post" novalidate class="bg-white p-8 rounded-lg shadow-md mx-auto">
         {% csrf_token %}
         <div class="space-y-4">
@@ -18,6 +19,39 @@
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 text-center">Nom</label>
                 {{ form.name }}
+=======
+        <form action="" method="post" novalidate class="bg-white p-8 rounded-lg shadow-md">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <!-- Name Field -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+                    {{ form.name }}
+                </div>
+
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone N¤</label>
+                    {{ form.email }}
+                </div>
+
+
+                <!-- Message Field -->
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700">Votre Message</label>
+                    {{ form.message }}
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <input type="submit" value="Envoyer" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                </div>
+>>>>>>> 8a2aecef (reaménagement du code dans les models, les vues et les forms)
             </div>
 
             <!-- Champ Email -->

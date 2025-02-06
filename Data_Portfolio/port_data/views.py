@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.views.generic.edit import FormView
 from django.conf import settings
 import warnings
+from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -17,6 +18,12 @@ from django.views.generic import TemplateView, DetailView
 
 class HomeView(TemplateView):
     template_name = 'portfolio/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_projects'] = Project.objects.all()[:3]  # Affiche les 3 derniers projets
+        context['latest_articles'] = Article.objects.all().order_by('-date_published')[:3]  # Affiche les 3 derniers articles
+        return context
 
 
 # Page "À propos de moi"
@@ -31,23 +38,19 @@ class AboutView(DetailView):
 
 
 # Page des articles dew blog
+
 def article(request):
     blog_article = Article.objects.all().order_by('-date_published')
-    print(blog_article)
-    return render(request, 'portfolio/blog.html', {'blog_article': blog_article})
+    paginator = Paginator(blog_article, 5)  # Affiche 5 articles par page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'portfolio/blog.html', {'page_obj': page_obj})
 
 #pour une article spécifique
 
 def article_list(request, id_article):
-    try:
-        blog_list = Article.objects.get(pk=id_article)
-        return render(request, 'portfolio/blog_list.html', {'blog_list': blog_list})
-    except Article.DoesNotExist:
-        return render(request, 'portfolio/blog.html', {
-            'blog_article': Article.objects.all().order_by('-date_published'),
-            'error_message': "L'article demandé n'existe pas."
-        })
-
+    blog_list = get_object_or_404(Article, pk=id_article)
+    return render(request, 'portfolio/blog_list.html', {'blog_list': blog_list})
 
 
 # Page des compétences
@@ -58,13 +61,13 @@ def skills(request):
 
 # Page des projets
 def projects(request):
-    project = Project.objects.all()  
+    project = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
     return render(request, 'portfolio/projects.html', {'project': project})
 
 
 
-
 # Page des contacts
+
 def contacts(request):
     if request.method == 'POST':
         form = ContactForms(request.POST)
@@ -74,33 +77,27 @@ def contacts(request):
             subject_message = form.cleaned_data['subject_message']
             content_message = form.cleaned_data['content_message']
 
-            # Assemblage du message
             full_message = f"Message de {name} ({email}):\n\n{content_message}"
 
-            # Envoi de l'email à l'administrateur
             try:
                 send_mail(
-                    subject=f"Message from {name} via Contact Us: {email}",
+                    subject=f"Message from {name} via Contact Us: {subject_message}",
                     message=full_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=settings.EMAIL_LIST,  # Liste des emails de l'administrateur
+                    recipient_list=[settings.EMAIL_ADMIN],  # Utilise une liste d'emails
                     fail_silently=False,
                 )
-                # Message pour l'utilisateur
                 messages.success(request, "Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.")
-                return redirect('')  # Redirige vers la page d'accueil ou la page souhaitée
+                return redirect('home')  # Redirige vers la page d'accueil
             except Exception as e:
                 print("Erreur lors de l'envoi de l'email :", e)
                 messages.error(request, "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.")
-                return render(request, 'portfolio/contacts.html', {'form': form})
         else:
-            # Formulaire invalide
             messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
         form = ContactForms()
 
     return render(request, 'portfolio/contacts.html', {'form': form})
-
 
 # page des services
 
@@ -109,29 +106,32 @@ def services(request):
     return render(request, 'portfolio/services.html',
                   {'service_list': service})
 
+
 def services_detail(request, id_service):
-    try:
-        service_detail = Service.objects.get(pk= id_service)
-        return render(request, 'portfolio/service_detail.html', {'service_detail': service_detail})
-    except Exception as e:
-        return HttpResponse(f"Erreur survenue {str(e)}")
+    service_detail = get_object_or_404(Service, pk=id_service)
+    return render(request, 'portfolio/service_detail.html', {'service_detail': service_detail})
 
 
 
 
-def services_request(request, id_service=None):  # Paramètre service_id ajouté
-    # Récupérer le service spécifique ou retourner 404 si non trouvé
+def services_request(request, id_service=None):
     service = get_object_or_404(Service, pk=id_service) if id_service else None
     
     if request.method == 'POST':
         form = ServiceRequestForms(request.POST)
         if form.is_valid():
-            service_request = form.save(commit=False)
-            if service:
-                service_request.service = service
-            service_request.save()
-            messages.success(request, 'Votre demande de service a été envoyée avec succès!')
-            return redirect('services')
+            try:
+                service_request = form.save(commit=False)
+                if service:
+                    service_request.service = service
+                service_request.save()
+                messages.success(request, 'Votre demande de service a été envoyée avec succès!')
+                return redirect('services')
+            except Exception as e:
+                print("Erreur lors de l'enregistrement de la demande de service :", e)
+                messages.error(request, "Une erreur est survenue lors de l'enregistrement de votre demande. Veuillez réessayer.")
+        else:
+            messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
         form = ServiceRequestForms()
         if service:
@@ -142,7 +142,6 @@ def services_request(request, id_service=None):  # Paramètre service_id ajouté
         'service': service,
     }
     return render(request, 'portfolio/services_request.html', contexte)
-
 
 
 """vue pour les newsletters """
@@ -157,13 +156,13 @@ def newsletters(request):
                 email = form.cleaned_data['email']
                 validate_email(email)
 
-                # Vérifier si le mail existe déjà
-                news = Newsletter.objects.filter(email=email).first()
-                if news:
-                    messages.info(request, "Cette adresse est déjà inscrite à notre newsletter")
-                else:
-                    news = Newsletter(nom=nom, prenom=prenom, email=email)
-                    news.save()
+                # Vérifie si l'email existe déjà ou crée un nouvel abonné
+                news, created = Newsletter.objects.get_or_create(
+                    email=email,
+                    defaults={'nom': nom, 'prenom': prenom}
+                )
+
+                if created:
                     messages.success(request, f"Merci {nom} ! Vous êtes inscrit à la newsletter")
                     print("Nouvelle inscription :", news)
 
@@ -172,20 +171,28 @@ def newsletters(request):
                         'Nouvelle inscription à la newsletter',
                         f'Nom: {nom}\nPrénom: {prenom}\nEmail: {email}',
                         settings.DEFAULT_FROM_EMAIL,
-                        ['admin@exemple.com'],  # Remplace par l'email de l'administrateur
+                        [settings.EMAIL_ADMIN],  # Remplace par l'email de l'administrateur
                         fail_silently=False,
                     )
-                return redirect('')  # Assurez-vous que 'home' est défini dans vos URLs
+                else:
+                    messages.info(request, "Cette adresse est déjà inscrite à notre newsletter")
+                
+                return redirect('home')  # Redirige vers la page d'accueil
             except ValidationError:
                 messages.error(request, "Veuillez fournir une adresse email valide.")
             except Exception as e:
                 print("Erreur lors de l'inscription :", e)
                 messages.error(request, "Une erreur est survenue. Veuillez réessayer.")
         else:
-            # Formulaire invalide
             messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
         form = NewsletterForms()
+
+    return render(request, 'portfolio/newsletters.html', {
+        'form': form,
+        'title': 'Inscription à la newsletter',
+        "description": "Restez informé de nos dernières actualités"
+    })
 
     # Rendu de la page avec le formulaire
     return render(request, 'portfolio/newsletters.html', {
