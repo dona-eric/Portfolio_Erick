@@ -23,7 +23,7 @@ class Project(models.Model):
     title = models.CharField(max_length=500, verbose_name="Titre")
     description = models.TextField(verbose_name="Description")
     skills_used = models.ManyToManyField("Skill", related_name="projects", verbose_name="Compétences utilisées")
-    image_project = models.ImageField(upload_to='portfolio_projects/', blank=True, null=True, verbose_name="Image du projet")
+    image_project = models.ImageField(upload_to='media/', blank=True, null=True, verbose_name="Image du projet")
     github_link = models.URLField(blank=True, null=True, verbose_name="Lien GitHub")
     url_project = models.URLField(blank=True, null=True, verbose_name="URL du projet")
     date_project_update = models.DateTimeField(auto_now_add=True, verbose_name="Date de mise à jour")
