@@ -1,73 +1,79 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Portfolio
-Mon Portfolio
-=======
-# Portfolio Django
+# 🏆 Portfolio de Erick DONA
 
-Bienvenue sur mon portfolio Django! Ce projet présente mes compétences et réalisations en développement web avec Django.
+![Welcome](https://img.shields.io/badge/Bienvenue-Welcome-brightgreen)
 
-## Fonctionnalités
+## 👋 Bonjour et Bienvenue sur mon Portfolio !
 
-- **Authentification des utilisateurs** : Inscription, connexion et déconnexion.
-- **Gestion des projets** : Ajouter, modifier et supprimer des projets.
-- **Affichage des projets** : Voir les détails de chaque projet.
-- **Commentaires** : Les utilisateurs peuvent commenter les projets.
+Je suis **KOULODJI Dona Eric**, un **data scientist** et **physicien** passionné par l'analyse des données, l'intelligence artificielle et le développement web. Mon objectif est de concevoir des solutions innovantes et impactantes en exploitant la puissance des données et des nouvelles technologies.
 
-## Installation
+📍 Basé en Afrique, je suis ouvert aux opportunités de collaboration à l'international.
 
-1. Clonez le dépôt :
-    ```bash
-    git clone https://github.com/votre-utilisateur/portfolio-django.git
-    ```
-2. Accédez au répertoire du projet :
-    ```bash
-    cd portfolio-django
-    ```
-3. Créez un environnement virtuel :
-    ```bash
-    python -m venv env
-    ```
-4. Activez l'environnement virtuel :
-    - Sur Windows :
-        ```bash
-        .\env\Scripts\activate
-        ```
-    - Sur macOS/Linux :
-        ```bash
-        source env/bin/activate
-        ```
-5. Installez les dépendances :
-    ```bash
-    pip install -r requirements.txt
-    ```
-6. Appliquez les migrations :
-    ```bash
-    python manage.py migrate
-    ```
-7. Démarrez le serveur de développement :
-    ```bash
-    python manage.py runserver
-    ```
+---
 
-## Utilisation
+## 🎯 À propos de moi
 
-- Accédez à `http://127.0.0.1:8000` dans votre navigateur pour voir le site en action.
-- Inscrivez-vous et commencez à ajouter vos projets.
+🔹 **Nom & Prénom** : KOULODJI D. Eric
+🔹 **Profession** : Data Scientist | Physicien | Développeur Django  
+🔹 **Compétences clés** : Machine Learning, Deep Learning, NLP, Django, FastAPI, Streamlit, Déploiement de modèles, Automatisation des tâches, Recommandation, Séries temporelles  
+🔹 **Expérience** : Plusieurs projets réalisés dans l'analyse de données, la modélisation et la mise en production de modèles IA
+🔹 **Langages de programmation** : Python, SQL, JavaScript, HTML/CSS  
+🔹 **Frameworks et outils** : Django, FastAPI, Streamlit, MLflow, Apache Airflow, Docker, PostgreSQL, Pandas, TensorFlow, Scikit-Learn, Ubuntu, Linux
+🔹 **Objectif professionnel** : Concevoir des solutions intelligentes basées sur les données pour répondre à des problématiques réelles et améliorer la prise de décision.
 
-## Technologies utilisées
+---
 
-- Django
-- Bootstrap
-- SQLite (par défaut)
+## 📌 Mes Projets Principaux
 
-## Auteur
+### 🚑 1. **Système de reservation des vols **
+**Description** : Mettre en place une api pour la gestion des clients, rendez-vous, reservations  et services.
+- 🔹 **Tech Stack** : Django, PostgreSQL, API REST (FastAPI), Frontend interactif
+- 🔹 **Objectif** : Optimiser la gestion des vols dans les aéroports et faciliter la prise de rendez-vous en ligne.
 
-- **Votre Nom** - [Votre Profil GitHub](https://github.com/votre-utilisateur)
+### 🔍 2. **Scoring de Risque (German Credit Dataset)**
+**Description** : Un modèle de scoring de crédit basé sur l'apprentissage automatique pour prédire le risque des clients.
+- 🔹 **Tech Stack** : Python, Scikit-Learn, FastAPI, Streamlit
+- 🔹 **Objectif** : Évaluer le risque de défaut de paiement des clients à partir de données financières.
 
-## Licence
+### 🍽️ 3. **Système de Recommandation pour un Restaurant (Défi Zindi)**
+**Description** : Modèle de recommandation prédictif pour estimer le restaurant où un client commandera probablement.
+- 🔹 **Tech Stack** : Filtrage collaboratif, Pandas, Scikit-Learn
+- 🔹 **Objectif** : Augmenter la fidélisation client et améliorer l'expérience utilisateur.
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
->>>>>>> 2293bd0 (First commit)
-=======
->>>>>>> afe2054 (reaffectation des commits)
+### 📊 4. **Analyse de Satisfaction Client (NLP & Word2Vec)**
+**Description** : Une analyse approfondie des avis clients en utilisant le traitement du langage naturel (NLP).
+- 🔹 **Tech Stack** : NLTK, Word2Vec, Matplotlib, FastAPI
+- 🔹 **Objectif** : Comprendre les attentes des clients et améliorer la qualité des services.
+
+### 🏬 5. **Système de Recommandation pour l'E-Commerce**
+**Description** : Un moteur de recommandation basé sur le dataset "Online Retail" de Kaggle.
+- 🔹 **Tech Stack** : Filtrage collaboratif, Scikit-Learn, Pandas, Streamlit
+- 🔹 **Objectif** : Proposer des produits complémentaires aux clients pour augmenter le panier moyen.
+
+---
+
+## 🚀 Ce que je peux faire pour vous
+✅ Développer des solutions de **machine learning** et **deep learning**  
+✅ Construire des **API** avec Django et FastAPI  
+✅ Automatiser des pipelines avec **MLflow & Airflow**  
+✅ Mettre en place un **dashboard interactif** avec Streamlit  
+✅ Déployer des modèles ML sur **serveurs & cloud**  
+✅ Construire des **systèmes de recommandation**  
+✅ Analyser des **données textuelles (NLP)** et des **séries temporelles**
+
+---
+
+## 📫 Me Contacter
+📧 Email : **donaerickoulodji@gmail.com**  
+💼 LinkedIn : [Mon Profil](https://www.linkedin.com/in/dona-erick)  
+🌍 Portfolio : [www.erickdona.com](https://portfolio-erick.onrender.com/)  
+🐦 Twitter : [@ErickDona](https://twitter.com/ErickDona)
+💼 Medium : [@erickoulodji](https://medium.com/@koulodjiric)
+
+Pour en savoir plus sur moi, vous visitez mon site web : [www.erickdona.com](https://portfolio-erick.onrender.com/) 
+
+---
+
+## 🔥 Let's Work Together!
+
+Je suis toujours à la recherche de **nouvelles opportunités**, de **collaborations** et de **défis techniques** passionnants. Que vous soyez une entreprise, une startup ou un recruteur, n'hésitez pas à me contacter. 🚀
+
