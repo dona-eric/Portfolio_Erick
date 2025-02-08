@@ -17,19 +17,23 @@ from dotenv import load_dotenv
 import dj_database_url
 load_dotenv()
 
+import environ
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # settings.py
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Exemple avec Gmail
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'donaerickoulodji@gmail.com'  # Ton email
-EMAIL_HOST_PASSWORD = 'Einstein51@#'  # Mot de passe de l'email
-DEFAULT_FROM_EMAIL = 'donaerickoulodji@gmail.com'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_ADMIN = os.getenv('EMAIL_ADMIN')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -176,6 +180,8 @@ MEDIA_ROOT = BASE_DIR.joinpath("media/")
 AUTH_MODEL_USER = "Authentification.User"
 
 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 #password = "Endrick@#"
 #encoded_password = urllib.parse.quote(password)

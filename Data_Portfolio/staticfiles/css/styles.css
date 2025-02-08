@@ -42,8 +42,7 @@
 /* Styles pour les éléments collapsibles sur mobile */
 .collapse {
   background-color:; /* Couleur de fond pour le menu déroulant */
-} */
-
+}
 /* Espacement et alignement */
 .container-fluid {
   display: flex;
@@ -213,10 +212,9 @@ a.btn-learn-more:hover {
 }
 
 /* Section À propos */
-/*.about-section {
+.about-section {
   padding: 5px;
 }
-*/
 .about-section h2 {
   text-align: center; /* Centrer le titre de la section À propos */
 }
