@@ -194,13 +194,6 @@ def newsletters(request):
         "description": "Restez informé de nos dernières actualités"
     })
 
-    # Rendu de la page avec le formulaire
-    return render(request, 'portfolio/newsletters.html', {
-        'form': form,
-        'title': 'Inscription à la newsletter',
-        "description": "Restez informé de nos dernières actualités"
-    })
-
 
             
 
