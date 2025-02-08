@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 import dj_database_url
 load_dotenv()
 
-import environ
+#import environ
 
 
 
@@ -180,8 +180,8 @@ MEDIA_ROOT = BASE_DIR.joinpath("media/")
 AUTH_MODEL_USER = "Authentification.User"
 
 
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+#env = environ.Env()
+#environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 #password = "Endrick@#"
 #encoded_password = urllib.parse.quote(password)
