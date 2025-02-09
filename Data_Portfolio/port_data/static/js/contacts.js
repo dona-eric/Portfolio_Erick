@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         alert('Merci d\'avoir rempli le formulaire ! Nous vous contacterons bientôt.');
-        form.reset(); // Réinitialise le formulaire après soumission
+        // form.reset(); // Réinitialise le formulaire après soumission
     });
 });
 

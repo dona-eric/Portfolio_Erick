@@ -10,13 +10,13 @@
         <p class="text-lg text-gray-700">Pour toute demande, veuillez remplir le formulaire ci-dessous.</p>
         <p class="text-sm text-gray-500">Comment puis-je vous assister ?</p>
     </div>
-    <form action="post" method="post" novalidate class="bg-white p-8 rounded-lg shadow-md mx-auto">
+    <form method="POST" action="{% url 'contact-us' %}" novalidate class="bg-white p-8 rounded-lg shadow-md mx-auto">
         {% csrf_token %}
         <div class="space-y-4">
             <!-- Champ Nom -->
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 text-center">Name</label>
-                {{ form.name }}
+                {{ form.nom }}
             </div>
         
             <div>

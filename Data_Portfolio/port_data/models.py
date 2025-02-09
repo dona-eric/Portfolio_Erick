@@ -83,7 +83,8 @@ class Article(models.Model):
 to create it """
 
 class Contact(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Nom")
+    nom = models.CharField(max_length=200, verbose_name="Nom")
+    prenom= models.CharField(max_length=200, verbose_name="Prénom")
     email = models.EmailField(verbose_name="Adresse email")
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Téléphone")
     subject = models.CharField(max_length=200, verbose_name="Sujet du message")
@@ -92,7 +93,7 @@ class Contact(models.Model):
     is_read = models.BooleanField(default=False, verbose_name="Lu")
 
     def __str__(self):
-        return f"Message de {self.name} ({self.email})"
+        return f"Message de {self.nom} ({self.email})"
     
     
 # mes services 
