@@ -1,5 +1,5 @@
 import requests
-import json
+import json, os
 
 MAILTRAP_API_TOKEN = "8d73f9afe66d1ae3b08a823808729e92"
 

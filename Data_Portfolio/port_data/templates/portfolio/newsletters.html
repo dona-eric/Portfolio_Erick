@@ -8,15 +8,15 @@
             <p class="text-gray-600">Restez informé de nos dernières actualités et mises à jour</p>
         </div>
 
-        {% if messages %}
+        <!--{% if messages %}
             {% for message in messages %}
                 <div class="mb-4 p-4 rounded-md {% if message.tags == 'success' %}bg-green-100 text-green-700{% elif message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-blue-100 text-blue-700{% endif %}">
                     {{ message }}
                 </div>
             {% endfor %}
-        {% endif %}
+        {% endif %} -->
 
-        <form method="POST" class="space-y-6">
+        <form method="POST"  action="{% url 'news' %}" class="space-y-6">
             {% csrf_token %}
             
             <div>

@@ -16,6 +16,12 @@ import urllib.parse
 from dotenv import load_dotenv
 import dj_database_url
 load_dotenv()
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s %(levelname)s %(message)s',
+)
 
 #import environ
 
@@ -26,29 +32,58 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # settings.py
 
-EMAIL_HOST = os.getenv("EMAIL_HOST")
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-EMAIL_PORT = os.getenv("EMAIL_PORT")
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+ADMIN_EMAIL='koulodjieric16@gmail.com'
+SECRET_KEY='django-insecure-6)$@l81a-k7w3#z^dnhxj79+g$mv%(lr62ua5+b71i@j(9apt7'
+
+LOGIN_URL='login'
+LOGIN_REDIRECT_URL='home'
+DEBUG=True
+EMAIL_LIST=['donaerickoulodji@gmail.com', "koulodjieric16@gmail.com"]
+
+USER_ID="koulodjiric"
+#ALLOWED_HOSTS=.onrender.com
+
+# BASE DE DONNÉES POSTGRESQL
+DATABASE_URL="postgresql://eric:VhhDWm7XIhn1mhePJT4lYbMwqjUcBmgY@dpg-cu2fhbqj1k6c73ckj120-a.oregon-postgres.render.com/portfoliodb_h8y3"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'c5e9d61921d033'
+EMAIL_HOST_PASSWORD = '********86bd'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  # Sécurisation de la connexion
+#EMAIL_USE_SSL = False  # Sécurisation de la connexion
+DEFAULT_FROM_EMAIL = "koulodjieric16@gmail.com"
+EMAIL_ADMIN = "donaerickoulodji@gmail.com"
+
+
+MAILTRAP_API_TOKEN = "8d73f9afe66d1ae3b08a823808729e92"
+
+
+
+#EMAIL_HOST = os.getenv("EMAIL_HOST")
+#EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+#EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+#EMAIL_PORT = os.getenv("EMAIL_PORT")
+#EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
 #EMAIL_USE_SSL= os.getenv("EMAIL_USE_SSL")
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-EMAIL_ADMIN = os.getenv('EMAIL_ADMIN')
+#DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+#EMAIL_ADMIN = os.getenv('EMAIL_ADMIN')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+#SECRET_KEY = os.getenv("SECRET_KEY")
 
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
+#ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
 
-DEBUG = os.getenv("DEBUG")
+#DEBUG = os.getenv("DEBUG")
 
-LOGIN_URL, LOGIN_REDIRECT_URL = os.getenv("LOGIN_URL"), os.getenv("LOGIN_REDIRECT_URL")
+#LOGIN_URL, LOGIN_REDIRECT_URL = os.getenv("LOGIN_URL"), os.getenv("LOGIN_REDIRECT_URL")
 
-EMAIL_LIST = os.getenv("EMAIL_LIST")
+#EMAIL_LIST = os.getenv("EMAIL_LIST")
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
@@ -105,7 +140,7 @@ WSGI_APPLICATION = "Data_Portfolio.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
+        default=DATABASE_URL,
         conn_max_age=600
     )
 }

@@ -39,13 +39,12 @@ class ServiceRequestForms(forms.ModelForm):
         }
 class NewsletterForms(forms.ModelForm):
     class Meta:
-        model  = Newsletter
-        fields = ['nom', 'prenom', "email"]
+        model = Newsletter
+        fields = ['nom', 'prenom', 'email']
 
-    widgets = {
-        'nom': forms.TextInput(attrs={'placeholder': "Nom", "class": "form-control"}),
-        'prenom': forms.TextInput(attrs={'placeholder': "prenom", "class": "form-control"}),
-        'email': forms.EmailInput(attrs={'placeholder': "Email", "class": "form-control"})
-    }
-
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if Newsletter.objects.filter(email=email).exists():
+            raise forms.ValidationError("Cet email est déjà inscrit à la newsletter.")
+        return email
 

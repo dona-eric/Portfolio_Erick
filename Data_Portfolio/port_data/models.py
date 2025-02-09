@@ -126,10 +126,6 @@ class Newsletter(models.Model):
     subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name="Date d'inscription")
     is_active = models.BooleanField(default=True, verbose_name="Actif")
 
-    def clean(self):
-        if Newsletter.objects.filter(email=self.email).exclude(pk=self.pk).exists():
-            raise ValidationError("Cet email est déjà inscrit à la newsletter.")
-
     def __str__(self):
         return self.email
     
