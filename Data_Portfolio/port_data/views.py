@@ -6,7 +6,7 @@ from django.core.validators import validate_email
 from django.urls import reverse
 from django.views.generic.edit import FormView
 from django.conf import settings
-import warnings
+import warnings,requests, json, os
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
@@ -146,7 +146,70 @@ def services_request(request, id_service=None):
 
 """vue pour les newsletters """
 
+
+
+MAILTRAP_API_TOKEN = os.getenv("MAILTRAP_API_TOKEN")
+
+def send_email_via_mailtrap(nom, prenom, email):
+    url = "https://sandbox.api.mailtrap.io/api/send/3448761"
+
+    headers = {
+        "Authorization": f"Bearer {MAILTRAP_API_TOKEN}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "from": {"email": settings.DEFAULT_FROM_EMAIL, "name": "Mon Site"},
+        "to": [{"email": settings.EMAIL_ADMIN}],  # Email Admin
+        "subject": "Nouvelle inscription à la newsletter",
+        "text": f"Nom: {nom}\nPrénom: {prenom}\nEmail: {email}"
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    return response.status_code == 200
+
 def newsletters(request):
+    if request.method == 'POST':
+        form = NewsletterForms(request.POST)
+        if form.is_valid():
+            try:
+                nom = form.cleaned_data['nom']
+                prenom = form.cleaned_data['prenom']
+                email = form.cleaned_data['email']
+
+                # Vérifie si l'email existe déjà
+                news, created = Newsletter.objects.get_or_create(
+                    email=email,
+                    defaults={'nom': nom, 'prenom': prenom}
+                )
+
+                if created:
+                    messages.success(request, f"Merci {nom} ! Vous êtes inscrit à la newsletter")
+                    print("Nouvelle inscription :", news)
+
+                    # Envoi d'un email avec Mailtrap API
+                    if send_email_via_mailtrap(nom, prenom, email):
+                        print("✅ Email envoyé à l'admin avec succès !")
+                    else:
+                        print("❌ Erreur lors de l'envoi de l'email.")
+
+                else:
+                    messages.info(request, "Cette adresse est déjà inscrite à notre newsletter")
+
+                return redirect('home')
+
+            except Exception as e:
+                print("Erreur lors de l'inscription :", e)
+                messages.error(request, "Une erreur est survenue. Veuillez réessayer.")
+
+    else:
+        form = NewsletterForms()
+
+    return render(request, 'portfolio/newsletters.html', {
+        'form': form,
+        'title': 'Inscription à la newsletter',
+        "description": "Restez informé de nos dernières actualités"
+    })
+
+#def newsletters(request):
     if request.method == 'POST':
         form = NewsletterForms(request.POST)
         if form.is_valid():
