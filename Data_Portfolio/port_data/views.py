@@ -70,19 +70,22 @@ def projects(request):
 
 def contacts(request):
     if request.method == 'POST':
+        print("✔ Django a reçu une requête POST !")  # Debugging
         form = ContactForms(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
+            nom = form.cleaned_data['nom']
+            prenom = form.cleaned_data['prenom']
             email = form.cleaned_data['email']
-            subject_message = form.cleaned_data['subject_message']
-            content_message = form.cleaned_data['content_message']
+            phone = form.cleaned_data['phone']
+            subject_message = form.cleaned_data['subject']
+            content_message = form.cleaned_data['message']
 
-            full_message = f"Message de {name} ({email}):\n\n{content_message}"
+            full_message = f"Message de {nom} ({email}):\n\n{content_message}"
 
             try:
                 send_mail(
-                    subject=f"Message from {name} via Contact Us: {subject_message}",
-                    message=full_message,
+                    subject=f"Message from {nom} via Contact Us: {subject_message}",
+                    message=content_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.EMAIL_ADMIN],  # Utilise une liste d'emails
                     fail_silently=False,
@@ -271,31 +274,31 @@ def newsletters(request):
 #class FormValidationMixin:
 
     ## mixin pour la validation des formulaires avec gestion des messages
-    def form_valid(self, form):
-        try:
-            self.object = form.save()
-            messages.success(self.request, self.get_success_message())
-            return HttpResponseRedirect(self.get_success_url())
-        except Exception as e:
-            messages.error(
-                self.request,
-                f"Une erreur est survenue: {str(e)}"
-            )
-            return self.form_invalid(form)
+    #def form_valid(self, form):
+     #   try:
+      #      self.object = form.save()
+       #     messages.success(self.request, self.get_success_message())
+        #    return HttpResponseRedirect(self.get_success_url())
+        #except Exception as e:
+         #   messages.error(
+          #      self.request,
+           #     f"Une erreur est survenue: {str(e)}"
+            #)
+            #return self.form_invalid(form)
         
 
-    def form_invalid(self, form):
-        messages.error(
-            self.request,
-            "Veuillez corriger les erreurs dans le formulaire"
-        )
-        return super().form_invalid(form)
+    #def form_invalid(self, form):
+     #   messages.error(
+      #      self.request,
+       #     "Veuillez corriger les erreurs dans le formulaire"
+        #)
+        #return super().form_invalid(form)
     
-    def get_success_message(self):
-        return f"Vos modifications ont été prises en compte !"
+   # def get_success_message(self):
+    #    return f"Vos modifications ont été prises en compte !"
 
-    def get_success_url(self):
-        return reverse('home')
+    #def get_success_url(self):
+     #   return reverse('home')
 
 
 #warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
