@@ -148,7 +148,7 @@ def services_request(request, id_service=None):
 
 
 
-MAILTRAP_API_TOKEN = os.getenv("MAILTRAP_API_TOKEN")
+MAILTRAP_API_TOKEN = settings.MAILTRAP_API_TOKEN
 
 def send_email_via_mailtrap(nom, prenom, email):
     url = "https://sandbox.api.mailtrap.io/api/send/3448761"
@@ -168,12 +168,15 @@ def send_email_via_mailtrap(nom, prenom, email):
 
 def newsletters(request):
     if request.method == 'POST':
+        print("✔ Django a reçu une requête POST !")  # Debugging
         form = NewsletterForms(request.POST)
         if form.is_valid():
+            print("✔ Formulaire valide !")  # Debugging
             try:
                 nom = form.cleaned_data['nom']
                 prenom = form.cleaned_data['prenom']
                 email = form.cleaned_data['email']
+                print(f"✔ Formulaire validé : {nom}, {prenom}, {email}")
 
                 # Vérifie si l'email existe déjà
                 news, created = Newsletter.objects.get_or_create(
@@ -182,22 +185,24 @@ def newsletters(request):
                 )
 
                 if created:
+                    print("✔ Nouvel inscrit :", news)
                     messages.success(request, f"Merci {nom} ! Vous êtes inscrit à la newsletter")
-                    print("Nouvelle inscription :", news)
 
                     # Envoi d'un email avec Mailtrap API
-                    if send_email_via_mailtrap(nom, prenom, email):
-                        print("✅ Email envoyé à l'admin avec succès !")
+                    mail_sent = send_email_via_mailtrap(nom, prenom, email)
+                    if mail_sent:
+                        print("✅ Email envoyé avec succès !")
                     else:
                         print("❌ Erreur lors de l'envoi de l'email.")
 
                 else:
+                    print("⚠ Email déjà inscrit :", email)
                     messages.info(request, "Cette adresse est déjà inscrite à notre newsletter")
 
                 return redirect('home')
 
             except Exception as e:
-                print("Erreur lors de l'inscription :", e)
+                print("🚨 Erreur lors de l'inscription :", e)
                 messages.error(request, "Une erreur est survenue. Veuillez réessayer.")
 
     else:
@@ -208,6 +213,7 @@ def newsletters(request):
         'title': 'Inscription à la newsletter',
         "description": "Restez informé de nos dernières actualités"
     })
+
 
 #def newsletters(request):
     if request.method == 'POST':
@@ -262,7 +268,7 @@ def newsletters(request):
 
 """ Une fonction qui valide tout les formulaires de la base avec get ou post"""
 
-class FormValidationMixin:
+#class FormValidationMixin:
 
     ## mixin pour la validation des formulaires avec gestion des messages
     def form_valid(self, form):
@@ -292,4 +298,4 @@ class FormValidationMixin:
         return reverse('home')
 
 
-warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
+#warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
