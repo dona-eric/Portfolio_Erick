@@ -32,32 +32,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # settings.py
 
-ADMIN_EMAIL='koulodjieric16@gmail.com'
-SECRET_KEY='django-insecure-6)$@l81a-k7w3#z^dnhxj79+g$mv%(lr62ua5+b71i@j(9apt7'
+ADMIN_EMAIL=os.getenv("ADMIN_EMAIL")
+SECRET_KEY=os.getenv("SECRET_KEY")
 
-LOGIN_URL='login'
-LOGIN_REDIRECT_URL='home'
-DEBUG=True
-EMAIL_LIST=['donaerickoulodji@gmail.com', "koulodjieric16@gmail.com"]
+LOGIN_URL=os.getenv("LOGIN_URL")
+LOGIN_REDIRECT_URL=os.getenv("LOGIN_REDIRECT_URL")
+DEBUG=os.getenv("DEBUG")
+EMAIL_LIST=os.getenv("EMAIL_LIST")
 
-USER_ID="koulodjiric"
+USER_ID=os.getenv("USER_ID")
 #ALLOWED_HOSTS=.onrender.com
 
 # BASE DE DONNÉES POSTGRESQL
-DATABASE_URL="postgresql://eric:VhhDWm7XIhn1mhePJT4lYbMwqjUcBmgY@dpg-cu2fhbqj1k6c73ckj120-a.oregon-postgres.render.com/portfoliodb_h8y3"
+DATABASE_URL=os.getenv("DATABASE_URL")
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'c5e9d61921d033'
-EMAIL_HOST_PASSWORD = '********86bd'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True  # Sécurisation de la connexion
+# configuration du serveur smtp pour mailtrip using in production
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS") # Sécurisation de la connexion
 #EMAIL_USE_SSL = False  # Sécurisation de la connexion
-DEFAULT_FROM_EMAIL = "koulodjieric16@gmail.com"
-EMAIL_ADMIN = "donaerickoulodji@gmail.com"
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+EMAIL_ADMIN = os.getenv("EMAIL_ADMIN")
 
-
-MAILTRAP_API_TOKEN = "8d73f9afe66d1ae3b08a823808729e92"
+## apis of mailtrap
+MAILTRAP_API_TOKEN = os.getenv('MAILTRAP_API_TOKEN')
 
 
 
@@ -75,24 +76,20 @@ MAILTRAP_API_TOKEN = "8d73f9afe66d1ae3b08a823808729e92"
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.getenv("SECRET_KEY")
 
-#ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
-
-#DEBUG = os.getenv("DEBUG")
 
 #LOGIN_URL, LOGIN_REDIRECT_URL = os.getenv("LOGIN_URL"), os.getenv("LOGIN_REDIRECT_URL")
 
 #EMAIL_LIST = os.getenv("EMAIL_LIST")
 # SECURITY WARNING: don't run with debug turned on in production!
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp-relay.brevo.com"  # Serveur SMTP de Brevo
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "855728001@smtp-brevo.com"  # Remplace par ton email Brevo
-EMAIL_HOST_PASSWORD = "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"  # Remplace par le mot de passe de l'application
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = "donaerickoulodji@gmail.com"  # Ton email d'admin pour recevoir les messages
+#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+#EMAIL_HOST = "smtp-relay.brevo.com"  # Serveur SMTP de Brevo
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST_USER = "855728001@smtp-brevo.com"  # Remplace par ton email Brevo
+#EMAIL_HOST_PASSWORD = "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"  # Remplace par le mot de passe de l'application
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+#EMAIL_ADMIN = "donaerickoulodji@gmail.com"  # Ton email d'admin pour recevoir les messages
 
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.65.42", ".onrender.com"]
@@ -234,11 +231,3 @@ MEDIA_ROOT = BASE_DIR.joinpath("media/")
 # Authentification user
 
 AUTH_MODEL_USER = "Authentification.User"
-
-
-#env = environ.Env()
-#environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
-
-#password = "Endrick@#"
-#encoded_password = urllib.parse.quote(password)
-#print(encoded_password)
