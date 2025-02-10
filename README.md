@@ -4,20 +4,21 @@
 
 ## 👋 Bonjour et Bienvenue sur mon Portfolio !
 
-Je suis **KOULODJI Dona Eric**, un **data scientist** et **physicien** passionné par l'analyse des données, l'intelligence artificielle et le développement web. Mon objectif est de concevoir des solutions innovantes et impactantes en exploitant la puissance des données et des nouvelles technologies.
+Je suis **KOULODJI Dona Eric**, un **Data scientist, Developpeur Django** et **Physicien Théoricien** passionné par l'analyse des données, l'intelligence artificielle et le développement web. Mon objectif est de concevoir des solutions innovantes et impactantes en exploitant la puissance des données et des nouvelles technologies et d'aider aussi les entreprises à donner un sens à leurs données produites afin de faire plus de chiffres d'affaires. ..
 
-📍 Basé en Afrique, je suis ouvert aux opportunités de collaboration à l'international.
+📍 Basé en Afrique,précisément au Bénin, je suis ouvert aux opportunités de collaboration à l'international.
 
 ---
 
 ## 🎯 À propos de moi
 
-🔹 **Nom & Prénom** : KOULODJI D. Eric
-🔹 **Profession** : Data Scientist | Physicien | Développeur Django  
-🔹 **Compétences clés** : Machine Learning, Deep Learning, NLP, Django, FastAPI, Streamlit, Déploiement de modèles, Automatisation des tâches, Recommandation, Séries temporelles  
-🔹 **Expérience** : Plusieurs projets réalisés dans l'analyse de données, la modélisation et la mise en production de modèles IA
-🔹 **Langages de programmation** : Python, SQL, JavaScript, HTML/CSS  
-🔹 **Frameworks et outils** : Django, FastAPI, Streamlit, MLflow, Apache Airflow, Docker, PostgreSQL, Pandas, TensorFlow, Scikit-Learn, Ubuntu, Linux
+    🔹 **Nom & Prénom** : KOULODJI D. Eric
+    🔹 **Profession** : Data Scientist | Physicien | Développeur Django  
+    🔹 **Compétences clés** : Machine Learning, Deep Learning, NLP, Django, FastAPI, Streamlit, Déploiement de modèles, Automatisation des tâches, Recommandation, Séries temporelles  
+    🔹 **Expérience** : Plusieurs projets réalisés dans l'analyse de données, la modélisation et la mise en production de modèles IA
+    🔹 **Langages de programmation** : Python, SQL, JavaScript, HTML/CSS  
+    🔹 **Frameworks et outils** : Django, FastAPI, Streamlit, MLflow, Apache Airflow, Docker, PostgreSQL, Pandas, TensorFlow, Scikit-Learn, Ubuntu, Linux .
+    
 🔹 **Objectif professionnel** : Concevoir des solutions intelligentes basées sur les données pour répondre à des problématiques réelles et améliorer la prise de décision.
 
 ---
