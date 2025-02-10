@@ -47,7 +47,7 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('nom','prenom', 'email', 'phone', 'subject', 'message', 'sent_at', 'is_read')
+    list_display = ('name','email','subject', 'message', 'sent_at', 'is_read')
     list_filter = ('is_read', 'sent_at')
-    search_fields = ('name', 'prenom','email', 'phone', 'subject', 'message')
+    search_fields = ('name','email', 'subject', 'message')
 
