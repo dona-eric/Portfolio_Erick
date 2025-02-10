@@ -5,12 +5,10 @@ from django import forms
 class ContactForms(forms.ModelForm):
     class Meta:
         model = Contact
-        fields= ['nom', "prenom", "email", "phone", "subject", "message"]
+        fields= ['name', "email", "subject", "message"]
     widgets = {
-        'nom' :forms.TextInput(attrs={"class": "form-control"}),
-        'prenom': forms.TextInput(attrs={"class": "form-control"}),
+        'name' :forms.TextInput(attrs={"class": "form-control"}),
         'email' : forms.EmailInput(attrs={'class': "form-control"}),
-        'phone':forms.TextInput(attrs={"class": "form-control"}),
         "subject": forms.TextInput(attrs={'class':"form-control"}),
         'message' : forms.TextInput(attrs={"class": "form-control"})
     }

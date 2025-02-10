@@ -85,6 +85,14 @@ MAILTRAP_API_TOKEN = "8d73f9afe66d1ae3b08a823808729e92"
 
 #EMAIL_LIST = os.getenv("EMAIL_LIST")
 # SECURITY WARNING: don't run with debug turned on in production!
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp-relay.brevo.com"  # Serveur SMTP de Brevo
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "855728001@smtp-brevo.com"  # Remplace par ton email Brevo
+EMAIL_HOST_PASSWORD = "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"  # Remplace par le mot de passe de l'application
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = "donaerickoulodji@gmail.com"  # Ton email d'admin pour recevoir les messages
 
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.65.42", ".onrender.com"]
@@ -141,9 +149,21 @@ WSGI_APPLICATION = "Data_Portfolio.wsgi.application"
 DATABASES = {
     'default': dj_database_url.config(
         default=DATABASE_URL,
-        conn_max_age=600
+       conn_max_age=600
     )
 }
+
+#DATABASES = {
+ #   "default":
+  #      {
+   #         "ENGINE":"django.db.backends.postgresql",
+    #        "NAME":'gptdb',
+     #       'USER':"erick",
+      #      'PASSWORD':"Endrick@#",
+       #     'HOST':"127.0.0.1",
+        #    'PORT':'5432'
+        #}
+#}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

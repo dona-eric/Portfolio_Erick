@@ -69,29 +69,45 @@ def projects(request):
 # Page des contacts
 
 def contacts(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         print("✔ Django a reçu une requête POST !")  # Debugging
         form = ContactForms(request.POST)
         if form.is_valid():
-            nom = form.cleaned_data['nom']
-            prenom = form.cleaned_data['prenom']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            subject_message = form.cleaned_data['subject']
-            content_message = form.cleaned_data['message']
-
-            full_message = f"Message de {nom} ({email}):\n\n{content_message}"
-
+            print("✔ Formulaire valide !")  # Debugging
             try:
-                send_mail(
-                    subject=f"Message from {nom} via Contact Us: {subject_message}",
-                    message=content_message,
+                nom = form.cleaned_data["name"]
+                email = form.cleaned_data["email"]
+                subject_message = form.cleaned_data["subject"]
+                content_message = form.cleaned_data["message"]
+                print(f"✔ Formulaire validé : {nom}, {email}, {content_message}")
+
+                # Email à l'admin
+                full_message = f"Message de {nom} ({email}):\n\n{content_message}"
+                print(full_message)
+                mail_admin = send_mail(
+                    subject=f"📩 Nouveau message de {nom} : {subject_message}",
+                    message=full_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.EMAIL_ADMIN],  # Utilise une liste d'emails
+                    recipient_list=[settings.EMAIL_ADMIN],  # Ton email admin
                     fail_silently=False,
                 )
-                messages.success(request, "Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.")
-                return redirect('home')  # Redirige vers la page d'accueil
+
+                # Email de confirmation à l'utilisateur
+                mail_user = send_mail(
+                    subject="📩 Votre message a bien été reçu !",
+                    message=f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe.",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],  # Email du visiteur
+                    fail_silently=False,
+                )
+
+                if mail_admin and mail_user:
+                    print("✅ Emails envoyés avec succès !")
+                    messages.success(request, "Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.")
+                else:
+                    print("❌ Erreur lors de l'envoi des emails.")
+
+                return redirect("home")  # Redirige vers la page d'accueil
             except Exception as e:
                 print("Erreur lors de l'envoi de l'email :", e)
                 messages.error(request, "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.")
@@ -100,9 +116,9 @@ def contacts(request):
     else:
         form = ContactForms()
 
-    return render(request, 'portfolio/contacts.html', {'form': form})
+    return render(request, "portfolio/contacts.html", {"form": form})
 
-# page des services
+# vues pour les services
 
 def services(request):
     service =  Service.objects.all()
