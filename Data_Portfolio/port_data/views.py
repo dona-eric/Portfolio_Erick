@@ -14,6 +14,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView
 # Page d'accueil
 
+
+
+warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
+
 #login_required
 
 class HomeView(TemplateView):
@@ -165,9 +169,7 @@ def services_request(request, id_service=None):
 
 """vue pour les newsletters """
 
-
-
-MAILTRAP_API_TOKEN = settings.MAILTRAP_API_TOKEN
+MAILTRAP_API_TOKEN = os.getenv("MAILTRAP_API_TOKEN")
 
 def send_email_via_mailtrap(nom, prenom, email):
     url = "https://sandbox.api.mailtrap.io/api/send/3448761"
@@ -177,8 +179,8 @@ def send_email_via_mailtrap(nom, prenom, email):
         "Content-Type": "application/json"
     }
     data = {
-        "from": {"email": settings.DEFAULT_FROM_EMAIL, "name": "Mon Site"},
-        "to": [{"email": settings.EMAIL_ADMIN}],  # Email Admin
+        "from": {"email": settings.EMAIL_ADMIN, "name": "DataWorld"},
+        "to": [{"email": email}],  # Email Admin
         "subject": "Nouvelle inscription à la newsletter",
         "text": f"Nom: {nom}\nPrénom: {prenom}\nEmail: {email}"
     }
@@ -315,6 +317,3 @@ def newsletters(request):
 
     #def get_success_url(self):
      #   return reverse('home')
-
-
-#warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
