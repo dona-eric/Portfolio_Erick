@@ -124,3 +124,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.head.appendChild(style);
+
+
+// contacts.js
+const formObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+        }
+    });
+});
+
+// Observer pour le formulaire
+const form = document.querySelector('.contact-form');
+formObserver.observe(form);
+
+// Observers pour les groupes de formulaire
+document.querySelectorAll('.form-group').forEach((group, index) => {
+    group.style.transitionDelay = `${index * 0.1}s`;
+    formObserver.observe(group);
+});
+
+// Animation au focus
+document.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('focus', () => {
+        input.parentElement.querySelector('.form-label').style.transform = 'translateY(0)';
+        input.parentElement.querySelector('.form-label').style.opacity = '1';
+    });
+});

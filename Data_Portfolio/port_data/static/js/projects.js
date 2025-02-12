@@ -107,3 +107,16 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// projects.js
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+        }
+    });
+});
+
+document.querySelectorAll('.project-card').forEach((card) => {
+    observer.observe(card);
+});
