@@ -533,20 +533,13 @@
 /* === Navbar Styles === */
 /* styles.css */
 /* Styles de la barre de navigation */
-.navbar {
-  background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
-  padding: 1rem 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  z-index: 100;
-}
-
 .navbar-brand {
-  color: #fff;
-  font-size: 1.75rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--accent-color);
   transition: color 0.3s ease;
 }
+
 
 .navbar-brand:hover {
   color: #6d28d9;
@@ -556,12 +549,13 @@
   display: flex;
   align-items: center; /* Alignement vertical */
   justify-content: space-around; /* Distribution égale de l'espace */
-  margin-left: auto; /* Pousse les éléments à droite */
+  margin-right: auto; /* Pousse les éléments à droite */
 }
 
 .nav-item {
   margin: 0 1rem; /* Espacement entre les éléments */
   position: relative;
+  list-style-type: none;
 }
 
 .nav-link {
@@ -766,10 +760,103 @@
     animation: navbarScroll 0.6s ease-out forwards;
   }
 
-    /* styles pour la page de projects html */
+/* === Navbar Fix (Horizontal Alignment) === */
+.navbar {
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0.8rem 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 30px); /* Réduit la largeur pour ne pas cacher le contenu */
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+}
 
-/* === Projet Styles === */
-/* styles.css */
+
+
+.nav-link {
+  color: var(--text-light);
+  padding: 0.5rem;
+}
+
+/* === Projects Section === */
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.display-4 {
+    font-size: calc(2rem + .5vw);
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Projects Container */
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem; /* Espacement entre les cartes */
+}
+
+/* Project Card */
+.project-card {
+    background-color: rgba(255,255,255,0.05);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: rgba(0,0,0,0.3) 0px 4px 15px; /* Ombre subtile */
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out; 
+}
+
+.project-card:hover {
+    transform: translateY(-5px); /* Légère élévation au survol */
+    box-shadow: rgba(0,242,195,0.2) 0px 8px 25px; /* Accentuation de l'ombre */
+}
+
+/* Project Content */
+.project-content {
+    padding: calc(1rem + .5vw);
+}
+
+.project-title {
+    font-size: calc(1.25rem + .2vw);
+    color: var(--accent-color);
+    margin-bottom: .5rem;
+}
+
+.project-description,
+.project-skills {
+    color: rgba(255,255,255,.7);
+    font-size:.9rem; 
+}
+
+/* Project Image */
+.project-image {
+    width:100%;
+    height:auto; 
+}
+
+/* Buttons inside Project Cards */
+.btn-outline-indigo,
+.btn-outline-secondary {
+   display:inline-block ;
+}
+
+
+
 /* === Styles spécifiques à la page Projects === */
 .projects-section {
   padding: 4rem 8%;
@@ -1254,5 +1341,104 @@
 @media (max-width: 768px) {
   .newsletter-container {
       padding: 1.5rem;
+  }
+}
+
+/* === Styles spécifiques à la page Articles === */
+.articles-section {
+  padding: 4rem 0;
+  background: linear-gradient(145deg, rgba(10, 10, 10, 0.9), rgba(30, 30, 30, 0.9));
+}
+
+.articles-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.articles-header h1 {
+  font-size: 2.8rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.articles-header p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* === Grille des articles === */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.col-lg-6,
+.col-xl-4 {
+  flex: 1;
+}
+
+/* === Cartes d'articles === */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 242, 195, 0.2);
+}
+
+.card-img-top {
+  height: auto; /* Assure que l'image garde ses proportions */
+}
+
+/* === Contenu de la carte === */
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
+
+.card-text {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* === Boutons === */
+.btn-outline-indigo {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-indigo:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-dark);
+}
+
+/* === Liens sans soulignement === */
+a {
+  text-decoration: none; /* Supprime le soulignement par défaut */
+}
+
+a:hover {
+  text-decoration: underline; /* Ajoute un soulignement au survol */
+}
+
+/* === Informations de publication === */
+.text-muted {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .row {
+      flex-direction: column; /* Empile les articles sur les petits écrans */
+      align-items: center; /* Centre les articles */
   }
 }

@@ -1,10 +1,9 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 {% block content %}
-<section class="py-5 bg-gray-50">
+<section class="articles-section">
     <div class="container px-5">
-        <!-- Section Title -->
-        <div class="text-center mb-5">
+        <div class="articles-header">
             <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Articles</span></h1>
             <p class="text-muted">Découvrez mes dernières réflexions et analyses sur divers sujets.</p>
         </div>
@@ -12,17 +11,17 @@
         {% if blog_article %}
             <div class="row gx-5 justify-content-center">
                 {% for article in blog_article %}
-                    <!-- Article Card -->
                     <div class="col-lg-6 col-xl-4 mb-4">
                         <div class="card shadow-sm rounded-lg border-0 h-100">
                             <img 
                                 src="{{ article.image_url|default:'images/opti.png' }}" 
                                 class="card-img-top img-fluid rounded-top" 
-                                alt="{{ article.title }}">
+                                alt="Image de l'article : {{ article.title }}"
+                                aria-label="Image de l'article : {{ article.title }}">
                             <div class="card-body">
                                 <h3 class="card-title fw-bolder text-indigo-600">{{ article.title }}</h3>
-                                <p class="card-text text-gray-700">{{ article.content|truncatechars:150 }}</p>
-                                <a href="{{ article.url_blog }}" target="_blank" class="btn btn-outline-indigo mt-3">
+                                <p class="card-text text-gray-700">{{ article.content|truncatewords:30 }}</p>
+                                <a href="{{ article.url_blog }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-indigo mt-3">
                                     Lire l'article
                                 </a>
                                 <p class="mt-2 text-sm text-muted">
@@ -34,9 +33,10 @@
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-center text-gray-600">Aucun article disponible pour le moment.</p>
+            <p class="text-center text-gray-600">Aucun article disponible pour le moment. <a href="https://medium.com/@koulodjiric" target="_blank" rel="noopener noreferrer">Visitez mon profil Medium</a>.</p>
         {% endif %}
     </div>
 </section>
+
 <script src="{% static 'js/articles.js' %}"></script>
 {% endblock content %}
