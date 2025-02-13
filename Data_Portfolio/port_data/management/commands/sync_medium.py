@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from port_data.models import Article
-from port_data.utils import recuperer_articles_medium
+from port_data.utils import fetch_medium_articles
+
 import os
 from dotenv import load_dotenv
 
@@ -21,7 +22,7 @@ class Command(BaseCommand):
         
         # Récupérer les articles via la fonction utilitaire
         try:
-            articles = recuperer_articles_medium(USER_ID)
+            articles = fetch_medium_articles(USER_ID)
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Erreur lors de la récupération des articles : {e}"))
             return
