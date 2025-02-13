@@ -125,7 +125,7 @@
   /* === About Section === */
   .about-section {
     padding: 6rem 8%;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(231, 236, 236, 0.15);
     margin: 4rem 0;
     border-radius: 20px;
     transition: var(--transition);
