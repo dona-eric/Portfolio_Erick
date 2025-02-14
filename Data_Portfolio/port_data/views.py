@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
 from .models import About, Article, Project, Skill, Contact, Service, ServiceRequest, Newsletter
-from .forms import ContactForms, ServicesForms, ServiceRequestForms, NewsletterForms
+from .forms import ContactForms, ServiceRequestForm, NewsletterForms
 from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.urls import reverse
@@ -124,48 +124,16 @@ def contacts(request):
 
 # vues pour les services
 
+def service_list(request):
+    services = Service.objects.all()
+    return render(request, 'portfolio/services.html', {'services': services})
+
+def service_detail(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    form = ServiceRequestForm()
+    return render(request, 'portfolio/service_detail.html', {'service': service, 'form': form})
+
 def services(request):
-    service =  Service.objects.all()
-    return render(request, 'portfolio/services.html',
-                  {'service_list': service})
-
-
-def services_detail(request, id_service):
-    service_detail = get_object_or_404(Service, pk=id_service)
-    return render(request, 'portfolio/service_detail.html', {'service_detail': service_detail})
-
-
-
-
-def services_request(request, id_service=None):
-    service = get_object_or_404(Service, pk=id_service) if id_service else None
-    
-    if request.method == 'POST':
-        form = ServiceRequestForms(request.POST)
-        if form.is_valid():
-            try:
-                service_request = form.save(commit=False)
-                if service:
-                    service_request.service = service
-                service_request.save()
-                messages.success(request, 'Votre demande de service a été envoyée avec succès!')
-                return redirect('services')
-            except Exception as e:
-                print("Erreur lors de l'enregistrement de la demande de service :", e)
-                messages.error(request, "Une erreur est survenue lors de l'enregistrement de votre demande. Veuillez réessayer.")
-        else:
-            messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
-    else:
-        form = ServiceRequestForms()
-        if service:
-            form.initial = {'service': service}
-    
-    contexte = {
-        'form': form,
-        'service': service,
-    }
-    return render(request, 'portfolio/services_request.html', contexte)
-
 
 """vue pour les newsletters """
 
