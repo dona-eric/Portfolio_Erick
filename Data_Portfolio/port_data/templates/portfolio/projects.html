@@ -1,52 +1,54 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
 {% block content %}
 
-    <!-- Projects Section-->
-    <section class="py-5">
-        <div class="container px-5 mb-5">
-            <div class="text-center mb-5">
-                <h1 class="display-4 font-bold text-indigo-600 mb-4">Mes Projets</h1>
-            </div>
-            {% if project %}
-                <div class="projects-container">
-                    {% for pro in project %}
-                        <div class="project-card">
-                            <div class="project-content">
-                                <h2 class="project-title">{{ pro.title }}</h2>
-                                <p class="project-description">{{ pro.description }}</p>
-                                <p class="project-skills"><strong>Compétences utilisées:</strong> {{ pro.skills_used }}</p>
-
-                                {% if pro.image_project %}
-                                    <img class="project-image" src="{{ pro.image_project }}" alt="{{ pro.title }}">
-                                {% else %}
-                                    <img class="project-image" src="{% static 'images/etu.jpg' %}" alt="Image de projet par défaut">
-                                {% endif %}
-
-                                <div class="project-links mt-4">
-                                    {% if pro.github_link %}
-                                        <a href="{{ pro.github_link }}" target="_blank" class="btn btn-outline-indigo">Voir sur Github</a>
-                                    {% else %}
-                                        <p class="text-muted">Pas de lien Github disponible</p>
-                                    {% endif %}
-
-                                    {% if pro.url_project %}
-                                        <a href="{{ pro.url_project }}" target="_blank" class="btn btn-outline-secondary mt-2">Voir la démo</a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+<section class="projects-section py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div class="container px-5">
+        <h1 class="text-center text-4xl font-bold text-indigo-500 mb-8">Mes Projets</h1>
+        {% if project %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for pro in project %}
+            <div class="project-card rounded-lg shadow-md overflow-hidden bg-gray-700 hover:shadow-lg transition-shadow duration-300">
+                {% if pro.image_project %}
+                <img src="{{ pro.image_project }}" alt="{{ pro.title }}" class="project-image w-full h-48 object-cover">
+                {% else %}
+                <img src="{% static 'images/etu.jpg' %}" alt="Image de projet par défaut" class="project-image w-full h-48 object-cover">
+                {% endif %}
+                <div class="p-4">
+                    <h2 class="project-title text-xl font-semibold mb-2">{{ pro.title }}</h2>
+                    <p class="project-description text-gray-300">{{ pro.description|truncatechars:100 }}</p>
+                    <p class="project-skills text-sm mt-2">
+                        <strong class="text-indigo-400">Compétences:</strong> {{ pro.skills_used }}
+                    </p>
+                    <div class="project-links mt-4 flex justify-between">
+                        {% if pro.github_link %}
+                        <a href="{{ pro.github_link }}" target="_blank" class="github-button px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300">
+                            Github
+                        </a>
+                        {% endif %}
+                        {% if pro.url_project %}
+                        <a href="{{ pro.url_project }}" target="_blank" class="demo-button px-4 py-2 rounded-md bg-gray-600 hover:bg-gray-700 transition-colors duration-300">
+                            Démo
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
-            {% else %}
-                <p class="text-center text-gray-600 mt-8">Aucun projet disponible.</p>
-            {% endif %}
+            </div>
+            {% endfor %}
         </div>
-    </section>
-    <div class="content">
-        <a href="{% url 'contacts-us' %}" class="btn-learn-more">Contactez-moi →</a>
-      </div>
-    <script src="{% static 'js/projects.js' %}"></script>
+        {% else %}
+        <p class="text-center text-gray-400 mt-8">Aucun projet disponible.</p>
+        {% endif %}
+        <div class="mt-8 text-center">
+            <a href="{% url 'contacts-us' %}" class="contact-button inline-block px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white font-semibold transition-colors duration-300">Contactez-moi →</a>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'js/projects.js' %}"></script>
 
 {% endblock content %}
