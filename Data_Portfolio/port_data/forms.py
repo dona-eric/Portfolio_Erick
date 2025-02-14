@@ -14,28 +14,13 @@ class ContactForms(forms.ModelForm):
     }
 
 
-class ServicesForms(forms.ModelForm):
-    class Meta:
-        model = Service
-        fields = ['title', 'description', 'icon', 'price']
-        widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Titre du service', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Description du service', 'class': 'form-control'}),
-            'icon': forms.TextInput(attrs={'placeholder': 'Icône (ex. fa-solid fa-code)', 'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'placeholder': 'Prix', 'class': 'form-control'}),
-        }
-        exclude = ('icon', "price")
+class ServiceRequestForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    service = forms.ModelChoiceField(queryset=Service.objects.all())
+    message = forms.CharField(widget=forms.Textarea)
 
 
-class ServiceRequestForms(forms.ModelForm):
-    class Meta:
-        model = ServiceRequest
-        fields = ['service', 'client', 'message']
-        widgets = {
-            'client': forms.Select(attrs={"class": "form-control"}),  # Utilisation de Select pour ForeignKey
-            'service': forms.Select(attrs={"class": "form-control"}),  # Utilisation correcte
-            'message': forms.Textarea(attrs={"class": "form-control", "placeholder": "Votre message", "rows": 4}),
-        }
 class NewsletterForms(forms.ModelForm):
     class Meta:
         model = Newsletter
