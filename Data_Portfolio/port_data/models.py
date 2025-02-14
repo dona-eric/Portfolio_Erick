@@ -98,11 +98,14 @@ class Contact(models.Model):
     
 # mes services 
 class Service(models.Model):
-    title = models.CharField(max_length = 200)
+    title = models.CharField(max_length=100)
     description = models.TextField()
-    icon = models.TextField(null =True, blank=True)
-    price = models.IntegerField(default=50)
+    icon = models.CharField(max_length=50, help_text="Utilisez une classe d'icône FontAwesome, par exemple 'fa-code'")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
 
 ## models pour permettre à un client de demander des services
 
