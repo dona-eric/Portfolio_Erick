@@ -13,9 +13,14 @@ class ProjectAdmin(admin.ModelAdmin):
 admin.site.register(Project, ProjectAdmin)
 
 admin.site.register(About)
-admin.site.register(Service)
+#admin.site.register(Service)
 
 
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'updated_at')
+    search_fields = ('title', 'description')
+    
 @admin.register(ServiceRequest)
 class ServiceRequestdmin(admin.ModelAdmin):
     list_display = ("client","service", "message", "date_requested")
