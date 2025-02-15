@@ -8,6 +8,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fetch_github_data(
             username='dona-eric',
-            token='votre_token_github'
+            token="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"
         )
         self.stdout.write('GitHub data updated successfully!')
