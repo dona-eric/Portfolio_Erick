@@ -8,7 +8,7 @@ pip install -r requirements.txt
 # Convert static asset files
 python manage.py collectstatic --no-input
 
-
+python manage.py makemigrations
 python manage.py migrate --noinput
 
 # Crée un super utilisateur (en utilisant des variables d'environnement)
