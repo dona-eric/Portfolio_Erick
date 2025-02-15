@@ -152,8 +152,8 @@ class GitHubRepo(models.Model):
     stars = models.IntegerField()
     forks = models.IntegerField()
     language = models.CharField(max_length=50, blank=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Date de création')
+    updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Date update')
 
     def __str__(self):
         return self.name
@@ -169,7 +169,7 @@ class GitHubActivity(models.Model):
     repo = models.ForeignKey(GitHubRepo, on_delete=models.CASCADE)
     activity_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     message = models.TextField()
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add = True)
     url = models.URLField()
 
     def __str__(self):
