@@ -1442,3 +1442,17 @@ a:hover {
       align-items: center; /* Centre les articles */
   }
 }
+
+
+services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.service {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+}
