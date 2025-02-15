@@ -101,8 +101,8 @@ class Service(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.CharField(max_length=50, help_text="Utilisez une classe d'icône FontAwesome, par exemple 'fa-code'")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     def __str__(self):
         return self.title
