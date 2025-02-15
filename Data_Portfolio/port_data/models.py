@@ -100,7 +100,7 @@ class Contact(models.Model):
 class Service(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    icon = models.CharField(max_length=50, help_text="Utilisez une classe d'icône FontAwesome, par exemple 'fa-code'")
+    icon = models.CharField()
     created_at = models.DateTimeField(auto_now= True, verbose_name= 'date de création')
     updated_at = models.DateTimeField(auto_now=True, verbose_name= 'date update')
 
