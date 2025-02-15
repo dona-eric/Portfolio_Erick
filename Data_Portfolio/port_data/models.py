@@ -141,3 +141,37 @@ class SocialMedia(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# models pour le repo GitHub 
+
+class GitHubRepo(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    html_url = models.URLField()
+    stars = models.IntegerField()
+    forks = models.IntegerField()
+    language = models.CharField(max_length=50, blank=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+
+    def __str__(self):
+        return self.name
+
+class GitHubActivity(models.Model):
+    TYPE_CHOICES = [
+        ('Push', 'Push'),
+        ('PullRequest', 'Pull Request'),
+        ('Issue', 'Issue'),
+        ('Create', 'Create'),
+    ]
+    
+    repo = models.ForeignKey(GitHubRepo, on_delete=models.CASCADE)
+    activity_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    message = models.TextField()
+    timestamp = models.DateTimeField()
+    url = models.URLField()
+
+    def __str__(self):
+        return f"{self.repo.name} - {self.activity_type}"
+
