@@ -4,6 +4,10 @@ from datetime import datetime
 from django.utils.timezone import make_aware
 from .models import Article
 from dotenv import load_dotenv
+import requests
+from django.utils import timezone
+from datetime import datetime
+from .models import GitHubRepo, GithubActivity
 
 
 username = os.getenv("USER_ID")
@@ -62,3 +66,54 @@ def fetch_medium_articles(username):
 
 # Appeler la fonction pour récupérer les articles
 fetch_medium_articles(username=username)
+
+
+# github_api.py
+
+def fetch_github_data(username, token):
+    headers = {'Authorization': f'token {token}'}
+    
+    # Récupération des repos
+    repos_url = f'https://api.github.com/users/{username}/repos'
+    repos = requests.get(repos_url, headers=headers).json()
+    
+    for repo in repos:
+        repo_obj, created = GitHubRepo.objects.update_or_create(
+            name=repo['name'],
+            defaults={
+                'description': repo['description'],
+                'html_url': repo['html_url'],
+                'stars': repo['stargazers_count'],
+                'forks': repo['forks_count'],
+                'language': repo['language'],
+                'created_at': datetime.strptime(repo['created_at'], '%Y-%m-%dT%H:%M:%SZ'),
+                'updated_at': datetime.strptime(repo['updated_at'], '%Y-%m-%dT%H:%M:%SZ')
+            }
+        )
+        
+        # Récupération des activités
+        events_url = f"https://api.github.com/repos/{username}/{repo['name']}/events"
+        events = requests.get(events_url, headers=headers).json()
+        
+        for event in events:
+            activity_type = _map_event_type(event['type'])
+            if activity_type:
+                GitHubActivity.objects.update_or_create(
+                    id=event['id'],
+                    defaults={
+                        'repo': repo_obj,
+                        'activity_type': activity_type,
+                        'message': event['payload'].get('commits', [{}])[0].get('message', '') if activity_type == 'Push' else event['type'],
+                        'timestamp': datetime.strptime(event['created_at'], '%Y-%m-%dT%H:%M:%SZ'),
+                        'url': event['repo']['url']
+                    }
+                )
+
+def _map_event_type(event_type):
+    mapping = {
+        'PushEvent': 'Push',
+        'PullRequestEvent': 'PullRequest',
+        'IssuesEvent': 'Issue',
+        'CreateEvent': 'Create'
+    }
+    return mapping.get(event_type)
