@@ -14,6 +14,7 @@ services:
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
       ./build.sh
+      python manage.py makemigrations
       python manage.py migrate
     startCommand: gunicorn Data_Portfolio.asgi:application -k uvicorn.workers.UvicornWorker
     envVars:
