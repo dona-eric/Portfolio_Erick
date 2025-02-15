@@ -133,8 +133,6 @@ def service_detail(request, pk):
     form = ServiceRequestForm()
     return render(request, 'portfolio/service_detail.html', {'service': service, 'form': form})
 
-def services(request):
-
 """vue pour les newsletters """
 
 MAILTRAP_API_TOKEN = os.getenv("MAILTRAP_API_TOKEN")
