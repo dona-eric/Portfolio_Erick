@@ -13,7 +13,23 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView
 # Page d'accueil
+from .models import GitHubRepo, GitHubActivity
 
+def github_activity(request):
+    repos = GitHubRepo.objects.all().order_by('-stars')
+    recent_activities = GitHubActivity.objects.all().order_by('-timestamp')[:10]
+    
+    # Statistiques
+    languages = GitHubRepo.objects.values('language').annotate(count=models.Count('language'))
+    
+    context = {
+        'repos': repos,
+        'activities': recent_activities,
+        'languages': languages,
+        'total_stars': sum(repo.stars for repo in repos),
+        'total_forks': sum(repo.forks for repo in repos)
+    }
+    return render(request, 'portfolio/github.html', context)
 
 
 warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
