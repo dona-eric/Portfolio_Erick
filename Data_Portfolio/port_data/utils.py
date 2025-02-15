@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import requests
 from django.utils import timezone
 from datetime import datetime
-from .models import GitHubRepo, GithubActivity
+from .models import GitHubRepo, GitHubActivity
 
 
 username = os.getenv("USER_ID")
