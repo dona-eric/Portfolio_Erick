@@ -9,10 +9,11 @@ urlpatterns = [
     #path('skills/', views.skills, name = 'skills'),
     path('projects/', views.projects, name="projects"),
     path('contacts-us/', views.contacts, name='contacts-us'),
-    path('services/', views.services, name ="services"),
-    path('services_request/<int:id_service>/', views.services_request, name ="service_request_with_id"),
-    path('services_request/', views.services_request, name = 'services_request'),
+   # path('services/', views.services, name ="services"),
+    #path('services_request/<int:id_service>/', views.services_request, name ="service_request_with_id"),
+   # path('services_request/', views.services_request, name = 'services_request'),
     path('blog/', views.article, name='blog'),
-    path('news/', views.newsletters, name = 'news')
-
+    path('news/', views.newsletters, name = 'news'),
+    path('service/', views.service_list, name='service'),
+    path('service/<int:pk>/', views.service_detail, name='service_detail')
 ]
