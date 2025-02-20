@@ -158,8 +158,7 @@ WSGI_APPLICATION = "Data_Portfolio.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=DATABASE_URL,
-       conn_max_age=600
+        default=DATABASE_URL
     )
 }
 
