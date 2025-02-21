@@ -1,126 +1,152 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contactForm');
-    const submitButton = document.getElementById('submitButton');
-    const successMessage = document.getElementById('submitSuccessMessage');
-    const errorMessage = document.getElementById('submitErrorMessage');
-
-    // Animation de l'icône d'enveloppe
-    const envelopeIcon = document.querySelector('.bi-envelope');
-    if (envelopeIcon) {
-        envelopeIcon.parentElement.addEventListener('mouseenter', function() {
-            envelopeIcon.style.transform = 'scale(1.2) rotate(15deg)';
-        });
-        
-        envelopeIcon.parentElement.addEventListener('mouseleave', function() {
-            envelopeIcon.style.transform = 'scale(1) rotate(0)';
-        });
-    }
-
-    // Fonction de validation d'email
-    function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    // Fonction de validation de numéro de téléphone
-    function isValidPhone(phone) {
-        return /^[\d\s()-+]{8,}$/.test(phone);
-    }
-
-    // Gérer la validation en temps réel des champs
-    const inputs = form.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-        input.addEventListener('input', function() {
-            validateField(this);
-            checkFormValidity();
-        });
-
-        input.addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
-        });
-
-        input.addEventListener('blur', function() {
-            this.parentElement.classList.remove('focused');
-            validateField(this);
-        });
-    });
-
-    // Valider un champ spécifique
-    function validateField(field) {
-        const feedback = field.parentElement.querySelector('.invalid-feedback');
-        let isValid = true;
-
-        if (field.hasAttribute('data-sb-validations')) {
-            const validations = field.getAttribute('data-sb-validations').split(',');
-
-            if (validations.includes('required') && !field.value.trim()) {
-                isValid = false;
-            }
-
-            if (field.type === 'email' && validations.includes('email') && !isValidEmail(field.value)) {
-                isValid = false;
-            }
-
-            if (field.type === 'tel' && !isValidPhone(field.value)) {
-                isValid = false;
-            }
+// contact.js
+document.addEventListener('DOMContentLoaded', () => {
+    class ContactForm {
+        constructor() {
+            this.form = document.getElementById('contactForm');
+            this.submitButton = document.getElementById('submitButton');
+            this.successMessage = document.getElementById('submitSuccessMessage');
+            this.errorMessage = document.getElementById('submitErrorMessage');
+            this.init();
         }
 
-        if (!isValid) {
-            field.classList.add('is-invalid');
-            field.classList.remove('is-valid');
-            if (feedback) feedback.style.display = 'block';
-        } else {
-            field.classList.remove('is-invalid');
-            field.classList.add('is-valid');
-            if (feedback) feedback.style.display = 'none';
+        init() {
+            this.initEnvelopeAnimation();
+            this.initFormValidation();
+            this.initFormSubmission();
+            this.injectStyles();
         }
 
-        return isValid;
-    }
+        initEnvelopeAnimation() {
+            const envelope = document.querySelector('.contact-envelope');
+            if (!envelope) return;
 
-    // Vérifier la validité du formulaire complet
-    function checkFormValidity() {
-        let isValid = true;
-        inputs.forEach(input => {
-            if (!validateField(input)) {
-                isValid = false;
-            }
-        });
-
-        if (isValid) {
-            submitButton.classList.remove('disabled');
-        } else {
-            submitButton.classList.add('disabled');
-        }
-    }
-
-    // Gérer la soumission du formulaire
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-
-        try {
-            // Simulation d'envoi (à remplacer par votre logique d'envoi réelle)
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            successMessage.classList.remove('d-none');
-            errorMessage.classList.add('d-none');
-            form.reset();
-            inputs.forEach(input => {
-                input.classList.remove('is-valid');
+            envelope.addEventListener('mouseenter', () => {
+                envelope.style.transform = 'scale(1.2) rotate(15deg)';
             });
-            submitButton.classList.add('disabled');
-        } catch (error) {
-            errorMessage.classList.remove('d-none');
-            successMessage.classList.add('d-none');
+
+            envelope.addEventListener('mouseleave', () => {
+                envelope.style.transform = 'scale(1) rotate(0)';
+            });
         }
 
+        initFormValidation() {
+            this.inputs = this.form.querySelectorAll('[data-validation]');
+            
+            this.inputs.forEach(input => {
+                input.addEventListener('input', this.validateField.bind(this, input));
+                input.addEventListener('blur', this.validateField.bind(this, input));
+            });
+        }
 
-        alert('Merci d\'avoir rempli le formulaire ! Nous vous contacterons bientôt.');
-        form.reset(); // Réinitialise le formulaire après soumission
-    });
+        validateField(field) {
+            const isValid = field.checkValidity();
+            const feedback = field.parentElement.querySelector('.form-feedback');
+
+            field.classList.toggle('is-invalid', !isValid);
+            field.classList.toggle('is-valid', isValid);
+            
+            if (feedback) {
+                feedback.textContent = field.validationMessage;
+                feedback.hidden = isValid;
+            }
+
+            return isValid;
+        }
+
+        validateForm() {
+            let isValid = true;
+            this.inputs.forEach(input => {
+                if (!this.validateField(input)) isValid = false;
+            });
+            return isValid;
+        }
+
+        async handleSubmit(e) {
+            e.preventDefault();
+            
+            if (!this.validateForm()) return;
+
+            const formData = new FormData(this.form);
+            this.toggleLoadingState(true);
+
+            try {
+                // Remplacez par votre logique d'envoi réelle
+                await this.sendFormData(formData);
+                
+                this.showFeedback('success');
+                this.form.reset();
+            } catch (error) {
+                this.showFeedback('error');
+                console.error('Erreur d\'envoi:', error);
+            } finally {
+                this.toggleLoadingState(false);
+            }
+        }
+
+        async sendFormData(formData) {
+            // Exemple avec fetch API
+            const response = await fetch('https://api.example.com/contact', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw new Error('Échec de l\'envoi');
+            return response.json();
+        }
+
+        toggleLoadingState(isLoading) {
+            this.submitButton.disabled = isLoading;
+            this.submitButton.innerHTML = isLoading 
+                ? '<span class="spinner-border spinner-border-sm" role="status"></span> Envoi...'
+                : 'Envoyer le message';
+        }
+
+        showFeedback(type) {
+            this.successMessage.hidden = type !== 'success';
+            this.errorMessage.hidden = type !== 'error';
+        }
+
+        initFormSubmission() {
+            this.form.addEventListener('submit', this.handleSubmit.bind(this));
+        }
+
+        injectStyles() {
+            const styles = `
+                .contact-envelope {
+                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .form-feedback {
+                    opacity: 0;
+                    max-height: 0;
+                    transition: all 0.3s ease;
+                }
+
+                .form-feedback:not([hidden]) {
+                    opacity: 1;
+                    max-height: 2rem;
+                }
+
+                .is-valid {
+                    border-color: #28a745 !important;
+                }
+
+                .is-invalid {
+                    border-color: #dc3545 !important;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .contact-envelope {
+                        transition: none;
+                    }
+                }
+            `;
+
+            const styleSheet = document.createElement('style');
+            styleSheet.textContent = styles;
+            document.head.appendChild(styleSheet);
+        }
+    }
+
+    new ContactForm();
 });
-
-document.head.appendChild(style);

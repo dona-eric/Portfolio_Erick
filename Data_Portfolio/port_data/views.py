@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
 from .models import About, Article, Project, Skill, Contact, Service, ServiceRequest, Newsletter
-from .forms import ContactForms, ServiceRequestForm, NewsletterForms
+from .forms import ContactForms, ServiceRequestForms, NewsletterForms, ServiceForms
 from django.core.mail import send_mail
 from django.core.validators import validate_email
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from django.conf import settings
 import warnings,requests, json, os
@@ -11,24 +11,9 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 # Page d'accueil
 from .models import GitHubRepo, GitHubActivity
-
-def github_activity(request):
-    repos = GitHubRepo.objects.all().order_by('-stars')
-    recent_activities = GitHubActivity.objects.all().order_by('-timestamp')[:10]
-    
-    # Statistiques
-    languages = GitHubRepo.objects.values('language').annotate(count=models.Count('language'))
-    context = {
-        'repos': repos,
-        'activities': recent_activities,
-        'languages': languages,
-        'total_stars': sum(repo.stars for repo in repos),
-        'total_forks': sum(repo.forks for repo in repos)
-    }
-    return render(request, 'portfolio/github.html', context)
 
 
 warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
@@ -56,15 +41,22 @@ class AboutView(DetailView):
 
 
 
-# Page des articles dew blog
+# vues pour les blogs ou articles et les details des blogs
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'portfolio/blog.html'
+    context_object_name = 'articles'
+    paginate_by = 5  # Affiche 5 articles par page
+    ordering = ['-date_published']  # Tri par date de publication
+    queryset = Article.objects.all().order_by('-date_published')
 
-def article(request):
-    blog_article = Article.objects.all().order_by('-date_published')
-    paginator = Paginator(blog_article, 5)  # Affiche 5 articles par page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'portfolio/blog.html', {'page_obj': page_obj})
 
+## pour les details sur les articles ou blogs
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'portfolio/blog_detail.html'
+    context_object_name = 'articles'
+    
 #pour une article spécifique
 
 def article_list(request, id_article):
@@ -78,12 +70,13 @@ def skills(request):
     return render(request, 'portfolio/skills.html', {'skills': skill})
 
 
-# Page des projets
-def projects(request):
-    project = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
-    return render(request, 'portfolio/projects.html', {'project': project})
-
-
+# vue des projects
+class ProjectListView(ListView):
+    model = Project
+    template_name = 'portfolio/projects.html'
+    context_object_name = 'projects'
+    paginate_by = 6  # Affiche 6 projets par page
+    queryset = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
 
 # Page des contacts
 def send_email_via_mailtrap(nom,email, subject_message, message):
@@ -102,7 +95,7 @@ def send_email_via_mailtrap(nom,email, subject_message, message):
     response = requests.post(url, headers=headers, data=json.dumps(data))
     return response.status_code == 200
 
-
+## vue pour les contacts en utilisant les formulaires de django et les vues generiques
 def contacts(request):
     if request.method == "POST":
         print("✔ Django a reçu une requête POST !")  # Debugging
@@ -155,14 +148,44 @@ def contacts(request):
 
 # vues pour les services
 
-def service_list(request):
-    services = Service.objects.all()
-    return render(request, 'portfolio/services.html', {'services': services})
+class ServicesListView(ListView):
+    model = Service
+    template_name = 'portfolio/services.html'
+    context_object_name = 'services'
+    paginate_by = 6  # Affiche 6 services par page
+    queryset = Service.objects.all()
+    
+    
+##### detail des services
+class ServiceDetailView(DetailView):
+    model = Service
+    template_name = 'portfolio/service_detail.html'
+    context_object_name = 'service'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ServiceRequestForms(initial={'service': self.object})
+        return context
 
-def service_detail(request, pk):
-    service = get_object_or_404(Service, pk=pk)
-    form = ServiceRequestForm()
-    return render(request, 'portfolio/service_detail.html', {'service': service, 'form': form})
+class ServiceRequestView(FormView):
+    form = ServiceRequestForms
+    template_name = 'portfolio/services_request.html'
+    
+    def form_valid(self, form):
+        service_request = form.save(commit=False)
+        service_request.service = get_object_or_404(Service, pk=self.kwargs['pk'])
+        service_request.save()
+        messages.success(self.request, "Votre demande a été envoyée !")
+        return redirect('services:detail', pk=self.kwargs['pk'])
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Veuillez corriger les erreurs dans le formulaire.")
+        return super().form_invalid(form)
+
+
+
+
+
 
 """vue pour les newsletters """
 
@@ -314,4 +337,21 @@ def newsletters(request):
     #    return f"Vos modifications ont été prises en compte !"
 
     #def get_success_url(self):
-     #   return reverse('home')
+     #   return reverse('home')**
+
+## vue pur les repos github
+def github_activity(request):
+    repos = GitHubRepo.objects.all().order_by('-stars')
+    recent_activities = GitHubActivity.objects.all().order_by('-timestamp')[:10]
+    
+    # Statistiques
+    languages = GitHubRepo.objects.values('language').annotate(count=models.Count('language'))
+    context = {
+        'repos': repos,
+        'activities': recent_activities,
+        'languages': languages,
+        'total_stars': sum(repo.stars for repo in repos),
+        'total_forks': sum(repo.forks for repo in repos)
+    }
+    return render(request, 'portfolio/github.html', context)
+

@@ -7,15 +7,21 @@ portfolio """
 
 """Models  for About"""
 
+
 class About(models.Model):
-    nom = models.CharField(max_length=100, verbose_name="Nom", help_text="Votre nom de famille")
-    prenoms = models.CharField(max_length=150, verbose_name="Prénoms", help_text="Vos prénoms")
-    biography = models.TextField(verbose_name="Biographie", help_text="Une brève description de vous")
-    profil_pictures = models.ImageField(upload_to='portfolio/', blank=True, null=True, verbose_name="Photo de profil", help_text="Téléchargez une photo de profil")
-    resume_link = models.URLField(blank=True, null=True, verbose_name="Lien vers le CV", help_text="URL vers votre CV en ligne")
+    nom = models.CharField(max_length=100)
+    prenoms = models.CharField(max_length=150)
+    biography = models.TextField(verbose_name="Biographie", help_text="Brève description de vous")
+    profil_pictures = models.ImageField(upload_to='portfolio/', blank=True, null=True)
+    resume_link = models.URLField(blank=True, null=True)
+    #social_media = models.ManyToManyField('social_media.SocialMedia', blank=True)
+
+    class Meta:
+        verbose_name = "À propos"
+        verbose_name_plural = "À propos"
 
     def __str__(self):
-        return self.nom
+        return f"{self.nom} {self.prenoms}"
     
 """models for projects"""
 
@@ -84,9 +90,7 @@ to create it """
 
 class Contact(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
-    #prenom= models.CharField(max_length=200, verbose_name="Prénom")
     email = models.EmailField(verbose_name="Adresse email")
-    #phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Téléphone")
     subject = models.CharField(max_length=200, verbose_name="Sujet du message")
     message = models.TextField(verbose_name="Message")
     sent_at = models.DateTimeField(auto_now_add=True, verbose_name="Envoyé à")
@@ -135,7 +139,11 @@ class Newsletter(models.Model):
 
     def __str__(self):
         return self.email
-    
+
+    class Meta:
+        verbose_name = "Abonné à la newsletter"
+        verbose_name_plural = "Abonnés à la newsletter"
+  
     
 class SocialMedia(models.Model):
     name = models.CharField(max_length=100)
@@ -151,18 +159,21 @@ class SocialMedia(models.Model):
 class GitHubRepo(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    html_url = models.URLField()
+    url = models.URLField()
     stars = models.IntegerField()
     forks = models.IntegerField()
     language = models.CharField(max_length=50, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Date de création')
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Date update')
+    last_updated = models.DateTimeField()
+
+    class Meta:
+        verbose_name = "Dépôt GitHub"
+        verbose_name_plural = "Dépôts GitHub"
 
     def __str__(self):
         return self.name
 
 class GitHubActivity(models.Model):
-    TYPE_CHOICES = [
+    ACTIVITY_TYPES = [
         ('Push', 'Push'),
         ('PullRequest', 'Pull Request'),
         ('Issue', 'Issue'),
@@ -170,11 +181,15 @@ class GitHubActivity(models.Model):
     ]
     
     repo = models.ForeignKey(GitHubRepo, on_delete=models.CASCADE)
-    activity_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPES)
     message = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add = True)
+    timestamp = models.DateTimeField()
     url = models.URLField()
 
-    def __str__(self):
-        return f"{self.repo.name} - {self.activity_type}"
-
+    class Meta:
+        verbose_name = "Activité GitHub"
+        verbose_name_plural = "Activités GitHub"
+        ordering = ['-timestamp']
+        
+        def __str__(self):
+            return f"{self.repo.name} - {self.activity_type}"
