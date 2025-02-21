@@ -75,7 +75,7 @@ class ProjectListView(ListView):
     model = Project
     template_name = 'portfolio/projects.html'
     context_object_name = 'projects'
-    paginate_by = 6  # Affiche 6 projets par page
+    paginate_by = 5  # Affiche 6 projets par page
     queryset = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
 
 # Page des contacts
