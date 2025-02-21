@@ -42,7 +42,11 @@ class Project(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.description})"
-
+    class Meta:
+        ordering = ['-date_project_update']  # Ordre décroissant par date de création
+        indexes = [
+            models.Index(fields=['-date_project_update']),  # Optionnel : améliore les performances
+        ]
 
 """models for skills"""
 
