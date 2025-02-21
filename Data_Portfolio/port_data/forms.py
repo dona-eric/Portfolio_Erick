@@ -7,19 +7,111 @@ class ContactForms(forms.ModelForm):
         model = Contact
         fields= ['name', "email", "subject", "message"]
     widgets = {
-        'name' :forms.TextInput(attrs={"class": "form-control"}),
-        'email' : forms.EmailInput(attrs={'class': "form-control"}),
-        "subject": forms.TextInput(attrs={'class':"form-control"}),
-        'message' : forms.TextInput(attrs={"class": "form-control"})
-    }
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Votre nom complet'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'exemple@email.com'
+            }),
+            'subject': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Sujet de votre message'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Votre message...'
+            }),
+        }
+    labels = {
+            'name': 'Nom complet',
+            'email': 'Adresse email',
+            'subject': 'Sujet',
+            'message': 'Message'
+        }
 
+class ServiceForms(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['title', 'description', 'icon']
+    widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nom du service'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Description du service'
+            }),
+            'icon': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Icone du service'
+            }),
+        }
+    labels = {
+            'title': 'Nom du service',
+            'description': 'Description',
+            'icon': 'Icone'
+        }
 
-class ServiceRequestForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    service = forms.ModelChoiceField(queryset=Service.objects.all())
-    message = forms.CharField(widget=forms.Textarea)
-
+class ServiceRequestForms(forms.Form):
+    class Meta:
+        model = ServiceRequest
+        fields = ['name','email', 'service', 'message']
+    widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Votre nom complet'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'email du client'
+            }),
+            'service': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'service demandé'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Votre message...'
+            }),
+        }
+    labels = {
+            'name': 'Nom complet',
+            'email': 'Adresse email',
+            'service': 'Service demandé',
+            'message': 'Message'
+        }
+                
+                
+class SkillForms(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['skills_name', 'level', 'description']
+    widgets = {
+            'skills_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nom de la compétence'
+            }),
+            'level': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Niveau de la compétence'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Description de la compétence'
+            }),
+        }
+    labels = {
+            'skills_name': 'Nom de la compétence',
+            'level': 'Niveau de maîtrise',
+            'description': 'Description'
+        }
 
 class NewsletterForms(forms.ModelForm):
     class Meta:

@@ -1,19 +1,23 @@
 from django.urls import path, include
 
 from . import views
-from .views import HomeView, AboutView
+from .views import (HomeView, AboutView, 
+                    ArticleDetailView, ArticleListView,
+                    ServicesListView, ServiceDetailView,
+                    ServiceRequestView, ProjectListView)
+
 
 urlpatterns = [
     path('', HomeView.as_view(), name = 'home'),
     path('about-me/', AboutView.as_view(), name='about'),
-    #path('skills/', views.skills, name = 'skills'),
-    path('projects/', views.projects, name="projects"),
+    path('skills/', views.skills, name = 'skills'),
+    path('projects/', ProjectListView.as_view(), name='projects'),
+    path('blog/', ArticleListView.as_view(), name='blog'),
+    path('blog/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
+    path('services/', ServicesListView.as_view(), name='services'),
+    path('service/<int:pk>/', ServiceDetailView.as_view(), name='service_detail'),
+    path('services/<int:pk>/demande/', ServiceRequestView.as_view(), name='service_request'),
     path('contacts-us/', views.contacts, name='contacts-us'),
-   # path('services/', views.services, name ="services"),
-    #path('services_request/<int:id_service>/', views.services_request, name ="service_request_with_id"),
-   # path('services_request/', views.services_request, name = 'services_request'),
-    path('blog/', views.article, name='blog'),
     path('news/', views.newsletters, name = 'news'),
-    path('service/', views.service_list, name='service'),
-    path('service/<int:pk>/', views.service_detail, name='service_detail')
+    path('github/', views.github_activity, name = 'github'),
 ]
