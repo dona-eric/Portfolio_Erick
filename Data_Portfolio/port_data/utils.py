@@ -8,8 +8,9 @@ import requests
 from django.utils import timezone
 from datetime import datetime
 from .models import GitHubRepo, GitHubActivity
+load_dotenv()
 
-
+# Récupérer le nom d'utilisateur Medium depuis les variables d'environnement
 username = os.getenv("USER_ID")
 def fetch_medium_articles(username):
     # URL de votre profil Medium

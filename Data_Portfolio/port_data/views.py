@@ -21,7 +21,6 @@ def github_activity(request):
     
     # Statistiques
     languages = GitHubRepo.objects.values('language').annotate(count=models.Count('language'))
-    
     context = {
         'repos': repos,
         'activities': recent_activities,
@@ -87,6 +86,22 @@ def projects(request):
 
 
 # Page des contacts
+def send_email_via_mailtrap(nom,email, subject_message, message):
+    url = "https://sandbox.api.mailtrap.io/api/send/3448761"
+
+    headers = {
+        "Authorization": f"Bearer {MAILTRAP_API_TOKEN}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "from": {"email": settings.EMAIL_ADMIN, "name": "DataWorld"},
+        "to": [{"email": email}],  # Email Admin
+        "subject": "Nouvelle inscription à la newsletter",
+        "text": f"Nom: {nom}\nEmail: {email}\nmessage: {message}"
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    return response.status_code == 200
+
 
 def contacts(request):
     if request.method == "POST":
@@ -104,7 +119,7 @@ def contacts(request):
                 # Email à l'admin
                 full_message = f"Message de {nom} ({email}):\n\n{content_message}"
                 print(full_message)
-                mail_admin = send_mail(
+                mail_admin = send_email_via_mailtrap(
                     subject=f"📩 Nouveau message de {nom} : {subject_message}",
                     message=full_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
@@ -113,7 +128,7 @@ def contacts(request):
                 )
 
                 # Email de confirmation à l'utilisateur
-                mail_user = send_mail(
+                mail_user = send_email_via_mailtrap(
                     subject="📩 Votre message a bien été reçu !",
                     message=f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe.",
                     from_email=settings.DEFAULT_FROM_EMAIL,
@@ -168,6 +183,7 @@ def send_email_via_mailtrap(nom, prenom, email):
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
     return response.status_code == 200
+
 
 def newsletters(request):
     if request.method == 'POST':

@@ -6,15 +6,11 @@ set -o errexit
 pip install -r requirements.txt
 
 # Convert static asset files
-python manage.py collectstatic --no-input
 
 python manage.py makemigrations
 python manage.py migrate --noinput
 
-# Crée un super utilisateur (en utilisant des variables d'environnement)
-#python manage.py createsuperuser --noinput \
- #   --username Donatien \
-  #  --email donaerickoulodji@gmail.com || true \
-   # --password erick0151 || true
-# Apply any outstanding database migrations
+# to colletc the staticfiles of images and data
+python manage.py collectstatic --no-input
+## to apply the migrations and execute them in the database
 python manage.py migrate
