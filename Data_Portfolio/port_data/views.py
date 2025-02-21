@@ -77,7 +77,9 @@ class ProjectListView(ListView):
     context_object_name = 'projects'
     paginate_by = 5  # Affiche 6 projets par page
     queryset = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
-
+    
+    def get_queryset(self):
+        return super().get_queryset().order_by('-date_project_update')
 # Page des contacts
 def send_email_via_mailtrap(nom,email, subject_message, message):
     url = "https://sandbox.api.mailtrap.io/api/send/3448761"
