@@ -1,69 +1,102 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Animation du titre principal
-    const textGradients = document.querySelectorAll('.text-gradient');
-    textGradients.forEach(text => {
-        text.style.backgroundSize = '200% auto';
-        text.style.animation = 'gradient 3s linear infinite';
-    });
+// about.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Configuration des animations
+    const animationConfig = {
+        card: {
+            transition: 'all 0.5s ease-out',
+            initialTranslate: 'translateY(20px)',
+            finalTranslate: 'translateY(0)'
+        },
+        skill: {
+            hoverScale: 1.05,
+            hoverShadow: '0 4px 8px rgba(0,0,0,0.1)'
+        },
+        date: {
+            staggerDelay: 200,
+            totalDelay: 500
+        }
+    };
 
-    // Animation des cartes d'expérience et d'éducation
-    const cards = document.querySelectorAll('.card');
-    
-    const observerOptions = {
+    // Initialisation des composants
+    initTextGradients();
+    initCardsAnimation();
+    initDownloadButton();
+    initSkillsInteraction();
+    initDatesAnimation();
+    injectGlobalStyles();
+});
+
+function initTextGradients() {
+    const gradients = document.querySelectorAll('.text-gradient');
+    gradients.forEach(gradient => {
+        gradient.style.backgroundSize = '200% auto';
+        gradient.style.animation = 'text-gradient 3s linear infinite';
+    });
+}
+
+function initCardsAnimation() {
+    const observer = new IntersectionObserver(handleCardIntersection, {
         root: null,
         rootMargin: '0px',
         threshold: 0.1
-    };
+    });
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    cards.forEach(card => {
+    document.querySelectorAll('.card').forEach(card => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.5s ease-out';
+        card.style.transform = animationConfig.card.initialTranslate;
+        card.style.transition = animationConfig.card.transition;
         observer.observe(card);
     });
+}
 
-    // Animation du bouton de téléchargement
-    const downloadBtn = document.querySelector('.btn-primary');
-    if (downloadBtn) {
-        downloadBtn.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-3px)';
-            this.querySelector('.bi-download').style.transform = 'translateY(2px)';
-        });
+function handleCardIntersection(entries, observer) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = animationConfig.card.finalTranslate;
+            observer.unobserve(entry.target);
+        }
+    });
+}
 
-        downloadBtn.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.querySelector('.bi-download').style.transform = 'translateY(0)';
-        });
-    }
+function initDownloadButton() {
+    const btn = document.querySelector('.btn-download');
+    if (!btn) return;
 
-    // Animation des compétences
-    const skillItems = document.querySelectorAll('.bg-light.rounded-4');
-    skillItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05)';
-            this.style.backgroundColor = '#f8f9fa';
-            this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-            this.style.backgroundColor = '#f8f9fa';
-            this.style.boxShadow = 'none';
-        });
+    const icon = btn.querySelector('.bi-download');
+    
+    btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateY(-3px)';
+        icon.style.transform = 'translateY(2px)';
     });
 
-    // Progression des dates
-    const dates = document.querySelectorAll('.text-primary.fw-bolder, .text-secondary.fw-bolder');
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translateY(0)';
+        icon.style.transform = 'translateY(0)';
+    });
+}
+
+function initSkillsInteraction() {
+    document.querySelectorAll('.skill-item').forEach(item => {
+        item.addEventListener('mouseenter', handleSkillHover);
+        item.addEventListener('mouseleave', handleSkillLeave);
+    });
+}
+
+function handleSkillHover(e) {
+    const target = e.currentTarget;
+    target.style.transform = `scale(${animationConfig.skill.hoverScale})`;
+    target.style.boxShadow = animationConfig.skill.hoverShadow;
+}
+
+function handleSkillLeave(e) {
+    const target = e.currentTarget;
+    target.style.transform = 'scale(1)';
+    target.style.boxShadow = 'none';
+}
+
+function initDatesAnimation() {
+    const dates = document.querySelectorAll('.timeline-date');
     dates.forEach(date => {
         date.style.opacity = '0';
         date.style.transform = 'translateX(-20px)';
@@ -75,51 +108,52 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 date.style.opacity = '1';
                 date.style.transform = 'translateX(0)';
-            }, index * 200);
+            }, index * animationConfig.date.staggerDelay);
         });
-    }, 500);
-});
+    }, animationConfig.date.totalDelay);
+}
 
-// Ajout des styles CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+function injectGlobalStyles() {
+    const styles = `
+        @keyframes text-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .text-gradient {
-        background: linear-gradient(45deg, #007bff, #6610f2, #6f42c1);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        background-size: 200% auto;
-    }
+        .text-gradient {
+            background: linear-gradient(45deg, #007bff, #6610f2, #6f42c1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-    .card {
-        transition: all 0.3s ease;
-    }
+        .skill-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #f8f9fa;
+            border-radius: 1rem;
+        }
 
-    .btn-primary {
-        transition: all 0.3s ease;
-    }
+        .btn-download {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .bg-light.rounded-4 {
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
+        .btn-download .bi-download {
+            transition: transform 0.3s ease;
+        }
 
-    .bi-download {
-        transition: transform 0.3s ease;
-    }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    `;
 
-    .feature {
-        transition: transform 0.3s ease;
-    }
-
-    .feature:hover {
-        transform: rotate(15deg);
-    }
-`;
-document.head.appendChild(style); arragement pour une bonne flexibilité
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
+}

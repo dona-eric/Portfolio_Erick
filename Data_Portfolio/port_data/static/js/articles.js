@@ -1,110 +1,160 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Animation du titre
-    const textGradient = document.querySelector('.text-gradient');
-    if (textGradient) {
-        textGradient.style.backgroundSize = '200% auto';
-        textGradient.style.animation = 'gradient 3s linear infinite';
-    }
+// articles.js
+document.addEventListener('DOMContentLoaded', () => {
+    const animationConfig = {
+        textGradient: {
+            animation: 'text-gradient 3s linear infinite'
+        },
+        card: {
+            translateY: '20px',
+            transition: 'all 0.3s ease',
+            hoverTranslate: '-5px'
+        },
+        link: {
+            hoverTranslate: '10px',
+            transition: 'all 0.3s ease'
+        },
+        image: {
+            loadTransition: 'opacity 0.5s ease',
+            hoverScale: 1.05
+        }
+    };
 
-    // Animation de la carte d'article
-    const articleCard = document.querySelector('.card');
-    if (articleCard) {
-        // Animation initiale
-        articleCard.style.opacity = '0';
-        articleCard.style.transform = 'translateY(20px)';
-        
-        // Animation d'entrée
-        setTimeout(() => {
-            articleCard.style.opacity = '1';
-            articleCard.style.transform = 'translateY(0)';
-        }, 300);
-
-        // Effet au survol
-        articleCard.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-        });
-
-        articleCard.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    }
-
-    // Animation du lien "Voir plus"
-    const linkArticle = document.querySelector('.linku-projects1');
-    if (linkArticle) {
-        linkArticle.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(10px)';
-        });
-
-        linkArticle.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0)';
-        });
-    }
-
-    // Gestion de l'image
-    const articleImage = document.querySelector('.img-fluid');
-    if (articleImage) {
-        articleImage.addEventListener('load', function() {
-            this.style.opacity = '1';
-        });
-        
-        articleImage.style.opacity = '0';
-        articleImage.style.transition = 'opacity 0.5s ease';
-    }
+    initTextGradient(animationConfig.textGradient);
+    initArticleCards(animationConfig.card);
+    initArticleLinks(animationConfig.link);
+    initArticleImages(animationConfig.image);
+    injectArticleStyles();
 });
 
-// Ajout des styles CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+function initTextGradient(config) {
+    const gradients = document.querySelectorAll('.article-title-gradient');
+    gradients.forEach(gradient => {
+        gradient.style.backgroundSize = '200% auto';
+        gradient.style.animation = config.animation;
+    });
+}
 
-    .text-gradient {
-        background: linear-gradient(45deg, #007bff, #6610f2, #6f42c1);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        background-size: 200% auto;
-    }
+function initArticleCards(config) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCard(entry.target, '0', 'translateY(0)');
+            }
+        });
+    }, { threshold: 0.1 });
 
-    .card {
-        transition: all 0.3s ease;
-    }
+    document.querySelectorAll('.article-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = `translateY(${config.translateY})`;
+        card.style.transition = config.transition;
+        
+        card.addEventListener('mouseenter', () => 
+            handleCardHover(card, config.hoverTranslate));
+        card.addEventListener('mouseleave', () => 
+            handleCardHover(card, '0'));
+        
+        observer.observe(card);
+    });
+}
 
-    .linku-projects1 {
-        display: inline-block;
-        color: #007bff;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        padding: 5px 0;
-        position: relative;
-    }
+function animateCard(element, opacity, transform) {
+    element.style.opacity = opacity;
+    element.style.transform = transform;
+}
 
-    .linku-projects1:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background-color: #007bff;
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
+function handleCardHover(card, translate) {
+    if (window.matchMedia('(hover: hover)').matches) {
+        card.style.transform = `translateY(${translate})`;
     }
+}
 
-    .linku-projects1:hover:after {
-        transform: scaleX(1);
-    }
+function initArticleLinks(config) {
+    document.querySelectorAll('.article-link').forEach(link => {
+        link.style.transition = config.transition;
+        
+        link.addEventListener('mouseenter', () => 
+            handleLinkHover(link, config.hoverTranslate));
+        link.addEventListener('mouseleave', () => 
+            handleLinkHover(link, '0'));
+    });
+}
 
-    .img-fluid {
-        transition: transform 0.3s ease;
+function handleLinkHover(link, translate) {
+    if (window.matchMedia('(hover: hover)').matches) {
+        link.style.transform = `translateX(${translate})`;
     }
+}
 
-    .img-fluid:hover {
-        transform: scale(1.05);
-    }
-`;
-document.head.appendChild(style);
+function initArticleImages(config) {
+    document.querySelectorAll('.article-image').forEach(img => {
+        img.style.opacity = '0';
+        img.style.transition = config.loadTransition;
+        
+        img.addEventListener('load', () => {
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+        });
+        
+        img.addEventListener('mouseenter', () => 
+            img.style.transform = `scale(${config.hoverScale})`);
+        img.addEventListener('mouseleave', () => 
+            img.style.transform = 'scale(1)');
+    });
+}
+
+function injectArticleStyles() {
+    const styles = `
+        @keyframes text-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .article-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
+        }
+
+        .article-link {
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+            position: relative;
+            backface-visibility: hidden;
+        }
+
+        .article-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .article-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        .article-image {
+            border-radius: 0.5rem;
+            transform: translateZ(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .article-card,
+            .article-link,
+            .article-image {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    `;
+
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
+}
