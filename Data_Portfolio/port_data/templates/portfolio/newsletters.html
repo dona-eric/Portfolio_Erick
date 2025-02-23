@@ -9,7 +9,7 @@
         <form method="POST" class="space-y-6">
             {% csrf_token %}
             <div class="form-group">
-                <label for="{{ form.nom.id_for_label }}" class="form-label">Name</label>
+                <label for="{{ form.nom.id_for_label }}" class="form-label">Name:</label>
                 {{ form.nom }}
                 {% if form.nom.errors %}
                     <p class="mt-2 text-sm text-red-600">
@@ -19,7 +19,7 @@
             </div>
 
             <div class="form-group">
-                <label for="{{ form.prenom.id_for_label }}" class="form-label">Surname</label>
+                <label for="{{ form.prenom.id_for_label }}" class="form-label">Surname:</label>
                 {{ form.prenom }}
                 {% if form.prenom.errors %}
                     <p class="mt-2 text-sm text-red-600">
@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group">
-                <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
                 {{ form.email }}
                 {% if form.email.errors %}
                     <p class="mt-2 text-sm text-red-600">
