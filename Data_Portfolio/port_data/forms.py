@@ -15,10 +15,6 @@ class ContactForms(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'exemple@email.com'
             }),
-            'subject': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Sujet de votre message'
-            }),
             'message': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 4,

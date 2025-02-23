@@ -1,0 +1,30 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="articles-section">
+    <div class="container px-5">
+        <div class="articles-header">
+            <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Details sur mes articles</span></h1>
+            <p class="text-muted">Découvrez mes dernières réflexions et analyses sur divers sujets.</p>
+        </div>
+        {% if articles %}
+        <div class="row gx-5 justify-content-center">
+            {% for article in articles %}
+            <div class="col-lg-6 col-xl-4 mb-4">
+                <div class="card-body">
+                    <h1>{{ article.title }}</h1>
+                    <p>{{ article.content }}</p>
+                    <a href="{% url 'blog_list' %}">Retour à la liste</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="text-center text-gray-600">Aucun article disponible pour le moment.</p>
+            <a href="https://medium.com/@koulodjiric" target="_blank" rel="noopener noreferrer">Click here</a>.</p>
+        {% endif %}
+    </div>
+</section>
+<script src="{% static 'js/articles.js' %}"></script>
+{% endblock content %}
