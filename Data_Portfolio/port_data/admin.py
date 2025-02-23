@@ -29,9 +29,9 @@ class ServiceRequestdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author_articles', 'date_published', 'categorie', 'content', 'url_blog')
-    list_filter = ('author_articles', 'categorie', 'date_published')
-    search_fields = ('title', 'content', 'author_articles')
+    list_display = ('title', 'author_article', 'date_published', 'categorie', 'content', 'url_blog')
+    list_filter = ('author_article', 'categorie', 'date_published')
+    search_fields = ('title', 'content', 'author_article')
     date_hierarchy = 'date_published'
     ordering = ('-date_published',)
     
@@ -52,7 +52,7 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('name','email','subject', 'message', 'sent_at', 'is_read')
+    list_display = ('name','email', 'message', 'sent_at', 'is_read')
     list_filter = ('is_read', 'sent_at')
-    search_fields = ('name','email', 'subject', 'message')
+    search_fields = ('name','email','message')
 
