@@ -5,7 +5,7 @@ from django import forms
 class ContactForms(forms.ModelForm):
     class Meta:
         model = Contact
-        fields= ['name', "email", "subject", "message"]
+        fields= ['name', "email", "message"]
     widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -24,7 +24,6 @@ class ContactForms(forms.ModelForm):
     labels = {
             'name': 'Nom complet',
             'email': 'Adresse email',
-            'subject': 'Sujet',
             'message': 'Message'
         }
 
