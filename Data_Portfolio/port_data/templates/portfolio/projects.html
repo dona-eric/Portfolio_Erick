@@ -2,35 +2,43 @@
 {% load static %}
 
 {% block content %}
+<section class="recherche-project py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div class="container px-5">
+        <h1 class="text-center text-4xl font-bold text-indigo-500 mb-8">Recherche de projet</h1>
+        <form action="{% url 'projects' %}" method="GET" class="flex justify-center">
+            <input type="text" name="q" placeholder="Rechercher un projet..." value="{{ request.GET.q }}">
+            <button type="submit">Rechercher</button>
+        </form>     
+    </div>
+</section>
 
 <section class="projects-section py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
     <div class="container px-5">
         <h1 class="text-center text-4xl font-bold text-indigo-500 mb-8">Mes Projets</h1>
-        {% if project %}
+        {% if projects %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for pro in project %}
             <div class="project-card rounded-lg shadow-md overflow-hidden bg-gray-700 hover:shadow-lg transition-shadow duration-300">
                 {% if pro.image_project %}
-                <img src="{{ pro.image_project }}" alt="{{ pro.title }}" class="project-image w-full h-48 object-cover">
+                    <img src="{{ pro.image_project }}" alt="{{ pro.title }}" class="project-image w-full h-48 object-cover">
                 {% else %}
-                <img src="{% static 'images/etu.jpg' %}" alt="Image de projet par défaut" class="project-image w-full h-48 object-cover">
+                    <img src="{% static 'images/opti.png' %}" alt="default" class="project-image w-full h-48 object-cover" weight="80" height="70">
                 {% endif %}
                 <div class="p-4">
                     <h2 class="project-title text-xl font-semibold mb-2">{{ pro.title }}</h2>
                     <p class="project-description text-gray-300">{{ pro.description|truncatechars:100 }}</p>
                     <p class="project-skills text-sm mt-2">
-                        <strong class="text-indigo-400">Compétences:</strong> {{ pro.skills_used }}
-                    </p>
+                        <strong class="text-indigo-400">Categories:</strong> {{ pro.skills_used }}</p>
                     <div class="project-links mt-4 flex justify-between">
                         {% if pro.github_link %}
-                        <a href="{{ pro.github_link }}" target="_blank" class="github-button px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300">
-                            Github
-                        </a>
+                            <a href="{{ pro.github_link }}" target="_blank" class="github-button px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300">
+                                Github
+                            </a>
                         {% endif %}
                         {% if pro.url_project %}
-                        <a href="{{ pro.url_project }}" target="_blank" class="demo-button px-4 py-2 rounded-md bg-gray-600 hover:bg-gray-700 transition-colors duration-300">
-                            Démo
-                        </a>
+                            <a href="{{ pro.url_project }}" target="_blank" class="demo-button px-4 py-2 rounded-md bg-gray-600 hover:bg-gray-700 transition-colors duration-300">
+                                Démo
+                            </a>
                         {% endif %}
                     </div>
                 </div>
@@ -38,7 +46,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-center text-gray-400 mt-8">Aucun projet disponible.</p>
+            <p class="text-center text-gray-400 mt-8">Aucun projet disponible.</p>
         {% endif %}
         <div class="mt-8 text-center">
             <a href="{% url 'contacts-us' %}" class="contact-button inline-block px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white font-semibold transition-colors duration-300">Contactez-moi →</a>
@@ -47,7 +55,6 @@
 </section>
 
 <script src="{% static 'js/projects.js' %}"></script>
-
 
 
 {% endblock content %}

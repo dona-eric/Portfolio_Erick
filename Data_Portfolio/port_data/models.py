@@ -23,12 +23,37 @@ class About(models.Model):
     def __str__(self):
         return f"{self.nom} {self.prenoms}"
     
+    
+"""models for skills"""
+
+class Skill(models.Model):
+    CATEGORY_CHOICES = [
+        ('FRONTEND', 'Frontend'),
+        ('BACKEND', 'Backend'),
+        ('DEVOPS', 'DevOps'),
+        ('DATABASE', 'Base de données'),
+        ('OTHER', 'Autre'),
+    ]
+    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, default="Category", verbose_name="Catégorie")
+    skills_name = models.CharField(max_length=100, verbose_name="Nom de la compétence")
+    level = models.IntegerField(
+        default=50,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        verbose_name="Niveau de maîtrise",
+        help_text="Niveau de maîtrise en pourcentage (0-100)"
+    )
+    description = models.TextField(null=True, blank=True, verbose_name="Description")
+
+    def __str__(self):
+        return f"{self.skills_name} ({self.category})"    
+    
+
 """models for projects"""
 
 class Project(models.Model):
     title = models.CharField(max_length=500, verbose_name="Titre")
     description = models.TextField(verbose_name="Description")
-    skills_used = models.ManyToManyField("Skill", related_name="projects", verbose_name="Compétences utilisées")
+    skills_used = models.ManyToManyField(Skill, related_name="projects", verbose_name="Compétences utilisées")
     image_project = models.ImageField(upload_to='media/', blank=True, null=True, verbose_name="Image du projet")
     github_link = models.URLField(blank=True, null=True, verbose_name="Lien GitHub")
     url_project = models.URLField(blank=True, null=True, verbose_name="URL du projet")
@@ -48,39 +73,15 @@ class Project(models.Model):
             models.Index(fields=['-date_project_update']),  # Optionnel : améliore les performances
         ]
 
-"""models for skills"""
-
-class Skill(models.Model):
-    CATEGORY_CHOICES = [
-        ('FRONTEND', 'Frontend'),
-        ('BACKEND', 'Backend'),
-        ('DEVOPS', 'DevOps'),
-        ('DATABASE', 'Base de données'),
-        ('OTHER', 'Autre'),
-    ]
-    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, verbose_name="Catégorie")
-    skills_name = models.CharField(max_length=100, verbose_name="Nom de la compétence")
-    level = models.IntegerField(
-        default=50,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name="Niveau de maîtrise",
-        help_text="Niveau de maîtrise en pourcentage (0-100)"
-    )
-    description = models.TextField(null=True, blank=True, verbose_name="Description")
-
-    def __str__(self):
-        return f"{self.skills_name} ({self.category})"
-
 
 
 """models for articles """
-
 
 class Article(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     url_blog = models.URLField(blank=True, null=True)
-    author_articles = models.CharField(max_length=200, verbose_name='Auteur', null=True)
+    author_article= models.CharField(max_length=200, verbose_name='Auteur', null=True)
     date_published = models.DateTimeField(null=True, verbose_name='Date de publication')
     categorie = models.CharField(max_length=255, blank=True, null=True)
 
@@ -95,7 +96,6 @@ to create it """
 class Contact(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
     email = models.EmailField(verbose_name="Adresse email")
-    subject = models.CharField(max_length=200, verbose_name="Sujet du message")
     message = models.TextField(verbose_name="Message")
     sent_at = models.DateTimeField(auto_now_add=True, verbose_name="Envoyé à")
     is_read = models.BooleanField(default=False, verbose_name="Lu")
@@ -148,16 +148,6 @@ class Newsletter(models.Model):
         verbose_name = "Abonné à la newsletter"
         verbose_name_plural = "Abonnés à la newsletter"
   
-    
-class SocialMedia(models.Model):
-    name = models.CharField(max_length=100)
-    url = models.URLField()
-    icon = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 # models pour le repo GitHub 
 
 class GitHubRepo(models.Model):

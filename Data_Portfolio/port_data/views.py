@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
-from .models import About, Article, Project, Skill, Contact, Service, ServiceRequest, Newsletter
+from .models import About, Article, Project, Skill, Contact, Service, ServiceRequest, Newsletter, GitHubRepo, GitHubActivity
 from .forms import ContactForms, ServiceRequestForms, NewsletterForms, ServiceForms
 from django.core.mail import send_mail
 from django.core.validators import validate_email
@@ -10,16 +10,19 @@ import warnings,requests, json, os
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
+import traceback
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView, ListView
 # Page d'accueil
-from .models import GitHubRepo, GitHubActivity
 
-
+# message d'alerte
 warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
 
 #login_required
+"""Construction des vues génériques pour les pages de l'application
+basée sur les classes de Django"""  
 
+# Page d'accueil
 class HomeView(TemplateView):
     template_name = 'portfolio/home.html'
 
@@ -40,7 +43,6 @@ class AboutView(DetailView):
         return About.objects.first()
 
 
-
 # vues pour les blogs ou articles et les details des blogs
 class ArticleListView(ListView):
     model = Article
@@ -56,79 +58,84 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'portfolio/blog_detail.html'
     context_object_name = 'articles'
+    queryset = Article.objects.all()
     
-#pour une article spécifique
-
-def article_list(request, id_article):
-    blog_list = get_object_or_404(Article, pk=id_article)
-    return render(request, 'portfolio/blog_list.html', {'blog_list': blog_list})
-
 
 # Page des compétences
-def skills(request):
-    skill = Skill.objects.all()
-    return render(request, 'portfolio/skills.html', {'skills': skill})
-
+class SkillsListView(ListView):
+    model = Skill
+    template_name = 'portfolio/skills.html'
+    context_object_name = 'skills'
+    queryset = Skill.objects.all()
 
 # vue des projects
 class ProjectListView(ListView):
     model = Project
     template_name = 'portfolio/projects.html'
     context_object_name = 'projects'
-    paginate_by = 5  # Affiche 6 projets par page
+    paginate_by = 5  # Affiche 5 projets par page
     queryset = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
     
     def get_queryset(self):
-        return super().get_queryset().order_by('-date_project_update')
+        queryset = super().get_queryset().order_by('-date_project_update')
+        search_query = self.request.GET.get('q')  # Récupère le mot-clé
+        if search_query:
+            queryset = queryset.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query))
+        return queryset
+
+    
+    
 # Page des contacts
-def send_email_via_mailtrap(nom,email, subject_message, message):
-    url = "https://sandbox.api.mailtrap.io/api/send/3448761"
+
+def send_email_via_mailtrap(email, message, recipient_email):
+    url = "https://sandbox.api.mailtrap.io/api/send/3448761"  # Assure-toi que cet ID est correct
 
     headers = {
-        "Authorization": f"Bearer {MAILTRAP_API_TOKEN}",
+        "Authorization": f"Bearer {settings.MAILTRAP_API_TOKEN}",
         "Content-Type": "application/json"
     }
+    
     data = {
         "from": {"email": settings.EMAIL_ADMIN, "name": "DataWorld"},
-        "to": [{"email": email}],  # Email Admin
-        "subject": "Nouvelle inscription à la newsletter",
-        "text": f"Nom: {nom}\nEmail: {email}\nmessage: {message}"
+        "to": [{"email": recipient_email}],  
+        "Adresse": email,
+        "text": message
     }
-    response = requests.post(url, headers=headers, data=json.dumps(data))
+
+    response = requests.post(url, headers=headers, json=data)  
     return response.status_code == 200
 
+
 ## vue pour les contacts en utilisant les formulaires de django et les vues generiques
+
 def contacts(request):
     if request.method == "POST":
         print("✔ Django a reçu une requête POST !")  # Debugging
         form = ContactForms(request.POST)
+        
         if form.is_valid():
             print("✔ Formulaire valide !")  # Debugging
             try:
                 nom = form.cleaned_data["name"]
                 email = form.cleaned_data["email"]
-                subject_message = form.cleaned_data["subject"]
                 content_message = form.cleaned_data["message"]
                 print(f"✔ Formulaire validé : {nom}, {email}, {content_message}")
 
-                # Email à l'admin
-                full_message = f"Message de {nom} ({email}):\n\n{content_message}"
-                print(full_message)
+                # Construction des messages
+                message_admin = f"Message de {nom} ({email}):\n\n{content_message}"
+                message_user = f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe."
+
+                # Envoi des emails
                 mail_admin = send_email_via_mailtrap(
-                    subject=f"📩 Nouveau message de {nom} : {subject_message}",
-                    message=full_message,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.EMAIL_ADMIN],  # Ton email admin
-                    fail_silently=False,
+                    subject=f"📩 Nouveau message de {nom} : {email}",
+                    message=message_admin,
+                    recipient_email=settings.EMAIL_ADMIN
                 )
 
-                # Email de confirmation à l'utilisateur
                 mail_user = send_email_via_mailtrap(
                     subject="📩 Votre message a bien été reçu !",
-                    message=f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe.",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],  # Email du visiteur
-                    fail_silently=False,
+                    message=message_user,
+                    recipient_email=email
                 )
 
                 if mail_admin and mail_user:
@@ -136,10 +143,12 @@ def contacts(request):
                     messages.success(request, "Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.")
                 else:
                     print("❌ Erreur lors de l'envoi des emails.")
+                    messages.error(request, "Problème lors de l'envoi des emails. Veuillez réessayer.")
 
-                return redirect("home")  # Redirige vers la page d'accueil
+                return redirect("home")  # Redirection après succès
             except Exception as e:
-                print("Erreur lors de l'envoi de l'email :", e)
+                print("❌ Erreur lors de l'envoi de l'email :", e)
+                print(traceback.format_exc())  # Debugging avancé
                 messages.error(request, "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.")
         else:
             messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
@@ -147,6 +156,7 @@ def contacts(request):
         form = ContactForms()
 
     return render(request, "portfolio/contacts.html", {"form": form})
+
 
 # vues pour les services
 
@@ -183,7 +193,6 @@ class ServiceRequestView(FormView):
     def form_invalid(self, form):
         messages.error(self.request, "Veuillez corriger les erreurs dans le formulaire.")
         return super().form_invalid(form)
-
 
 
 
