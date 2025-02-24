@@ -10,15 +10,13 @@
         </div>
         {% if articles %}
         <div class="row gx-5 justify-content-center">
-            {% for article in articles %}
             <div class="col-lg-6 col-xl-4 mb-4">
                 <div class="card-body">
-                    <h1>{{ article.title }}</h1>
-                    <p>{{ article.content }}</p>
+                    <h1>{{ articles.title }}</h1>
+                    <p>{{ articles.content }}</p>
                     <a href="{% url 'blog_list' %}">Retour à la liste</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
         {% else %}
             <p class="text-center text-gray-600">Aucun article disponible pour le moment.</p>

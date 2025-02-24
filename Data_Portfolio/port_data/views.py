@@ -11,6 +11,8 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 import traceback
+from django.db.models import Q
+from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView, ListView
 # Page d'accueil
@@ -87,7 +89,7 @@ class ProjectListView(ListView):
     
 # Page des contacts
 
-def send_email_via_mailtrap(email, message, recipient_email):
+def send_email_via_mailtrap(nom, message, recipient_email):
     url = "https://sandbox.api.mailtrap.io/api/send/3448761"  # Assure-toi que cet ID est correct
 
     headers = {
@@ -98,7 +100,7 @@ def send_email_via_mailtrap(email, message, recipient_email):
     data = {
         "from": {"email": settings.EMAIL_ADMIN, "name": "DataWorld"},
         "to": [{"email": recipient_email}],  
-        "Adresse": email,
+        "Adresse": nom,
         "text": message
     }
 
@@ -122,19 +124,19 @@ def contacts(request):
                 print(f"✔ Formulaire validé : {nom}, {email}, {content_message}")
 
                 # Construction des messages
-                message_admin = f"Message de {nom} ({email}):\n\n{content_message}"
+                message_admin = f"Message de {nom}, ({email}):\n\n{content_message}"
                 message_user = f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe."
 
                 # Envoi des emails
                 mail_admin = send_email_via_mailtrap(
-                    subject=f"📩 Nouveau message de {nom} : {email}",
-                    message=message_admin,
+                    nom = f"📩 Nouveau message de : {email}",
+                    message = message_admin,
                     recipient_email=settings.EMAIL_ADMIN
                 )
 
                 mail_user = send_email_via_mailtrap(
-                    subject="📩 Votre message a bien été reçu !",
-                    message=message_user,
+                    nom ="📩 Votre message a bien été reçu !",
+                    message = message_user,
                     recipient_email=email
                 )
 
@@ -172,7 +174,7 @@ class ServicesListView(ListView):
 class ServiceDetailView(DetailView):
     model = Service
     template_name = 'portfolio/service_detail.html'
-    context_object_name = 'service'
+    context_object_name = 'services'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

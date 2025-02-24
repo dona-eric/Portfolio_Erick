@@ -35,7 +35,6 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=150)),
                 ('content', models.TextField()),
                 ('url_blog', models.URLField(blank=True, null=True)),
-                ('author_article', models.CharField(max_length=200, null=True, verbose_name='Auteur')),
                 ('date_published', models.DateTimeField(null=True, verbose_name='Date de publication')),
                 ('categorie', models.CharField(blank=True, max_length=255, null=True)),
             ],
