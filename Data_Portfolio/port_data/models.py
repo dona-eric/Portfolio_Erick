@@ -28,11 +28,13 @@ class About(models.Model):
 
 class Skill(models.Model):
     CATEGORY_CHOICES = [
-        ('FRONTEND', 'Frontend'),
-        ('BACKEND', 'Backend'),
-        ('DEVOPS', 'DevOps'),
-        ('DATABASE', 'Base de données'),
-        ('OTHER', 'Autre'),
+        ('DATA', 'Data Science'),
+        ('Python', 'Django-Flasks'),
+        ('Mlops', 'Mlop Data Infra'),
+        ('DATABASE', 'SQL, MySQL, PostgreSQL'),
+        ('DEEP lEARNING', 'Tensorflow, Keras, Pytorch'),
+        ("NLP:Natural Language Processing", 'NLTK, Spacy, Gensim, word2vec'),
+        ('MACHINE lEARNING', 'Scikit-learn, XGBoost, LightGBM'),
     ]
     category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, default="Category", verbose_name="Catégorie")
     skills_name = models.CharField(max_length=100, verbose_name="Nom de la compétence")
