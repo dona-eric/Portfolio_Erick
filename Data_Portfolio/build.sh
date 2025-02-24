@@ -11,6 +11,6 @@ python manage.py makemigrations
 python manage.py migrate --noinput
 
 # to colletc the staticfiles of images and data
-python manage.py collectstatic --no-input
+python manage.py collectstatic
 ## to apply the migrations and execute them in the database
 python manage.py migrate
