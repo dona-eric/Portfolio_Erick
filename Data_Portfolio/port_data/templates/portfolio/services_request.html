@@ -1,0 +1,29 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="form-requested-service">
+    <div class="text-center mb-8">
+        <h3 class="text-lg text-gray-700">Pour vos demandes de service</h3>
+        <p>Remplissez le formulaire ci-dessous pour soumettre votre demande.</p>
+    </div>
+    
+    <!-- Formulaire pour demander le service spécifique -->
+    <form method="post" class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="mb-4">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">
+            Demander ce service
+        </button>
+    </form>
+
+    <div class="text-center mt-8">
+        <p>Votre satisfaction 😇, notre priorité primaire ! Faites-nous confiance 😇 et vous ne serez pas déçus. Merci 😊</p>
+        <a href="{% url 'display/services' %}" class="text-indigo-600 hover:text-indigo-700">Retour à la liste des services</a>
+    </div>
+</section>
+
+{% endblock content %}
