@@ -50,11 +50,15 @@ Je suis **KOULODJI Dona Eric**, un **Data scientist, Developpeur Django** et **P
 - 🔹 **Tech Stack** : Filtrage collaboratif, Scikit-Learn, Pandas, Streamlit
 - 🔹 **Objectif** : Proposer des produits complémentaires aux clients pour augmenter le panier moyen.
 
+### 😣😣 6. **Système de reconnaissance émotionnelle en temps réel**
+**Description**: Développer un système de detection des émotions en temps réel et intégration dans une application web construite avec Django et développement des apis avec FastAPI pour l'intégration. 
+- *  **Tech Stack**: Traitement d'images avec Tensorflow/pytorch, Deep Learning, Machine Learning, OpenCV, DJango, Convolutionnal Neural Networks(CNN), Pre-trained models
 ---
 
-## 🚀 Ce que je peux faire pour vous
-✅ Développer des solutions de **machine learning** et **deep learning**  
-✅ Construire des **API** avec Django et FastAPI  
+## 🚀 Ce que je peux faire pour vous:
+✅ Développer des solutions de **Machine Learning** et **Deep Learning**  
+✅ Construire des **API** avec **Django et FastAPI**  
+✅ Concevoir vos applications avec **Django**  
 ✅ Automatiser des pipelines avec **MLflow & Airflow**  
 ✅ Mettre en place un **dashboard interactif** avec Streamlit  
 ✅ Déployer des modèles ML sur **serveurs & cloud**  
@@ -66,12 +70,12 @@ Je suis **KOULODJI Dona Eric**, un **Data scientist, Developpeur Django** et **P
 ## 📫 Me Contacter
 📧 Email : **donaerickoulodji@gmail.com**  
 💼 LinkedIn : [Mon Profil](https://www.linkedin.com/in/dona-erick)  
-🌍 Portfolio : [www.erickdona.com](https://portfolio-erick.onrender.com/)  
-🐦 Twitter : [@ErickDona](https://twitter.com/ErickDona)  
+🌍 Portfolio : [www.donaeric.com](https://portfolio-erick.onrender.com/)  
+🐦 Twitter : [@ErickDona](https://twitter.com/ericschrodinger)  
 📜 Medium : [@erickoulodji](https://medium.com/@koulodjiric)
 
 
-Pour en savoir plus sur moi, vous visitez mon site web : [www.erickdona.com](https://portfolio-erick.onrender.com/) 
+Pour en savoir plus sur moi, vous visitez mon site web : [www.donaeric.com](https://portfolio-erick.onrender.com/) 
 
 ---
 

@@ -349,6 +349,7 @@
   }
   
   .section-header h2 {
+    text-align: center;
     font-size: 2.5rem;
     color: var(--accent-color);
   }
@@ -540,15 +541,13 @@
   color: var(--accent-color);
   transition: color 0.3s ease;
 }
-
-
 .navbar-brand:hover {
-  color: #6d28d9;
+  color: #111013;
+  text-decoration: none;
 }
-
 .navbar-nav {
-  display: flex;
-  align-items: center; /* Alignement vertical */
+  display:flexbox;
+  align-items: flex-start;/* Alignement vertical */
   justify-content: space-around; /* Distribution égale de l'espace */
   margin-right: auto; /* Pousse les éléments à droite */
 }
@@ -560,7 +559,7 @@
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(44, 42, 42, 0.8);
   font-size: 1.1rem;
   text-decoration: none;
   padding: 0.5rem 1rem;
@@ -569,14 +568,16 @@
 }
 
 .nav-link:hover {
-  color: #fff;
+  color: #0c0b0b;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
 }
 
 .nav-link.active {
-  color: #fff;
+  color: #0e0d0d;
   background: linear-gradient(45deg, #fd6f46, #fb9832);
+  text-decoration: none;
 }
 
 /* Animation d'apparition */
@@ -636,7 +637,7 @@
   }
 }
   
-  .navbar-dark .navbar-nav .nav-link {
+.navbar-dark .navbar-nav .nav-link {
     color: #f5f6fa;
     font-weight: 500;
     padding: 0.5rem 0.8rem !important;
@@ -663,9 +664,9 @@
   }
   
   /* État actif */
-  .navbar-dark .navbar-nav .nav-link.active {
+  /**.navbar-dark .navbar-nav .nav-link.active {
     color: var(--accent-color) !important;
-  }
+  } **/
   
   .navbar-dark .navbar-nav .nav-link.active::after {
     width: 100%;
@@ -699,34 +700,7 @@
   .nav-item {
     margin: 0; /* Supprime les marges */
     padding: 0;
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 0.5rem 0.8rem;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .navbar-brand {
-      font-size: 1.2rem;
-      margin-right: 1rem;
-      margin-bottom: 0.3rem;
-    }
-    
-    .navbar-nav {
-      padding: 1rem 0;
-    }
 
-     .navbar-collapse {
-    width: 100%;
-  }
-    
-    .nav-link {
-      margin: 0.3rem 0 !important;
-      text-align: center;
-    }
-  }
   
   /* Animation d'apparition */
   @keyframes navItemAppear {
@@ -775,240 +749,230 @@
   justify-content: space-between;
 }
 
-
-
 .nav-link {
   color: var(--text-light);
   padding: 0.5rem;
 }
 
-/* === Projects Section === */
 
+
+
+
+/* Section principale */
 .projects-section {
-  padding: 2rem 0;
+  background: linear-gradient(to bottom right, #1a202c, #2d3748);
+  color: #ffffff;
+  padding: 3rem 0;
+  font-family: 'Arial', sans-serif;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.projects-section h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #6366f1;
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 1s ease-in-out;
 }
 
-/* Project Grid */
+/* Grille des projets */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
+/* Carte de projet */
 .project-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  margin: 2rem 0;
-  transition: var(--transition);
+  background-color: #2d3748;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 242, 195, 0.1);
+  transform: scale(1.05);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* Image du projet */
 .project-image {
   width: 100%;
-  height: 150px; /* Reduced height of the image */
-  object-fit: cover;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Project Content */
-.p-4 {
-  padding: 1rem;
+.project-card:hover .project-image {
+  transform: scale(1.1);
 }
 
+/* Contenu de la carte */
 .project-title {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 0.5rem;
-  color: var(--accent-color);
 }
 
 .project-description {
+  color: #a0aec0;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.4;
 }
 
 .project-skills {
-  font-size: 0.8rem;
-  margin-top: 0.75rem;
-  color: var(--text-light);
+  margin-top: 0.5rem;
 }
 
-.project-links {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: flex-start; /* Align buttons to the left */
-  gap: 0.5rem; /* Space between buttons */
+.project-links a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-/* Buttons */
-.github-button,
-.demo-button,
+.github-button {
+  background-color: #4c51bf;
+  color: white;
+}
+
+.github-button:hover {
+  background-color: #5a67d8;
+}
+
+.demo-button {
+  background-color: #4a5568;
+  color: rgb(255, 79, 79);
+}
+
+.demo-button:hover {
+  background-color: #718096;
+}
+
+/* Bouton contact */
 .contact-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 2rem;
-  border-radius: 30px;
-  background: var(--accent-color);
-  color: var(--primary-dark);
-  font-weight: 600;
-  transition: var(--transition);
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
 }
 
-.github-button:hover,
-.demo-button:hover,
 .contact-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0, 242, 195, 0.3);
+  transform: translateY(-3px);
 }
 
-/* No Projects Message */
-p.text-center {
-  font-size: 1.1rem;
-  color: #737373;
+/* Formulaire de recherche */
+.recherche-project input[type="text"] {
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: none;
 }
 
-/* Specific adjustments to match the reference image */
-h1.text-center {
-  color: var(--accent-color); /* Turquoise color */
-  margin-bottom: 1rem;
+.recherche-project button[type="submit"] {
+  padding: 10px 15px;
+  margin-left: -4px; /* Pour aligner avec l'input */
 }
 
-.project-skills strong {
-  color: var(--accent-color); /* Turquoise color */
+/* Animations */
+@keyframes fadeInDown {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
 }
 
-/* Override Bootstrap Icons */
-.bi {
-font-size: 1.2em;
-vertical-align: middle;
-}
+/* === Contact Styles Modifiés === */
 
-/* === Contact Styles === */
-
-
-/* Section de contact */
 .contact-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
   background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: #dac5c5;
 }
 
 .contact-container {
-  max-width: 800px;
-  width: 100%;
-  background-color: rgba(10, 10, 10, 0.95); /* Légère transparence */
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Titre */
-.contact-container h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Formulaire */
-.contact-form {
-  display: flex;
-  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.95); /* Fond plus clair */
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .form-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
+  color: #4c51bf; /* Bleu indigo pour les labels */
+  font-size: 0.9rem;
+  margin-bottom: 12px;
 }
 
 input[type="text"],
 input[type="email"],
 textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
+  background-color: #f8f9fa; /* Fond gris clair */
+  border: 2px solid #4c51bf !important; /* Bordure indigo */
+  padding: 15px;
+  transition: all 0.3s ease;
+  color: #2d3748; /* Texte foncé */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #2b6cb0 !important; /* Bleu plus foncé au focus */
+  box-shadow: 0 0 8px rgba(76, 81, 191, 0.3); /* Lueur subtile */
+  background-color: #ffffff;
 }
 
 textarea {
-  height: 120px;
+  resize: vertical; /* Permet le redimensionnement vertical uniquement */
+  min-height: 150px;
 }
 
-/* Bouton Submit */
 .submit-btn {
-  background-color: rgba(31, 29, 29, 0.95); /* Couleur sombre pour le bouton */
-  color: #fff;
-  font-size: 1rem;
-  padding: 12px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
+  background-color: #4c51bf !important; /* Bleu indigo */
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: transform 0.2s ease;
 }
 
 .submit-btn:hover {
-  background-color: #777777; /* Couleur plus claire au survol */
-}
-
-/* Liens et boutons */
-.contact-button {
-  text-decoration: none;
-}
-
-.contact-button:hover {
-  background-color: #444444; /* Effet au survol */
-}
-
-/* Informations de contact (bas) */
-.info-section {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
+  background-color: #2b6cb0 !important;
+  transform: translateY(-2px); /* Effet de légère élévation */
 }
 
 .info-box {
-  flex-basis: calc(50% - 10px);
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1); /* Transparence */
-  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* Fond blanc opaque */
+  border: 2px solid #4c51bf;
 }
 
 .info-box h3 {
-  font-size: 1.2rem;
+  color: #2d3748; /* Texte foncé */
 }
 
 .info-box p,
 .info-box a {
-  color: #ddd; /* Texte clair */
+  color: #4a5568 !important; /* Texte gris foncé */
 }
 
 .info-box a:hover {
-  color: #fff; /* Texte blanc au survol */
+  color: #4c51bf !important;
 }
+
+/* Amélioration de la visibilité générale */
+.contact-container h2 {
+  color: #2d3748;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-center p {
+  color: #4a5568 !important;
+  font-size: 1.1rem;
+}
+
 
   /* newsletters.css */
 /* Ajoutez ces styles à votre fichier CSS */
@@ -1254,7 +1218,7 @@ a {
 }
 
 a:hover {
-  text-decoration: underline; /* Ajoute un soulignement au survol */
+  text-decoration: none; /* Ajoute un soulignement au survol */
 }
 
 /* === Informations de publication === */
@@ -1329,4 +1293,318 @@ services {
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
+}
+
+
+
+/***** Ensembles services ****/
+
+/* services Styles */
+
+h2 {
+  font-size: 2rem;
+  text-transform:initial;
+  letter-spacing: 2px;
+  text-align: center;
+  transition: cubic-bezier(0.77, 0, 0.175, 1);
+}
+/* Section Styling */
+.section-services {
+  background-color: rgba(10, 10, 10, 0.95); /* Légère transparence */
+  padding: 50px 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Service Cards Container */
+.services-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Service Card Styling */
+.service-card {
+  background-color: rgba(71, 66, 66, 0.95); /* Légère transparence */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon Styling */
+.service-icon {
+  font-size: 3rem;
+  color: #4c51bf; /* Indigo color for icons */
+  text-align: center;
+  padding: 20px;
+}
+
+/* Title Styling */
+.service-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #dee0fa; /* Indigo title */
+}
+
+/* Description Styling */
+.service-description {
+  padding: 15px;
+  font-size: 1rem;
+  color: #ebe1e1; /* Gray text for description */
+}
+
+/* Price Styling */
+.service-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #9e9999; /* Darker gray for price */
+  text-align: center;
+}
+
+/* Button Styling */
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  /*color: white;*/
+  background-color: #696a7a; /* Indigo button background */
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/*.btn:hover {background-color: #2b6cb0; /* Darker Indigo on hover */*/
+
+.btn {
+  background-image: linear-gradient(to right, #2a2a2e, #2f3031); /* Indigo to light blue gradient */
+}
+.btn:hover {
+  background-image: linear-gradient(to right, #292b2c, #323335); /* Darker gradient on hover */
+}
+.detail-service a {
+  color: white; /* Ensure link inside button is white */
+}
+.detail-service a:hover {
+  text-decoration: none; /* Add underline on hover for links in buttons */
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
   }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.service-card {
+  animation: fadeInUp 0.6s ease-in-out both;
+}
+
+
+/* detail service Styles */
+
+h3 {
+  font-size: 2rem;
+  text-transform:initial;
+  letter-spacing: 1.5px;
+  text-align: center;
+  color: #b0b1bb; /* Indigo */
+}
+
+/* Section Styling */
+section {
+  padding: 50px 20px;
+}
+
+/* Service Detail Card Styling */
+.detail--services {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.service-card {
+  background-color: rgba(71, 66, 66, 0.95); /* Légère transparence */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  text-align: center;
+  animation: fadeInUp 0.6s ease-in-out both;
+}
+.service-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.service-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ebe1e1; /* Gray text for description */
+}
+
+.service-description {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #ebe1e1; /* Gray text for description */
+}
+
+.service-price {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Button Styling */
+.demande.service .btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgb(95, 89, 89);
+  background-color: #353538; /* Indigo button background */
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.demande.service .btn:hover {
+  background-color: #383a3b; /* Darker Indigo on hover */
+}
+.demande.service .btn {
+  transition: all 0.3s ease-in-out;
+}
+
+
+.demande.service a {
+  color: rgb(138, 129, 129); /* Ensure link inside button is white */
+  text-align: center;
+}
+
+.demande.service a:hover {
+  text-decoration: none; /* Add underline on hover for links in buttons */
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+
+/*** styles pour la demande de service le formulaire ***/
+
+h3 {
+  font-size: 1.8rem;
+  text-transform:initial;
+  letter-spacing: 1.5px;
+  text-align: center;
+  color: #bcbcbe; /* Indigo */
+}
+
+/* Section Styling */
+.form-requested-service {
+  padding: 30px 10px;
+  background-color: #404244; /* Light gray background */
+}
+
+/* Form Styling */
+form {
+  background-color: #201f1f; /* White form background */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+form .mb-4 {
+  margin-bottom: 20px;
+}
+
+form input, form textarea, form select {
+  width: 1000%;
+  padding: 5px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #d1d5db; /* Light gray border */
+  margin-bottom: 10px;
+}
+
+form input:focus, form textarea:focus, form select:focus {
+  outline: none;
+  border-color: #4c51bf; /* Indigo border on focus */
+  box-shadow: 0 0 5px rgba(76, 81, 191, 0.5); /* Indigo glow on focus */
+}
+
+button[type="submit"] {
+  display: block;
+  width: 30%;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform:inherit;
+  color: rgb(223, 216, 216);
+  background-color: #2f2f31; /* Indigo button background */
+  border-radius: 5px;
+  text-align: center;
+}
+
+button[type="submit"]:hover {
+  background-color: #3c3e3f; /* Darker Indigo on hover */
+}
+
+/* Link Styling */
+.text-indigo-600 {
+  color: #bebec4; /* Indigo link color */
+  text-decoration: none;
+  transform: perspective(10);
+}
+
+.text-indigo-600:hover {
+  color: #222425; /* Darker Indigo on hover */
+  text-decoration: none;
+  transition: cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Text Center Styling */
+.text-center p {
+  font-size: 1rem;
+  color: #e6dada; /* Gray text for description */
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+  form {
+      padding: 20px;
+      box-shadow: none; /* Remove shadow for smaller screens */
+      border-radius: 5px; /* Slightly reduce border radius for small screens */
+      margin-top:0%;
+  }
+}

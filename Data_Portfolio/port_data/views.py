@@ -40,7 +40,6 @@ class HomeView(TemplateView):
 class AboutView(DetailView):
     model = About
     template_name = 'portfolio/about.html'
-
     def get_object(self):
         return About.objects.first()
 
@@ -90,7 +89,7 @@ class ProjectListView(ListView):
 # Page des contacts
 
 def send_email_via_mailtrap(nom, message, recipient_email):
-    url = "https://sandbox.api.mailtrap.io/api/send/3448761"  # Assure-toi que cet ID est correct
+    url = "https://sandbox.api.mailtrap.io/api/send/3448761"  # l'api de maitrip pour recevoir des mail des contacts et des newsletters
 
     headers = {
         "Authorization": f"Bearer {settings.MAILTRAP_API_TOKEN}",
@@ -167,14 +166,14 @@ class ServicesListView(ListView):
     template_name = 'portfolio/services.html'
     context_object_name = 'services'
     paginate_by = 6  # Affiche 6 services par page
-    queryset = Service.objects.all()
+    queryset = Service.objects.all().order_by('-created_at')
     
     
 ##### detail des services
 class ServiceDetailView(DetailView):
     model = Service
     template_name = 'portfolio/service_detail.html'
-    context_object_name = 'services'
+    context_object_name = 'services_detail'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -182,7 +181,7 @@ class ServiceDetailView(DetailView):
         return context
 
 class ServiceRequestView(FormView):
-    form = ServiceRequestForms
+    form_class = ServiceRequestForms
     template_name = 'portfolio/services_request.html'
     
     def form_valid(self, form):
@@ -190,7 +189,7 @@ class ServiceRequestView(FormView):
         service_request.service = get_object_or_404(Service, pk=self.kwargs['pk'])
         service_request.save()
         messages.success(self.request, "Votre demande a été envoyée !")
-        return redirect('services:detail', pk=self.kwargs['pk'])
+        return redirect(reverse_lazy('display/services'))  # Redirection vers la page du service
 
     def form_invalid(self, form):
         messages.error(self.request, "Veuillez corriger les erreurs dans le formulaire.")
@@ -268,7 +267,6 @@ def newsletters(request):
         'title': 'Inscription à la newsletter',
         "description": "Restez informé de nos dernières actualités"
     })
-
 
 #def newsletters(request):
     if request.method == 'POST':

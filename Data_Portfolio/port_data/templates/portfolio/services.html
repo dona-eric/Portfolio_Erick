@@ -8,34 +8,34 @@
             <p class="text-lg text-gray-700">Nous vous proposons une gamme variée de services adaptés à vos besoins.</p>
         </div>
 
-        {% if service %}
+        {% if services %}
             <div class="services-container">
-                {% for service_pro in service %}
+                {% for service in services %}
                     <div class="service-card">
                         <!-- Icon -->
-                        {% if service_pro.icon %}
+                        {% if service.icon %}
                             <div class="service-icon">
-                                <i class="{{ service_pro.icon }}"></i>
+                                <i class="{{ service.icon }}"></i>
                             </div>
                         {% endif %}
                         
                         <!-- Title -->
-                        <h3 class="service-title">{{ service_pro.title }}</h3>
+                        <h3 class="service-title">{{ service.title }}</h3>
                         
                         <!-- Description -->
-                        <p class="service-description">{{ service_pro.description }}</p>
+                        <p class="service-description">{{ service.description }}</p>
                         
                         <!-- Price -->
                         <p class="service-price">
-                            <strong>Prix :</strong> {{ service_pro.price }}€
+                            <strong>Prix 🤑:</strong> {{ service.price }}€
                         </p>
-                        
-                        <!-- Action Button -->
-                        <div class="text-center">
-                            <a href="{% url 'service_detail' service_pro.pk %}" 
-                               class="service-request-btn">
-                                En savoir plus 
-                            </a>
+                        <!-- Detail sur un service spécifique -->
+                        <div>
+                            <button type="button" class="btn btn-primary">
+                                <p class="detail-service">
+                                    <a href="{% url 'detail/display/services' service.pk %}">Know here 🥵</a>
+                                </p>
+                            </button>
                         </div>
                     </div>
                 {% endfor %}

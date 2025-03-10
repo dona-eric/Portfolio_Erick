@@ -52,34 +52,28 @@ class ServiceForms(forms.ModelForm):
             'icon': 'Icone'
         }
 
-class ServiceRequestForms(forms.Form):
+class ServiceRequestForms(forms.ModelForm):
     class Meta:
         model = ServiceRequest
-        fields = ['name','email', 'service', 'message']
+        fields = ['name_client','email_client', 'service']
     widgets = {
-            'name': forms.TextInput(attrs={
+            'name_client': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Votre nom complet'
             }),
-            'email': forms.EmailInput(attrs={
+            'email_client': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'email du client'
             }),
             'service': forms.Select(attrs={
                 'class': 'form-control',
                 'placeholder': 'service demandé'
-            }),
-            'message': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 4,
-                'placeholder': 'Votre message...'
-            }),
+            })
         }
     labels = {
-            'name': 'Nom complet',
-            'email': 'Adresse email',
+            'name_client': 'Nom complet',
+            'email_client': 'Adresse email',
             'service': 'Service demandé',
-            'message': 'Message'
         }
                 
                 
