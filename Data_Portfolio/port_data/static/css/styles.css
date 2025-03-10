@@ -1293,6 +1293,7 @@ services {
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
+<<<<<<< HEAD
 }
 
 
@@ -1607,4 +1608,6 @@ button[type="submit"]:hover {
       border-radius: 5px; /* Slightly reduce border radius for small screens */
       margin-top:0%;
   }
+=======
+>>>>>>> 16b74c0ed7af079c966fceb3fe24c8347965313c
 }

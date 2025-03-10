@@ -15,7 +15,10 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(About)
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 16b74c0ed7af079c966fceb3fe24c8347965313c
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_at', 'updated_at')
     search_fields = ('title', 'description')
@@ -44,6 +47,10 @@ class NewsletterAdmin(admin.ModelAdmin):
     search_fields = ('email', 'nom', "prenom")
 admin.site.register(Newsletter, NewsletterAdmin)
 
+<<<<<<< HEAD
+=======
+@admin.register(Skill)
+>>>>>>> 16b74c0ed7af079c966fceb3fe24c8347965313c
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('category', 'skills_name', "level")
     search_fields = ('category', "level", "description")

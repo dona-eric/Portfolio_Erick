@@ -125,12 +125,22 @@ class Service(models.Model):
 
 class ServiceRequest(models.Model):
     service = models.ForeignKey("Service", on_delete=models.CASCADE, related_name='requests')
+<<<<<<< HEAD
     name_client = models.CharField(max_length=100,verbose_name="Nom du client")
     email_client = models.EmailField(verbose_name="Adresse email du client", unique=True)
     date_requested = models.DateTimeField(auto_now_add=True, verbose_name="Date de la demande")
 
     def __str__(self):
         return f"Demande de service de {self.name_client} + {self.email_client} pour {self.service.title}"
+=======
+    name_client = models.CharField(max_length=100, default="nom@CharField" ,verbose_name="Nom du client")
+    email_client = models.EmailField(default='name_client@gmail.com', verbose_name="Adresse email du client")
+    date_requested = models.DateTimeField(auto_now_add=True, verbose_name="Date de la demande")
+
+    def __str__(self):
+        return f"Demande de service de {self.name_client} + " " + {self.email_client} pour {self.service.title}"
+
+>>>>>>> 16b74c0ed7af079c966fceb3fe24c8347965313c
 
 
 ## models pour la newsletter 
