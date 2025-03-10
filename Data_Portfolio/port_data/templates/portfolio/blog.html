@@ -20,7 +20,7 @@
                             <p class="mt-2 text-sm text-muted">Publié le {{ article.date_published|date:"d M Y" }}</p>
                         </div>
                         <div class="card shadow-sm rounded-lg border-0 h-100">
-                            <img src="{{ article.image_url|default:'images/opti.png' }}" class="card-img-top img-fluid rounded-top" 
+                            <img src="{{ article.image_article.url |default:'images/opti.png' }}" class="card-img-top img-fluid rounded-top" 
                                 alt="Image de l'article : {{ article.title }}" aria-label="Image de l'article : {{ article.title }}"> 
                         </div>
                     </div>

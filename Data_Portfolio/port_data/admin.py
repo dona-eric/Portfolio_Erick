@@ -29,7 +29,7 @@ class ServiceRequestdmin(admin.ModelAdmin):
 admin.site.register(ServiceRequest, ServiceRequestdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author_article', 'date_published', 'categorie', 'content', 'url_blog')
+    list_display = ('title', 'author_article', 'date_published', 'categorie', 'content', 'url_blog', "image_article")
     list_filter = ('author_article', 'categorie', 'date_published')
     search_fields = ('title', 'content', 'author_article')
     date_hierarchy = 'date_published'
