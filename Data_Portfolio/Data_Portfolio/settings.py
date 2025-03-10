@@ -1,3 +1,4 @@
+-- Active: 1735120816342@@127.0.0.1@5432
 """
 Django settings for Data_Portfolio project.
 
@@ -156,23 +157,23 @@ WSGI_APPLICATION = "Data_Portfolio.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL
-    )
-}
-
 #DATABASES = {
- #   "default":
-  #      {
-   #         "ENGINE":"django.db.backends.postgresql",
-    #        "NAME":'gptdb',
-     #       'USER':"erick",
-      #      'PASSWORD':"Endrick@#",
-       #     'HOST':"127.0.0.1",
-        #    'PORT':'5432'
-        #}
+   # 'default': dj_database_url.config(
+  #      default=DATABASE_URL
+ #   )
 #}
+
+DATABASES = {
+    "default":
+        {
+            "ENGINE":"django.db.backends.postgresql",
+            "NAME":'gptdb',
+            'USER':"erick",
+            'PASSWORD':"Endrick@#",
+            'HOST':"127.0.0.1",
+           'PORT':'5432'
+        }
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

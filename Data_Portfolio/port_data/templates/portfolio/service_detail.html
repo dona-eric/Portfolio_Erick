@@ -2,19 +2,27 @@
 {% load static %}
 {% block content %}
 
-    <h2 class="text-3xl font-semibold text-indigo-600 text-center py-6">Demander un service</h2>
-    <h3>{{ service.title }}</h3>
-    <p>{{ service.description }}</p>
-    <form method="post" class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-        {% csrf_token %}
-        
-        <div class="mb-4">
-            {{ form.as_p }}
+<section>
+    {% if services_detail %}
+        <div class="detail--services">
+            <div class="service-card">
+                <h3 class="service-title">{{ services_detail.title }}</h3>
+                <p class="service-description">{{ services_detail.description }}</p>
+                <p class="service-price">
+                    <strong>Prix 🤑:</strong> {{ services_detail.price }}€
+                </p>
+            </div>
+        </div>
+        <div class="demande service">
+            <button class="btn btn-primary">
+                <a href="{% url 'services/requested' pk=services_detail.id %}"> Demander ce service</a>
+            </button>
         </div>
 
-        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">Demander ce service</button>
-    </form>
-
+    {% else %}
+        <p class="text-center text-gray-600 mt-8">Aucun service disponible pour le moment.</p>
+    {% endif %}
+</section>
     <script src="{% static 'js/scripts.js' %}"></script>
 
 {% endblock content %}

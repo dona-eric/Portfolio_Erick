@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
-
+from django.utils.text import slugify
 """ Here we create other that the models of database of website
 portfolio """
 
@@ -17,8 +17,8 @@ class About(models.Model):
     #social_media = models.ManyToManyField('social_media.SocialMedia', blank=True)
 
     class Meta:
-        verbose_name = "À propos"
-        verbose_name_plural = "À propos"
+        verbose_name = "about"
+        verbose_name_plural = "about"
 
     def __str__(self):
         return f"{self.nom} {self.prenoms}"
@@ -30,13 +30,14 @@ class Skill(models.Model):
     CATEGORY_CHOICES = [
         ('DATA', 'Data Science'),
         ('Python', 'Django-Flasks'),
-        ('Mlops', 'Mlop Data Infra'),
-        ('DATABASE', 'SQL, MySQL, PostgreSQL'),
-        ('DEEP lEARNING', 'Tensorflow, Keras, Pytorch'),
-        ("NLP:Natural Language Processing", 'NLTK, Spacy, Gensim, word2vec'),
-        ('MACHINE lEARNING', 'Scikit-learn, XGBoost, LightGBM'),
+        ('Mlops', 'Mlops'),
+        ('DATABASE', 'Database'),
+        ('DEEP lEARNING', 'Deep Learning'),
+        ("NL","Traitement Langage Naturel"),
+        ('MACHINE lEARNING', 'Machine Learning'),
+        ('Deep Learning', "Deep Learning"),
     ]
-    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES, default="Category", verbose_name="Catégorie")
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default="Category", verbose_name="Catégorie")
     skills_name = models.CharField(max_length=100, verbose_name="Nom de la compétence")
     level = models.IntegerField(
         default=50,
@@ -83,7 +84,7 @@ class Article(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     url_blog = models.URLField(blank=True, null=True)
-    author_article= models.CharField(max_length=200, verbose_name='Auteur', null=True)
+    author_article = models.CharField(verbose_name="Nom de l'auteur", default="KOULODJI Dona Eric", max_length=100)
     date_published = models.DateTimeField(null=True, verbose_name='Date de publication')
     categorie = models.CharField(max_length=255, blank=True, null=True)
 
@@ -91,13 +92,12 @@ class Article(models.Model):
         return self.title
 
 
-
 """models for contacts: i would like to use the forms of django 
 to create it """
 
 class Contact(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
-    email = models.EmailField(verbose_name="Adresse email")
+    email = models.EmailField(verbose_name="Adresse email", unique =True)
     message = models.TextField(verbose_name="Message")
     sent_at = models.DateTimeField(auto_now_add=True, verbose_name="Envoyé à")
     is_read = models.BooleanField(default=False, verbose_name="Lu")
@@ -114,6 +114,7 @@ class Service(models.Model):
         max_length=50,
         default='fa-code',
         blank=False)
+    price = models.DecimalField(decimal_places=2, max_digits=10, default=0.00)
     created_at = models.DateTimeField(auto_now= True, verbose_name= 'date de création')
     updated_at = models.DateTimeField(auto_now=True, verbose_name= 'date update')
 
@@ -124,13 +125,12 @@ class Service(models.Model):
 
 class ServiceRequest(models.Model):
     service = models.ForeignKey("Service", on_delete=models.CASCADE, related_name='requests')
-    client = models.ForeignKey("Contact", on_delete=models.CASCADE, related_name='service_requests')
-    message = models.TextField(verbose_name="Message")
+    name_client = models.CharField(max_length=100,verbose_name="Nom du client")
+    email_client = models.EmailField(verbose_name="Adresse email du client", unique=True)
     date_requested = models.DateTimeField(auto_now_add=True, verbose_name="Date de la demande")
 
     def __str__(self):
-        return f"Demande de service de {self.client.name} pour {self.service.title}"
-
+        return f"Demande de service de {self.name_client} + {self.email_client} pour {self.service.title}"
 
 
 ## models pour la newsletter 
@@ -189,3 +189,4 @@ class GitHubActivity(models.Model):
         
         def __str__(self):
             return f"{self.repo.name} - {self.activity_type}"
+        
