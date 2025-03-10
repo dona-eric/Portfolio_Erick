@@ -10,7 +10,7 @@
             {% for project in projects %}
             <div class="project-card rounded-lg shadow-md overflow-hidden bg-gray-700 hover:shadow-lg transition-shadow duration-300">
                 {% if project.image_project %}
-                    <img src="{{ project.image_project }}" alt="{{ project.title }}" class="project-image w-full h-48 object-cover">
+                    <img src="{{ project.image_project.url }}" alt="{{ project.title }}" class="project-image w-full h-48 object-cover">
                 {% else %}
                     <img src="{% static 'images/opti.png' %}" alt="default" class="project-image w-full h-48 object-cover" weight="90" height="80">
                 {% endif %}
@@ -18,7 +18,7 @@
                     <h2 class="project-title text-xl font-semibold mb-2">{{ project.title }}</h2>
                     <p class="project-description text-gray-300">{{ project.description|truncatechars:100 }}</p>
                     <p class="project-skills text-sm mt-2">
-                        <strong class="text-indigo-400">Categories:</strong> {{ project.skills_used }}</p>
+                        <strong class="text-indigo-400">Techs Stacks:</strong> {{ project.skills_used }}</p>
                     <div class="project-links mt-4 flex justify-between">
                         {% if project.github_link %}
                             <a href="{{ project.github_link }}" target="_blank" class="github-button px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300">

@@ -57,7 +57,7 @@ class Project(models.Model):
     title = models.CharField(max_length=500, verbose_name="Titre")
     description = models.TextField(verbose_name="Description")
     skills_used = models.ManyToManyField(Skill, related_name="projects", verbose_name="Compétences utilisées")
-    image_project = models.ImageField(upload_to='media/', blank=True, null=True, verbose_name="Image du projet")
+    image_project = models.ImageField(upload_to='projects/', blank=True, null=True, verbose_name="Image du projet")
     github_link = models.URLField(blank=True, null=True, verbose_name="Lien GitHub")
     url_project = models.URLField(blank=True, null=True, verbose_name="URL du projet")
     date_project_update = models.DateTimeField(auto_now_add=True, verbose_name="Date de mise à jour")
@@ -72,9 +72,7 @@ class Project(models.Model):
         return f"{self.title} ({self.description})"
     class Meta:
         ordering = ['-date_project_update']  # Ordre décroissant par date de création
-        indexes = [
-            models.Index(fields=['-date_project_update']),  # Optionnel : améliore les performances
-        ]
+        indexes = [models.Index(fields=['-date_project_update']),]  # Optionnel : améliore les performances
 
 
 
@@ -84,13 +82,13 @@ class Article(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     url_blog = models.URLField(blank=True, null=True)
+    image_article = models.ImageField(upload_to="blog/", blank=True, null=True, verbose_name="Image de blog")
     author_article = models.CharField(verbose_name="Nom de l'auteur", default="KOULODJI Dona Eric", max_length=100)
     date_published = models.DateTimeField(null=True, verbose_name='Date de publication')
     categorie = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.title
-
+        return self.title + self.content
 
 """models for contacts: i would like to use the forms of django 
 to create it """

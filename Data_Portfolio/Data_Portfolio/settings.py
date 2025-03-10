@@ -10,19 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-#host: db.lmvicsqzsaxyftqeymxs.supabase.co
-
-#port:5432
-
-#database:postgres
-
-#user:postgres
-
-
-
-
-
-
 from pathlib import Path
 import os
 import urllib.parse

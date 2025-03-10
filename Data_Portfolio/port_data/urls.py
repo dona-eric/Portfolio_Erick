@@ -1,5 +1,6 @@
 from django.urls import path, include
-
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 from .views import (HomeView, AboutView, 
                     ArticleDetailView, ArticleListView,
@@ -21,3 +22,6 @@ urlpatterns = [
     path('news/', views.newsletters, name = 'news'),
     path('github/', views.github_activity, name = 'github'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
