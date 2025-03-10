@@ -43,7 +43,7 @@ class NewsletterAdmin(admin.ModelAdmin):
     search_fields = ('email', 'nom', "prenom")
 admin.site.register(Newsletter, NewsletterAdmin)
 
-@admin.register(Skill)
+
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('category', 'skills_name', "level")
     search_fields = ('category', "level", "description")
