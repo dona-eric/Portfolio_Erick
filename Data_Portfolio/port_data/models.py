@@ -82,7 +82,7 @@ class Article(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     url_blog = models.URLField(blank=True, null=True)
-    image_article = models.ImageField(upload_to="blog/", blank=True, null=True, verbose_name="Image de blog")
+    image_article = models.URLField(blank=True, null=True)
     author_article = models.CharField(verbose_name="Nom de l'auteur", default="KOULODJI Dona Eric", max_length=100)
     date_published = models.DateTimeField(null=True, verbose_name='Date de publication')
     categorie = models.CharField(max_length=255, blank=True, null=True)
