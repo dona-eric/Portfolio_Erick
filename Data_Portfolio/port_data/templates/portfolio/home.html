@@ -21,7 +21,7 @@
         </div>
         
         <div class="profile-container">
-            <img src="{% static 'images/photo_pictures.jpg' %}" alt="Profile" class="profile-image">
+            <img src="{% static 'images/profile.jpg' %}" alt="Profile" class="profile-image">
         </div>
     </header>
 
@@ -38,9 +38,15 @@
     </section>
 
     <section class="about-section">
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <div flex:2 style="max-width: 800px; margin: 0 auto; text-align: center;">
             <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Timely Entertainment !</h2>
-            <p style="color: var(--text); line-height: 1.8;">Mes moments de distraction sont comme des éclats 
+            <div class="profile-asset-container">
+                <div class="profile-asset" flex:1>
+                    <img src="{% static 'images/vlog.jpg' %}" alt="divertissment-profile" class="divertissment-profile">
+                    <img src="{% static 'images/back-up.jpg' %}" alt="divertissment-profile" class="divertissment-profile">
+                </div>
+            </div>
+            <p class="profile-asset-text" style="color: var(--text); line-height: 1.8;">Mes moments de distraction sont comme des éclats 
                 de lumière furtifs dans le tumulte de tes projets ambitieux. 
                 Ils surgissent lorsque mon esprit, saturé d’analyses et d’algorithmes, s’octroie une échappée, un souffle hors du cadre rigide des codes et des modèles. 
                 Ce sont ces instants où, porté par le vague à l’âme du génie créatif, 

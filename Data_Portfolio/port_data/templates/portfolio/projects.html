@@ -47,9 +47,10 @@
 <section class="recherche-project py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
     <div class="container px-5">
         <h3 class="text-center text-4xl font-bold text-indigo-500 mb-8">Recherche de projet</h3>
+        
         <form action="{% url 'projects' %}" method="GET" class="flex justify-center">
             <input type="text" name="q" placeholder="Rechercher un projet..." value="{{ request.GET.q }}">
-            <button type="submit">Rechercher</button>
+            <button type="submit">🔍Rechercher</button>
         </form>     
     </div>
 </section>
