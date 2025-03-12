@@ -1,18 +1,15 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 {% block content %}
-<section class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Newsletter</h2>
-            <p class="text-gray-600">Restez informé de nos dernières actualités et mises à jour</p>
-        </div>
+<section class="newsletter-section">
+    <div class="newsletter-container">
+        <h2 class="newsletter-title">Newsletter</h2>
+        <p class="newsletter-description">Restez informé de nos dernières actualités et mises à jour</p>
 
-    
-        <form method="POST"  action="{% url 'news' %}" class="space-y-6">
+        <form method="POST" class="space-y-6">
             {% csrf_token %}
-            <div>
-                <label for="{{ form.nom.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <div class="form-group">
+                <label for="{{ form.nom.id_for_label }}" class="form-label">Name:</label>
                 {{ form.nom }}
                 {% if form.nom.errors %}
                     <p class="mt-2 text-sm text-red-600">
@@ -21,8 +18,8 @@
                 {% endif %}
             </div>
 
-            <div>
-                <label for="{{ form.prenom.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Surname</label>
+            <div class="form-group">
+                <label for="{{ form.prenom.id_for_label }}" class="form-label">Surname:</label>
                 {{ form.prenom }}
                 {% if form.prenom.errors %}
                     <p class="mt-2 text-sm text-red-600">
@@ -31,8 +28,8 @@
                 {% endif %}
             </div>
 
-            <div>
-                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
                 {{ form.email }}
                 {% if form.email.errors %}
                     <p class="mt-2 text-sm text-red-600">
@@ -41,21 +38,14 @@
                 {% endif %}
             </div>
 
-            <div class="flex items-start">
-                <div class="flex items-center h-5">
-                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                </div>
-
-                <div class="ml-3 text-sm">
-                    <label for="terms" class="font-medium text-gray-700">J'accepte de recevoir des emails</label>
-                    <p class="text-gray-500">Vous pouvez vous désabonner à tout moment.</p>
-                </div>
+            <div class="checkbox-group">
+                <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <label for="terms" class="checkbox-label">J'accepte de recevoir des emails</label>
             </div>
 
             <div>
-                <button type="submit"
-                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    S'abonner à la newsletter
+                <button type="submit" class="submit-btn">
+                    S'abonner à la newsletter ✨
                 </button>
             </div>
         </form>
@@ -76,21 +66,21 @@
             </div>
         {% endif %}
 
-
-        <div class="mt-6 text-center text-sm text-gray-500">
+        <div class="terms-links">
             <p>En vous inscrivant, vous acceptez notre</p>
-            <div class="mt-1">
-                <a href="https://alice-esmeralda.com/politique-de-confidentialite" class="text-indigo-600 hover:text-indigo-500">
+            <div>
+                <a href="#" class="text-indigo-600 hover:text-indigo-500">
                     Politique de confidentialité
                 </a>
                 <span class="mx-2">et</span>
-                <a href="https://www.leto.legal/guides/newsletters" class="text-indigo-600 hover:text-indigo-500">
+                <a href="#" class="text-indigo-600 hover:text-indigo-500">
                     Conditions d'utilisation
                 </a>
             </div>
         </div>
     </div>
 </section>
+
 <script src="{% static 'js/news.js' %}"></script>
 
 {% endblock %}

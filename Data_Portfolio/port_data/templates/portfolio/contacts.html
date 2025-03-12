@@ -3,45 +3,55 @@
 {% block content %}
 
 <title>Contacts</title>
-<section class="max-w-4xl mx-auto px-6 py-12">
-    <h2 class="text-3xl font-semibold text-center text-indigo-600 mb-6">Contactez-moi</h2>
-    
-    <div class="text-center mb-6">
-        <p class="text-lg text-gray-700">Pour toute demande, veuillez remplir le formulaire ci-dessous.</p>
-        <p class="text-sm text-gray-500">Comment puis-je vous assister ?</p>
+<section class="contact-section">
+    <div class="contact-container">
+        <h2 class="text-center mb-8">Contactez-moi</h2>
+        
+        <form class="contact-form" method="POST">
+            {% csrf_token %}
+            <div class="space-y-6">
+                <!-- Nom -->
+                <div class="form-group">
+                    <label class="form-label">Nom :</label>
+                    {{ form.name }}
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label">Email :</label>
+                    {{ form.email }}
+                </div>
+
+                <!-- Message -->
+                <div class="form-group">
+                    <label class="form-label">Message :</label>
+                    {{ form.message }}
+                </div>
+
+                <!-- Submit -->
+                <div class="text-center">
+                    <button type="submit" class="submit-btn">
+                        Envoyer le message ✨
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form method="POST" action="{% url 'contacts-us' %}" novalidate class="bg-white p-8 rounded-lg shadow-md mx-auto">
-        {% csrf_token %}
-        <div class="space-y-4">
-            <!-- Champ Nom -->
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 text-center">Name</label>
-                {{ form.name }}
-            </div>
-
-                <!-- Email Field -->
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                {{ form.email }}
-            </div>
-
-            <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700">Votre Message</label>
-                {{ form.subject }}
-            </div>
-                <!-- Message Field -->
-            <div>
-                <label for="message" class="block text-sm font-medium text-gray-700">Votre Message</label>
-                {{ form.message }}
-            </div>
-
-            <!-- Submit Button -->
-            <div>
-                <input type="submit" value="Envoyer" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
-            </div>
+    <div class="info-section">
+        <!-- Vision du futur de l'IA -->
+        <div class="info-box">
+            <h3>Vision du futur de l'IA</h3>
+            <p>Atantlique<br>Abomey-Calavi, Zogbadjè<br>Bénin</p>
+            <p>Email : donaerickoulodji@gmail.com</p>
+            <p>Téléphone : +229 01~51~34~42~89</p>
         </div>
-    </form>
+    </div>
+     
+    <div class="mt-8 text-center">
+        <a href="{% url 'display/services' %}" class="contact-button inline-block px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white font-semibold transition-colors duration-300">Mes Services</a>
+    </div>
 </section>
+
 
 <script src="{% static 'js/contacts.js' %}"></script>
 {% endblock content %}

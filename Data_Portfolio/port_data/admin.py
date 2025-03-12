@@ -13,41 +13,47 @@ class ProjectAdmin(admin.ModelAdmin):
 admin.site.register(Project, ProjectAdmin)
 
 admin.site.register(About)
-admin.site.register(Service)
 
 
-@admin.register(ServiceRequest)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'updated_at')
+    search_fields = ('title', 'description')
+    
+admin.site.register(Service, ServiceAdmin)
+
 class ServiceRequestdmin(admin.ModelAdmin):
-    list_display = ("client","service", "message", "date_requested")
-    list_filter =("service", "client", 'message')
-    search_fields = ("client", "service")
+    list_display = ("name_client","email_client", "service", "date_requested")
+    list_filter =("service", "name_client", 'email_client')
+    search_fields = ("service", 'name_client')
 
-@admin.register(Article)
+admin.site.register(ServiceRequest, ServiceRequestdmin)
+
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author_articles', 'date_published', 'categorie', 'content', 'url_blog')
-    list_filter = ('author_articles', 'categorie', 'date_published')
-    search_fields = ('title', 'content', 'author_articles')
+    list_display = ('title', 'author_article', 'date_published', 'categorie', 'content', 'url_blog', "image_article")
+    list_filter = ('author_article', 'categorie', 'date_published')
+    search_fields = ('title', 'content', 'author_article')
     date_hierarchy = 'date_published'
     ordering = ('-date_published',)
-    
+admin.site.register(Article, ArticleAdmin)
 
-@admin.register(Newsletter)
+
 class NewsletterAdmin(admin.ModelAdmin):
     list_display = ('nom', 'prenom', 'email', 'subscribed_at', 'is_active')
     list_filter = ('subscribed_at', "is_active")
     search_fields = ('email', 'nom', "prenom")
+admin.site.register(Newsletter, NewsletterAdmin)
 
 
-@admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('category', 'skills_name', "level")
     search_fields = ('category', "level", "description")
+admin.site.register(Skill, SkillAdmin)
 
 
 
-@admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('name','email','subject', 'message', 'sent_at', 'is_read')
+    list_display = ('name','email', 'message', 'sent_at', 'is_read')
     list_filter = ('is_read', 'sent_at')
-    search_fields = ('name','email', 'subject', 'message')
+    search_fields = ('name','email','message')
 
+admin.site.register(Contact, ContactAdmin)

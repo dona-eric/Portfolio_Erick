@@ -144,9 +144,8 @@ WSGI_APPLICATION = "Data_Portfolio.wsgi.application"
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL,
-       conn_max_age=600
+        'default': dj_database_url.config(
+        default=DATABASE_URL
     )
 }
 
@@ -158,7 +157,7 @@ DATABASES = {
      #       'USER':"erick",
       #      'PASSWORD':"Endrick@#",
        #     'HOST':"127.0.0.1",
-        #    'PORT':'5432'
+        #   'PORT':'5432'
         #}
 #}
 # Password validation
