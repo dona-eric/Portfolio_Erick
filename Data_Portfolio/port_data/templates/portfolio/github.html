@@ -1,0 +1,65 @@
+<!-- github.html -->
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="github-dashboard">
+    <!-- Section Statistiques -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>⭐ Total Stars</h3>
+            <p>{{ total_stars }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>📚 Total Forks</h3>
+            <p>{{ total_forks }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>📦 Projets</h3>
+            <p>{{ repos|length }}</p>
+        </div>
+    </div>
+
+    <!-- Graphique des langages -->
+    <div class="chart-container">
+        <canvas id="languageChart"></canvas>
+    </div>
+
+    <!-- Liste des projets -->
+    <div class="repo-grid">
+        {% for repo in repos %}
+        <div class="repo-card">
+            <div class="repo-header">
+                <h3><a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a></h3>
+                <span class="language-badge">{{ repo.language }}</span>
+            </div>
+            <p>{{ repo.description }}</p>
+            <div class="repo-stats">
+                <span>⭐ {{ repo.stars }}</span>
+                <span>📚 {{ repo.forks }}</span>
+                <span>🔄 {{ repo.updated_at|date:"d M Y" }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Graphique des langages
+    const ctx = document.getElementById('languageChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: {{ languages|safe|default:"[]" }}.map(l => l.language || 'Other'),
+            datasets: [{
+                data: {{ languages|safe|default:"[]" }}.map(l => l.count),
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
+                    '#9966FF', '#FF9F40', '#FFCD56', '#C9CBCF'
+                ]
+            }]
+        }
+    });
+</script>
+{% endblock %}

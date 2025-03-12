@@ -1,25 +1,30 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
-from .models import About, Article, Project, Skill, Contact, Service, ServiceRequest, Newsletter
-from .forms import ContactForms, ServicesForms, ServiceRequestForms, NewsletterForms
+from .models import About, Article, Project, Skill, Contact, Service, ServiceRequest, Newsletter, GitHubRepo, GitHubActivity
+from .forms import ContactForms, ServiceRequestForms, NewsletterForms, ServiceForms
 from django.core.mail import send_mail
 from django.core.validators import validate_email
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from django.conf import settings
 import warnings,requests, json, os
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
+import traceback
+from django.db.models import Q
+from django.db import models
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 # Page d'accueil
 
-
-
+# message d'alerte
 warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
 
 #login_required
+"""Construction des vues génériques pour les pages de l'application
+basée sur les classes de Django"""  
 
+# Page d'accueil
 class HomeView(TemplateView):
     template_name = 'portfolio/home.html'
 
@@ -35,74 +40,103 @@ class HomeView(TemplateView):
 class AboutView(DetailView):
     model = About
     template_name = 'portfolio/about.html'
-
     def get_object(self):
         return About.objects.first()
 
 
+# vues pour les blogs ou articles et les details des blogs
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'portfolio/blog.html'
+    context_object_name = 'articles'
+    paginate_by = 5  # Affiche 5 articles par page
+    ordering = ['-date_published']  # Tri par date de publication
+    queryset = Article.objects.all().order_by('-date_published')
 
-# Page des articles dew blog
 
-def article(request):
-    blog_article = Article.objects.all().order_by('-date_published')
-    paginator = Paginator(blog_article, 5)  # Affiche 5 articles par page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'portfolio/blog.html', {'page_obj': page_obj})
-
-#pour une article spécifique
-
-def article_list(request, id_article):
-    blog_list = get_object_or_404(Article, pk=id_article)
-    return render(request, 'portfolio/blog_list.html', {'blog_list': blog_list})
-
+## pour les details sur les articles ou blogs
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'portfolio/blog_detail.html'
+    context_object_name = 'articles'
+    queryset = Article.objects.all()
+    
 
 # Page des compétences
-def skills(request):
-    skill = Skill.objects.all()
-    return render(request, 'portfolio/skills.html', {'skills': skill})
+class SkillsListView(ListView):
+    model = Skill
+    template_name = 'portfolio/skills.html'
+    context_object_name = 'skills'
+    queryset = Skill.objects.all()
 
+# vue des projects
+class ProjectListView(ListView):
+    model = Project
+    template_name = 'portfolio/projects.html'
+    context_object_name = 'projects'
+    paginate_by = 5  # Affiche 5 projets par page
+    queryset = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
+    
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date_project_update')
+        search_query = self.request.GET.get('q')  # Récupère le mot-clé
+        if search_query:
+            queryset = queryset.filter(Q(title__icontains=search_query) | Q(description__icontains=search_query))
+        return queryset
 
-# Page des projets
-def projects(request):
-    project = Project.objects.all().prefetch_related('skills_used')  # Si tu as des relations
-    return render(request, 'portfolio/projects.html', {'project': project})
-
-
-
+    
+    
 # Page des contacts
+
+def send_email_via_mailtrap(nom, message, recipient_email):
+    url = "https://sandbox.api.mailtrap.io/api/send/3448761"  # l'api de maitrip pour recevoir des mail des contacts et des newsletters
+
+    headers = {
+        "Authorization": f"Bearer {settings.MAILTRAP_API_TOKEN}",
+        "Content-Type": "application/json"
+    }
+    
+    data = {
+        "from": {"email": settings.EMAIL_ADMIN, "name": "DataWorld"},
+        "to": [{"email": recipient_email}],  
+        "Adresse": nom,
+        "text": message
+    }
+
+    response = requests.post(url, headers=headers, json=data)  
+    return response.status_code == 200
+
+
+## vue pour les contacts en utilisant les formulaires de django et les vues generiques
 
 def contacts(request):
     if request.method == "POST":
         print("✔ Django a reçu une requête POST !")  # Debugging
         form = ContactForms(request.POST)
+        
         if form.is_valid():
             print("✔ Formulaire valide !")  # Debugging
             try:
                 nom = form.cleaned_data["name"]
                 email = form.cleaned_data["email"]
-                subject_message = form.cleaned_data["subject"]
                 content_message = form.cleaned_data["message"]
                 print(f"✔ Formulaire validé : {nom}, {email}, {content_message}")
 
-                # Email à l'admin
-                full_message = f"Message de {nom} ({email}):\n\n{content_message}"
-                print(full_message)
-                mail_admin = send_mail(
-                    subject=f"📩 Nouveau message de {nom} : {subject_message}",
-                    message=full_message,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.EMAIL_ADMIN],  # Ton email admin
-                    fail_silently=False,
+                # Construction des messages
+                message_admin = f"Message de {nom}, ({email}):\n\n{content_message}"
+                message_user = f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe."
+
+                # Envoi des emails
+                mail_admin = send_email_via_mailtrap(
+                    nom = f"📩 Nouveau message de : {email}",
+                    message = message_admin,
+                    recipient_email=settings.EMAIL_ADMIN
                 )
 
-                # Email de confirmation à l'utilisateur
-                mail_user = send_mail(
-                    subject="📩 Votre message a bien été reçu !",
-                    message=f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe.",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],  # Email du visiteur
-                    fail_silently=False,
+                mail_user = send_email_via_mailtrap(
+                    nom ="📩 Votre message a bien été reçu !",
+                    message = message_user,
+                    recipient_email=email
                 )
 
                 if mail_admin and mail_user:
@@ -110,10 +144,12 @@ def contacts(request):
                     messages.success(request, "Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.")
                 else:
                     print("❌ Erreur lors de l'envoi des emails.")
+                    messages.error(request, "Problème lors de l'envoi des emails. Veuillez réessayer.")
 
-                return redirect("home")  # Redirige vers la page d'accueil
+                return redirect("home")  # Redirection après succès
             except Exception as e:
-                print("Erreur lors de l'envoi de l'email :", e)
+                print("❌ Erreur lors de l'envoi de l'email :", e)
+                print(traceback.format_exc())  # Debugging avancé
                 messages.error(request, "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.")
         else:
             messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
@@ -122,49 +158,45 @@ def contacts(request):
 
     return render(request, "portfolio/contacts.html", {"form": form})
 
+
 # vues pour les services
 
-def services(request):
-    service =  Service.objects.all()
-    return render(request, 'portfolio/services.html',
-                  {'service_list': service})
-
-
-def services_detail(request, id_service):
-    service_detail = get_object_or_404(Service, pk=id_service)
-    return render(request, 'portfolio/service_detail.html', {'service_detail': service_detail})
-
-
-
-
-def services_request(request, id_service=None):
-    service = get_object_or_404(Service, pk=id_service) if id_service else None
+class ServicesListView(ListView):
+    model = Service
+    template_name = 'portfolio/services.html'
+    context_object_name = 'services'
+    paginate_by = 6  # Affiche 6 services par page
+    queryset = Service.objects.all().order_by('-created_at')
     
-    if request.method == 'POST':
-        form = ServiceRequestForms(request.POST)
-        if form.is_valid():
-            try:
-                service_request = form.save(commit=False)
-                if service:
-                    service_request.service = service
-                service_request.save()
-                messages.success(request, 'Votre demande de service a été envoyée avec succès!')
-                return redirect('services')
-            except Exception as e:
-                print("Erreur lors de l'enregistrement de la demande de service :", e)
-                messages.error(request, "Une erreur est survenue lors de l'enregistrement de votre demande. Veuillez réessayer.")
-        else:
-            messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
-    else:
-        form = ServiceRequestForms()
-        if service:
-            form.initial = {'service': service}
     
-    contexte = {
-        'form': form,
-        'service': service,
-    }
-    return render(request, 'portfolio/services_request.html', contexte)
+##### detail des services
+class ServiceDetailView(DetailView):
+    model = Service
+    template_name = 'portfolio/service_detail.html'
+    context_object_name = 'services_detail'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ServiceRequestForms(initial={'service': self.object})
+        return context
+
+class ServiceRequestView(FormView):
+    form_class = ServiceRequestForms
+    template_name = 'portfolio/services_request.html'
+    
+    def form_valid(self, form):
+        service_request = form.save(commit=False)
+        service_request.service = get_object_or_404(Service, pk=self.kwargs['pk'])
+        service_request.save()
+        messages.success(self.request, "Votre demande a été envoyée !")
+        return redirect(reverse_lazy('display/services'))  # Redirection vers la page du service
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Veuillez corriger les erreurs dans le formulaire.")
+        return super().form_invalid(form)
+
+
+
 
 
 """vue pour les newsletters """
@@ -186,6 +218,7 @@ def send_email_via_mailtrap(nom, prenom, email):
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
     return response.status_code == 200
+
 
 def newsletters(request):
     if request.method == 'POST':
@@ -234,7 +267,6 @@ def newsletters(request):
         'title': 'Inscription à la newsletter',
         "description": "Restez informé de nos dernières actualités"
     })
-
 
 #def newsletters(request):
     if request.method == 'POST':
@@ -316,4 +348,21 @@ def newsletters(request):
     #    return f"Vos modifications ont été prises en compte !"
 
     #def get_success_url(self):
-     #   return reverse('home')
+     #   return reverse('home')**
+
+## vue pur les repos github
+def github_activity(request):
+    repos = GitHubRepo.objects.all().order_by('-stars')
+    recent_activities = GitHubActivity.objects.all().order_by('-timestamp')[:10]
+    
+    # Statistiques
+    languages = GitHubRepo.objects.values('language').annotate(count=models.Count('language'))
+    context = {
+        'repos': repos,
+        'activities': recent_activities,
+        'languages': languages,
+        'total_stars': sum(repo.stars for repo in repos),
+        'total_forks': sum(repo.forks for repo in repos)
+    }
+    return render(request, 'portfolio/github.html', context)
+

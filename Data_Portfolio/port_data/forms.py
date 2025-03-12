@@ -5,37 +5,103 @@ from django import forms
 class ContactForms(forms.ModelForm):
     class Meta:
         model = Contact
-        fields= ['name', "email", "subject", "message"]
+        fields= ['name', "email", "message"]
     widgets = {
-        'name' :forms.TextInput(attrs={"class": "form-control"}),
-        'email' : forms.EmailInput(attrs={'class': "form-control"}),
-        "subject": forms.TextInput(attrs={'class':"form-control"}),
-        'message' : forms.TextInput(attrs={"class": "form-control"})
-    }
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Votre nom complet'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'exemple@email.com'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Votre message...'
+            }),
+        }
+    labels = {
+            'name': 'Nom complet',
+            'email': 'Adresse email',
+            'message': 'Message'
+        }
 
-
-class ServicesForms(forms.ModelForm):
+class ServiceForms(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['title', 'description', 'icon', 'price']
-        widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Titre du service', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Description du service', 'class': 'form-control'}),
-            'icon': forms.TextInput(attrs={'placeholder': 'Icône (ex. fa-solid fa-code)', 'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'placeholder': 'Prix', 'class': 'form-control'}),
+        fields = ['title', 'description', 'icon']
+    widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nom du service'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Description du service'
+            }),
+            'icon': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Icone du service'
+            }),
         }
-        exclude = ('icon', "price")
-
+    labels = {
+            'title': 'Nom du service',
+            'description': 'Description',
+            'icon': 'Icone'
+        }
 
 class ServiceRequestForms(forms.ModelForm):
     class Meta:
         model = ServiceRequest
-        fields = ['service', 'client', 'message']
-        widgets = {
-            'client': forms.Select(attrs={"class": "form-control"}),  # Utilisation de Select pour ForeignKey
-            'service': forms.Select(attrs={"class": "form-control"}),  # Utilisation correcte
-            'message': forms.Textarea(attrs={"class": "form-control", "placeholder": "Votre message", "rows": 4}),
+        fields = ['name_client','email_client', 'service']
+    widgets = {
+            'name_client': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Votre nom complet'
+            }),
+            'email_client': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'email du client'
+            }),
+            'service': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'service demandé'
+            })
         }
+    labels = {
+            'name_client': 'Nom complet',
+            'email_client': 'Adresse email',
+            'service': 'Service demandé',
+        }
+                
+                
+class SkillForms(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['skills_name', 'level', 'description']
+    widgets = {
+            'skills_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nom de la compétence'
+            }),
+            'level': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Niveau de la compétence'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Description de la compétence'
+            }),
+        }
+    labels = {
+            'skills_name': 'Nom de la compétence',
+            'level': 'Niveau de maîtrise',
+            'description': 'Description'
+        }
+
 class NewsletterForms(forms.ModelForm):
     class Meta:
         model = Newsletter
