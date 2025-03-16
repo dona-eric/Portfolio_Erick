@@ -5,6 +5,9 @@ from django.utils.timezone import make_aware
 from .models import Article
 from dotenv import load_dotenv
 import requests
+from django.db import transaction
+from dateutil.parser import parse as date_parse
+
 from django.utils import timezone
 from datetime import datetime
 from .models import GitHubRepo, GitHubActivity
@@ -70,18 +73,28 @@ fetch_medium_articles(username=username)
 
 
 # github_api.py
-
+username = os.getenv('USERNAME')
 def fetch_github_data(username, token):
     headers = {'Authorization': f'token {token}'}
     
-    # Récupération des repos
+    # Fetch all pages for repositories
+    repos = []
     repos_url = f'https://api.github.com/users/{username}/repos'
-    repos = requests.get(repos_url, headers=headers).json()
-    
-    for repo in repos:
-        repo_obj, created = GitHubRepo.objects.update_or_create(
-            name=repo['name'],
-            defaults={
+    while repos_url:
+        response = requests.get(repos_url, headers=headers)
+        response.raise_for_status()  # Check for HTTP errors
+        repos.extend(response.json())
+        repos_url = response.links.get('next', {}).get('url')  # Pagination
+
+    with transaction.atomic():
+        for repo in repos:
+            # Use repo owner from API data
+            owner_login = repo['owner']['login']
+            repo_name = repo['name']
+            
+            repo_obj, _ = GitHubRepo.objects.update_or_create(
+                name=repo_name,
+                defaults={
                 'description': repo['description'],
                 'html_url': repo['html_url'],
                 'stars': repo['stargazers_count'],
@@ -91,25 +104,43 @@ def fetch_github_data(username, token):
                 'updated_at': datetime.strptime(repo['updated_at'], '%Y-%m-%dT%H:%M:%SZ')
             }
         )
-        
-        # Récupération des activités
-        events_url = f"https://api.github.com/repos/{username}/{repo['name']}/events"
-        events = requests.get(events_url, headers=headers).json()
-        
-        for event in events:
-            activity_type = _map_event_type(event['type'])
-            if activity_type:
-                GitHubActivity.objects.update_or_create(
-                    id=event['id'],
-                    defaults={
-                        'repo': repo_obj,
-                        'activity_type': activity_type,
-                        'message': event['payload'].get('commits', [{}])[0].get('message', '') if activity_type == 'Push' else event['type'],
-                        'timestamp': datetime.strptime(event['created_at'], '%Y-%m-%dT%H:%M:%SZ'),
-                        'url': event['repo']['url']
-                    }
-                )
+            
+            # Fetch all pages for events
+            events = []
+            events_url = f"https://api.github.com/repos/{owner_login}/{repo_name}/events"
+            while events_url:
+                response = requests.get(events_url, headers=headers)
+                response.raise_for_status()
+                events.extend(response.json())
+                events_url = response.links.get('next', {}).get('url')
 
+            activities = []
+            for event in events:
+                activity_type = _map_event_type(event['type'])
+                if not activity_type:
+                    continue
+                
+                # Safely get commit message
+                commits = event.get('payload', {}).get('commits') or [{}]
+                message = commits[0].get('message', '') if commits else ''
+                
+                activities.append(GitHubActivity(
+                    id=event['id'],
+                    repo=repo_obj,
+                    activity_type=activity_type,
+                    message=message[:255],  # Truncate to 255 chars
+                    timestamp=date_parse(event['created_at']),
+                    url=event.get('repo', {}).get('url', '')
+                ))
+            
+            # Bulk create/update activities
+            GitHubActivity.objects.bulk_create(
+                activities,
+                update_conflicts=True,
+                update_fields=['message', 'timestamp', 'url'],
+                unique_fields=['id']
+            )
+            
 def _map_event_type(event_type):
     mapping = {
         'PushEvent': 'Push',
