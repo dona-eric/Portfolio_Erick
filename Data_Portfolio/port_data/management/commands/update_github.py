@@ -1,6 +1,7 @@
 # management/commands/update_github.py
 from django.core.management.base import BaseCommand
-from .github_api import fetch_github_data
+from port_data.utils import fetch_github_data, fetch_medium_articles
+from .
 
 class Command(BaseCommand):
     help = 'Update GitHub data'

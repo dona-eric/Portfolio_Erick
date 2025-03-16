@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
-from port_data.models import Article
-from port_data.utils import fetch_medium_articles
+
 
 import os
 from dotenv import load_dotenv

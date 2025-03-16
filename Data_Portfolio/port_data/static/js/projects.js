@@ -1,163 +1,101 @@
-// projects.js
-
-function handleButtonHover(button, scale) {
-    if (window.matchMedia('(hover: hover)').matches) {
-        button.style.transform = `scale(${scale})`;
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajouter une classe pour indiquer que le DOM est chargé
+    document.body.classList.add('dom-loaded');
+  
+    // Animation de chargement
+    const loader = document.querySelector('.loader');
+    if (loader) {
+      window.addEventListener('load', () => {
+        loader.classList.add('loaded');
+        setTimeout(() => {
+          loader.remove();
+        }, 500);
+      });
     }
-}
-document.addEventListener('DOMContentLoaded', () => {
-    const animationConfig = {
-        card: {
-            translateY: '50px',
-            transition: 'all 0.5s ease-out',
-            observerThreshold: 0.1
-        },
-        button: {
-            hoverScale: 1.05,
-            transition: 'transform 0.2s ease'
-        },
-        image: {
-            loadTransition: 'opacity 0.5s ease'
-        },
-        cta: {
-            scale: 0.95,
-            transition: 'all 0.5s ease'
-        }
-    };
-
-    initProjectCards(animationConfig.card);
-    initTextGradient();
-    initProjectButtons(animationConfig.button);
-    initImageLoading(animationConfig.image);
-    initCTASection(animationConfig.cta);
-    injectProjectStyles();
-});
-
-function initProjectCards(config) {
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCardIn(entry.target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        root: null,
-        rootMargin: '0px',
-        threshold: config.observerThreshold
+  
+    // Gestion des liens externes
+    const externalLinks = document.querySelectorAll('a[href^="http"]');
+    externalLinks.forEach(link => {
+      link.setAttribute('rel', 'noopener noreferrer');
+      link.setAttribute('target', '_blank');
     });
-
-    document.querySelectorAll('.project-card').forEach(card => {
-        resetCardStyle(card, config);
-        observer.observe(card);
+  
+    // Effet de survol pour les cartes
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('mouseover', () => {
+        card.classList.add('hovered');
+      });
+      card.addEventListener('mouseout', () => {
+        card.classList.remove('hovered');
+      });
     });
-}
-
-function resetCardStyle(card, config) {
-    card.style.opacity = '0';
-    card.style.transform = `translateY(${config.translateY})`;
-    card.style.transition = config.transition;
-}
-
-function animateCardIn(card) {
-    card.style.opacity = '1';
-    card.style.transform = 'translateY(0)';
-}
-
-function initTextGradient() {
-    const gradientElements = document.querySelectorAll('.text-gradient');
-    gradientElements.forEach(el => {
-        el.style.backgroundSize = '200% auto';
-        el.style.animation = 'text-gradient 3s linear infinite';
+  
+    // Validation de formulaires
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+      form.addEventListener('submit', (event) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      });
     });
-}
-
-function initProjectButtons(config) {
-    document.querySelectorAll('.project-button').forEach(button => {
-        button.addEventListener('mouseenter', () => 
-            handleButtonHover(button, config.hoverScale));
-        button.addEventListener('mouseleave', handleButtonLeave);
-        button.style.transition = config.transition;
+  
+    // Scroll progress bar
+    const progressBar = document.createElement('div');
+    progressBar.classList.add('scroll-progress');
+    document.body.prepend(progressBar);
+  
+    window.addEventListener('scroll', () => {
+      let scroll = document.documentElement.scrollTop;
+      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      let progress = (scroll / height) * 100;
+      progressBar.style.width = `${progress}%`;
     });
-}
-
-function handleButtonHover(button, scale) {
-    button.style.transform = `scale(${scale})`;
-}
-
-function handleButtonLeave(e) {
-    e.currentTarget.style.transform = 'scale(1)';
-}
-
-function initImageLoading(config) {
-    document.querySelectorAll('.project-image').forEach(img => {
-        img.style.opacity = '0';
-        img.style.transition = config.loadTransition;
-        img.addEventListener('load', () => img.style.opacity = '1');
+  
+    // Ajout d'un bouton "Retour en haut"
+    const backToTopButton = document.createElement('button');
+    backToTopButton.innerHTML = '↑';
+    backToTopButton.classList.add('back-to-top');
+    document.body.appendChild(backToTopButton);
+  
+    window.addEventListener('scroll', () => {
+      if (document.documentElement.scrollTop > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
     });
-}
-
-function initCTASection(config) {
-    const cta = document.querySelector('.project-cta');
-    if (!cta) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) animateCTASection(entry.target);
-        });
+  
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-
-    cta.style.opacity = '0';
-    cta.style.transform = `scale(${config.scale})`;
-    cta.style.transition = config.transition;
-    observer.observe(cta);
-}
-
-function animateCTASection(cta) {
-    cta.style.opacity = '1';
-    cta.style.transform = 'scale(1)';
-}
-
-function injectProjectStyles() {
-    const styles = `
-        @keyframes text-gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            will-change: transform;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .project-button {
-            transition: all 0.3s ease;
-            backface-visibility: hidden;
-        }
-
-        .text-gradient {
-            background: linear-gradient(45deg, #007bff, #6610f2, #6f42c1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .project-card,
-            .project-button {
-                transition: none !important;
-                animation: none !important;
-            }
-        }
-    `;
-
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
-}
+  
+    // Dark mode toggle
+    const darkModeToggle = document.createElement('button');
+    darkModeToggle.innerHTML = '🌙';
+    darkModeToggle.classList.add('dark-mode-toggle');
+    document.body.appendChild(darkModeToggle);
+  
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '☀️';
+        localStorage.setItem('dark-mode', 'enabled');
+      } else {
+        darkModeToggle.innerHTML = '🌙';
+        localStorage.setItem('dark-mode', 'disabled');
+      }
+    });
+  
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkModeToggle.innerHTML = '☀️';
+    }
+  });
+  

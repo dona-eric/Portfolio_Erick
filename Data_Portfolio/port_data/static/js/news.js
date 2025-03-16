@@ -56,3 +56,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Valider au chargement de la page pour la première fois
     validateForm();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Effet de chargement
+  const loader = document.querySelector('.loader');
+  if (loader) {
+    window.addEventListener('load', () => {
+      loader.classList.add('loaded');
+      setTimeout(() => {
+        loader.remove();
+      }, 500);
+    });
+  }
+  
+  // Validation de formulaire
+  const form = document.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    });
+  }
+});
