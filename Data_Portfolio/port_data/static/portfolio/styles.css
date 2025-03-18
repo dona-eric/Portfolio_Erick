@@ -1238,7 +1238,7 @@ a[href="{% url 'projects' %}"]:hover {
 /* Titre de la section projets */
 .projects-section h1 {
   text-align: center;
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--accent-primary);
   margin-bottom: var(--spacing-lg);
@@ -1271,6 +1271,8 @@ a[href="{% url 'projects' %}"]:hover {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius:50%;
+  position:relative;
 }
 
 /* Contenu de la carte de projet */
@@ -1280,7 +1282,7 @@ a[href="{% url 'projects' %}"]:hover {
 
 /* Titre du projet */
 .project-title {
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
   color: var(--text-primary);
@@ -1288,7 +1290,7 @@ a[href="{% url 'projects' %}"]:hover {
 
 /* Description du projet */
 .project-description {
-  font-size: 1.5rem;
+  font-size: 1.0rem;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
@@ -1296,12 +1298,13 @@ a[href="{% url 'projects' %}"]:hover {
 
 /* Compétences utilisées */
 .project-skills {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
 }
 
 .project-skills strong {
   color: var(--accent-primary);
+  font-size:1.1rem;
 }
 
 /* Liens du projet (Github, Démo) */
@@ -1356,9 +1359,10 @@ a[href="{% url 'projects' %}"]:hover {
 .contact-button {
   display: inline-block;
   padding: 1rem 2rem;
-  border-radius: var(--radius-md);
+  border-radius: 60%;
   font-weight: 600;
   transition: var(--transition-normal);
+  object-fit:cover;
   text-decoration: none;
   background-color: var(--accent-primary);
   color: var(--text-primary);
@@ -1387,7 +1391,7 @@ a[href="{% url 'projects' %}"]:hover {
 /* Titre de la section recherche */
 .recherche-project h3 {
   text-align: center;
-  font-size: 2.4rem;
+  font-size: 2.0rem;
   font-weight: 700;
   color: var(--accent-primary);
   margin-bottom: var(--spacing-lg);
@@ -1503,7 +1507,7 @@ a[href="{% url 'projects' %}"]:hover {
 
 .contact-section h2 {
   text-align: center;
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: var(--spacing-lg);
   background: var(--gradient-accent);
@@ -1556,7 +1560,7 @@ a[href="{% url 'projects' %}"]:hover {
 }
 
 textarea.form-control {
-  min-height: 120px;
+  min-height: 100px;
   resize: vertical;
 }
 
@@ -1565,7 +1569,7 @@ textarea.form-control {
   display: inline-block;
   padding: 0.8rem 1.5rem;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: var(--radius-md);
   transition: var(--transition-normal);
   cursor: pointer;
@@ -1595,16 +1599,17 @@ textarea.form-control {
   box-shadow: var(--shadow-sm);
   transition: var(--transition-normal);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align:center;
 }
 
 .info-box h3 {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: var(--spacing-md);
 }
 
 .info-box p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-sm);
 }
@@ -1672,7 +1677,7 @@ textarea.form-control {
 
 .section-services h2 {
   text-align: center;
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: var(--spacing-lg);
   background: var(--gradient-accent);
@@ -1682,7 +1687,7 @@ textarea.form-control {
 }
 
 .section-services p {
-  font-size: 1.6rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
 }
@@ -1714,21 +1719,21 @@ textarea.form-control {
 
 /* ICON DE SERVICE */
 .service-icon {
-  font-size: 3rem;
+  font-size: 1.5rem;
   color: var(--accent-primary);
   margin-bottom: var(--spacing-sm);
 }
 
 /* TITRE DU SERVICE */
 .service-title {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
 }
 
 /* DESCRIPTION DU SERVICE */
 .service-description {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
@@ -1736,7 +1741,7 @@ textarea.form-control {
 
 /* PRIX DU SERVICE */
 .service-price {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
 }
 
@@ -1750,7 +1755,7 @@ textarea.form-control {
   color: var(--text-primary);
   padding: 0.8rem 1.5rem;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: var(--radius-md);
   transition: var(--transition-normal);
   cursor: pointer;
@@ -1774,7 +1779,7 @@ textarea.form-control {
 
 /* MESSAGE SI AUCUN SERVICE N'EST DISPONIBLE */
 .section-services p.text-center {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
   margin-top: var(--spacing-lg);
 }
@@ -1788,23 +1793,23 @@ textarea.form-control {
 
 @media (max-width: 576px) {
   .section-services h2 {
-    font-size: 2.4rem;
+    font-size: 1.4rem;
   }
   
   .service-title {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
   }
   
   .service-description {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
   }
   
   .service-price {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
   }
   
   .btn.btn-primary {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     padding: 0.6rem 1.2rem;
   }
 }
@@ -1838,20 +1843,20 @@ section {
 }
 
 .service-title {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: var(--spacing-md);
 }
 
 .service-description {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
 }
 
 .service-price {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
 }
 
@@ -1870,7 +1875,7 @@ section {
   color: var(--text-primary);
   padding: 0.8rem 1.5rem;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   border-radius: var(--radius-md);
   transition: var(--transition-normal);
   cursor: pointer;
@@ -1931,7 +1936,7 @@ section p.text-center {
 
 .form-requested-service h3 {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: var(--spacing-md);
   color: var(--text-secondary);
@@ -2259,7 +2264,7 @@ input[type="email"]:focus {
 }
 
 .articles-header h1 {
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: var(--spacing-md);
 }
@@ -2305,13 +2310,13 @@ input[type="email"]:focus {
 }
 
 .card-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
 }
 
 .card-text {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
@@ -2328,16 +2333,17 @@ input[type="email"]:focus {
 }
 
 .card img {
-  width: 100%;
-  height: auto;
+  width: 40%;
+  height: 40%;
   object-fit: cover;
-  border-top-left-radius: var(--radius-lg);
-  border-top-right-radius: var(--radius-lg);
+  border-radius:60%;
+  border: 5px solid #19122A; /* Remplace par la couleur de ton fond */
+  position: relative;
 }
 
 /* INFOS SUPPLÉMENTAIRES */
 .mt-2 {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
 }
 
@@ -2367,15 +2373,15 @@ input[type="email"]:focus {
 
 @media (max-width: 576px) {
   .articles-header h1 {
-    font-size: 2.8rem;
+    font-size: 1.5rem;
   }
   
   .card-title {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
   }
   
   .card-text {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
   
   .mt-2 {
@@ -2395,7 +2401,7 @@ input[type="email"]:focus {
 }
 
 .articles-header h1 {
-  font-size: 3.2rem;
+  font-size: 2.0rem;
   font-weight: 700;
   margin-bottom: var(--spacing-md);
 }
@@ -2408,7 +2414,7 @@ input[type="email"]:focus {
 }
 
 .articles-header p {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
 }
 
@@ -2437,13 +2443,13 @@ input[type="email"]:focus {
 }
 
 .card-body h1 {
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: var(--spacing-md);
 }
 
 .card-body p {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-lg);
