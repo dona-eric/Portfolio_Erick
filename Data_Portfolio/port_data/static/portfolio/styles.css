@@ -377,20 +377,20 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 2.5rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: var(--space-lg);
   letter-spacing: -0.5px;
 }
 
 h2 {
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 400;
   margin-top: var(--space-xl);
 }
 
 h3 {
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 p {
@@ -514,9 +514,10 @@ section {
 .social-links {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  right: 20px;
+  text-align:center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--space-md);
   z-index: 100;
 }
@@ -705,9 +706,12 @@ section {
   padding: 0.6rem 1.2rem;
   background-color: var(--bg-card);
   color: var(--text-secondary);
-  border-radius: var(--radius-sm);
+  border-radius:10px;
   font-size: 1.4rem;
-  font-weight: 500;
+  text-align: center;
+  font-weight: 400;
+  border: 2px solid #19122A; /* Bordure blanche */
+  color: #ffffff; /* Texte blanc */
   transition: var(--transition-fast);
 }
 
@@ -736,10 +740,14 @@ section {
 
 .profile-image {
   transition: var(--transition-fast);
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-lg);
+  width: 100%;  /* Ajuste la taille selon tes besoins */
+  height: 100%; /* Assure un cercle parfait */
+  border-radius: 50%; /* Rend l'image circulaire */
+  border: 5px solid #19122A; /* Remplace par la couleur de ton fond */
+  object-fit: cover; /* Évite l'écrasement de l'image */
+  position: relative;
+  left: -50px; /* Ajuste pour centrer légèrement vers la gauche */
   box-shadow: var(--shadow-lg);
 }
 .profile-image:hover {
@@ -784,10 +792,12 @@ section {
 }
 
 .divertissment-profile {
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
-  border-radius: var(--radius-md);
+  gap: 30px; /* Espace entre les images */
+  border-radius: 50%;
+  position:relative;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-fast);
 }
@@ -809,10 +819,11 @@ a[href="{% url 'about' %}"], .btn-learn-more {
   padding: 0.8rem 1.5rem;
   font-weight: 600;
   font-size: 1.5rem;
-  border-radius: var(--radius-md);
   transition: var(--transition-normal);
+  border: 2px solid #ffffff; /* Bordure blanche */
+  border-radius: 10px;
+  color: #ffffff; /* Texte blanc */
   cursor: pointer;
-  border: none;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -821,6 +832,9 @@ a[href="{% url 'about' %}"], .btn-learn-more {
 a[href="{% url 'about' %}"] {
   background: var(--accent-primary);
   color: var(--text-primary);
+  border: 2px solid #ffffff; /* Bordure blanche */
+  border-radius: 10px;
+  color: #ffffff; /* Texte blanc */
   box-shadow: var(--shadow-md);
 }
 
@@ -831,6 +845,9 @@ a[href="{% url 'about' %}"]:hover {
 
 a[href="{% url 'projects' %}"] {
   border: 2px solid var(--accent-primary);
+  border: 2px solid #ffffff; /* Bordure blanche */
+  border-radius: 10px;
+  color: #ffffff; /* Texte blanc */
   color: var(--accent-primary);
 }
 
