@@ -51,7 +51,7 @@
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: {{ languages|safe|default:"[]" }}.map(l => l.language || 'Other'),
+            labels: {{ languages|safe|default:"[]"}}.map(l => l.language || 'Other'),
             datasets: [{
                 data: {{ languages|safe|default:"[]" }}.map(l => l.count),
                 backgroundColor: [
