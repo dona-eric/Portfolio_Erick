@@ -1,86 +1,323 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+
+{% block title %}Newsletters - Eric KOULODJI{% endblock %}
+
 {% block content %}
-<section class="newsletter-section">
-    <div class="newsletter-container">
-        <h2 class="newsletter-title">Newsletter</h2>
-        <p class="newsletter-description">Restez informé de nos dernières actualités et mises à jour</p>
+<div class="newsletters-container">
+    <header class="newsletters-header">
+        <h1 class="page-title">Newsletters</h1>
+        <p class="page-description">Restez informé des dernières actualités en Data Science et Machine Learning</p>
+    </header>
 
-        <form method="POST" class="space-y-6">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="{{ form.nom.id_for_label }}" class="form-label">Name:</label>
-                {{ form.nom }}
-                {% if form.nom.errors %}
-                    <p class="mt-2 text-sm text-red-600">
-                        {{ form.nom.errors|join:", " }}
-                    </p>
-                {% endif %}
-            </div>
+    <div class="newsletters-grid">
+        <!-- Subscription Form -->
+        <section class="subscription-section">
+            <div class="subscription-card">
+                <h2 class="section-title">S'abonner à la newsletter</h2>
+                <p class="section-description">Recevez régulièrement des articles, tutoriels et actualités sur l'IA et la Data Science.</p>
+                
+                <form class="subscription-form" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.email.id_for_label }}">
+                            <i class="bi bi-envelope"></i>
+                            Email
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="form-error">
+                                {{ form.email.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
 
-            <div class="form-group">
-                <label for="{{ form.prenom.id_for_label }}" class="form-label">Surname:</label>
-                {{ form.prenom }}
-                {% if form.prenom.errors %}
-                    <p class="mt-2 text-sm text-red-600">
-                        {{ form.prenom.errors|join:", " }}
-                    </p>
-                {% endif %}
-            </div>
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.name.id_for_label }}">
+                            <i class="bi bi-person"></i>
+                            Nom complet
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="form-error">
+                                {{ form.name.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
 
-            <div class="form-group">
-                <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <p class="mt-2 text-sm text-red-600">
-                        {{ form.email.errors|join:", " }}
-                    </p>
-                {% endif %}
-            </div>
+                    <button type="submit" class="subscribe-button">
+                        <i class="bi bi-send"></i>
+                        S'abonner
+                    </button>
+                </form>
 
-            <div class="checkbox-group">
-                <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                <label for="terms" class="checkbox-label">J'accepte de recevoir des emails</label>
-            </div>
-
-            <div>
-                <button type="submit" class="submit-btn">
-                    S'abonner à la newsletter ✨
-                </button>
-            </div>
-        </form>
-
-        {% if messages %}
-        <div class="alert-container">
-            {% for message in messages %}
-                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %}">
-                    {{ message }}
+                <div class="privacy-notice">
+                    <i class="bi bi-shield-check"></i>
+                    <p>Vos données sont protégées et ne seront jamais partagées.</p>
                 </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% if form.errors %}
-            <div class="alert alert-danger">
-                <strong>Erreur !</strong> Veuillez corriger les erreurs ci-dessous.
             </div>
-        {% endif %}
+        </section>
 
-        <div class="terms-links">
-            <p>En vous inscrivant, vous acceptez notre</p>
-            <div>
-                <a href="#" class="text-indigo-600 hover:text-indigo-500">
-                    Politique de confidentialité
-                </a>
-                <span class="mx-2">et</span>
-                <a href="#" class="text-indigo-600 hover:text-indigo-500">
-                    Conditions d'utilisation
-                </a>
-            </div>
-        </div>
+        <!-- Previous Newsletters -->
+        <section class="previous-newsletters">
+            <h2 class="section-title">Newsletters précédentes</h2>
+            
+            {% if newsletters %}
+                <div class="newsletters-list">
+                    {% for newsletter in newsletters %}
+                        <article class="newsletter-card">
+                            <div class="newsletter-header">
+                                <h3 class="newsletter-title">{{ newsletter.title }}</h3>
+                                <span class="newsletter-date">{{ newsletter.date_published|date:"d M Y" }}</span>
+                            </div>
+                            
+                            <p class="newsletter-excerpt">{{ newsletter.content|truncatewords:30 }}</p>
+                            
+                            <a href="{{ newsletter.file.url }}" class="download-link" target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-download"></i>
+                                Télécharger
+                            </a>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-newsletters">
+                    <i class="bi bi-journal-text"></i>
+                    <p>Aucune newsletter disponible pour le moment.</p>
+                </div>
+            {% endif %}
+        </section>
     </div>
-</section>
+</div>
 
-<script src="{% static 'js/news.js' %}"></script>
+<style>
+.newsletters-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
-{% endblock %}
+.newsletters-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.newsletters-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+}
+
+/* Subscription Section */
+.subscription-section {
+    position: sticky;
+    top: 2rem;
+}
+
+.subscription-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    color: #6B7280;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.subscription-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.form-label i {
+    color: var(--primary);
+}
+
+input[type="email"],
+input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="text"]:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-error {
+    color: #DC2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.subscribe-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.subscribe-button:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+.privacy-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E5E7EB;
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.privacy-notice i {
+    color: var(--primary);
+}
+
+/* Previous Newsletters */
+.newsletters-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.newsletter-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newsletter-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.newsletter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.newsletter-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.newsletter-date {
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.newsletter-excerpt {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.3s ease;
+}
+
+.download-link:hover {
+    gap: 0.75rem;
+}
+
+.no-newsletters {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6B7280;
+}
+
+.no-newsletters i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .newsletters-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .newsletters-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .subscription-section {
+        position: static;
+    }
+}
+</style>
+
+{% endblock content %}

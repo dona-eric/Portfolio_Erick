@@ -1,32 +1,382 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 
+{% block title %}Demande de Service - Eric KOULODJI{% endblock %}
+
 {% block content %}
+<div class="service-request-container">
+    <header class="request-header">
+        <h1 class="page-title">Demande de Service</h1>
+        <p class="page-description">Remplissez ce formulaire pour me faire part de votre projet</p>
+    </header>
 
-<section class="form-requested-service">
-    <div class="text-center mb-8">
-        <h3 class="text-lg text-gray-700">Pour vos demandes de service</h3>
-        <p>Remplissez le formulaire ci-dessous pour soumettre votre demande.</p>
+    <div class="request-grid">
+        <!-- Service Details -->
+        <section class="service-details">
+            <div class="service-card">
+                <div class="service-icon">
+                    {% if service.icon %}
+                        <i class="{{ service.icon }}"></i>
+                    {% else %}
+                        <i class="bi bi-code-square"></i>
+                    {% endif %}
+                </div>
+
+                <div class="service-info">
+                    <h2 class="service-title">{{ service.title }}</h2>
+                    <p class="service-description">{{ service.description }}</p>
+                    
+                    <div class="service-price">
+                        <span class="price-label">Prix</span>
+                        <span class="price-amount">{{ service.price }}€</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Request Form -->
+        <section class="request-form-section">
+            <div class="form-card">
+                <h2 class="form-title">Formulaire de demande</h2>
+                <p class="form-description">Veuillez remplir tous les champs requis pour que je puisse vous répondre au plus vite.</p>
+
+                <form class="request-form" method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.name.id_for_label }}">
+                            <i class="bi bi-person"></i>
+                            Nom complet
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="form-error">
+                                {{ form.name.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.email.id_for_label }}">
+                            <i class="bi bi-envelope"></i>
+                            Email
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="form-error">
+                                {{ form.email.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.phone.id_for_label }}">
+                            <i class="bi bi-phone"></i>
+                            Téléphone
+                        </label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <div class="form-error">
+                                {{ form.phone.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.company.id_for_label }}">
+                            <i class="bi bi-building"></i>
+                            Entreprise (optionnel)
+                        </label>
+                        {{ form.company }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.message.id_for_label }}">
+                            <i class="bi bi-chat-dots"></i>
+                            Détails du projet
+                        </label>
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                            <div class="form-error">
+                                {{ form.message.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.budget.id_for_label }}">
+                            <i class="bi bi-currency-euro"></i>
+                            Budget estimé
+                        </label>
+                        {{ form.budget }}
+                        {% if form.budget.errors %}
+                            <div class="form-error">
+                                {{ form.budget.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.timeline.id_for_label }}">
+                            <i class="bi bi-calendar"></i>
+                            Délai souhaité
+                        </label>
+                        {{ form.timeline }}
+                        {% if form.timeline.errors %}
+                            <div class="form-error">
+                                {{ form.timeline.errors|join:", " }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        <i class="bi bi-send"></i>
+                        Envoyer la demande
+                    </button>
+                </form>
+
+                <div class="guarantee-notice">
+                    <i class="bi bi-shield-check"></i>
+                    <p>Votre demande sera traitée dans les plus brefs délais. Je m'engage à vous répondre sous 24 heures.</p>
+                </div>
+            </div>
+        </section>
     </div>
-    
-    <!-- Formulaire pour demander le service spécifique -->
-    <form method="post" class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-        {% csrf_token %}
-        <div class="mb-4">
-            {{ form.as_p }}
-        </div>
-        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200">
-            Demander ce service
-        </button>
-    </form>
+</div>
 
-    <div class="text-center mt-8">
-        <p>Votre satisfaction 😇, notre priorité primaire ! Faites-nous confiance 😇 et vous ne serez pas déçus. Merci 😊</p>
-        <a href="{% url 'display/services' %}" class="text-indigo-600 hover:text-indigo-700">Retour à la liste des services</a>
-    </div>
-</section>
+<style>
+.service-request-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
-    <script src="{% static 'js/services.js' %}"></script>
+.request-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
 
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.request-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+}
+
+/* Service Details */
+.service-details {
+    position: sticky;
+    top: 2rem;
+}
+
+.service-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.service-icon {
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    color: white;
+    padding: 3rem;
+    text-align: center;
+}
+
+.service-icon i {
+    font-size: 4rem;
+}
+
+.service-info {
+    padding: 2rem;
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.service-description {
+    color: #6B7280;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.service-price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem;
+    background: #F8FAFC;
+    border-radius: 0.5rem;
+}
+
+.price-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6B7280;
+}
+
+.price-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Request Form */
+.request-form-section {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.form-card {
+    padding: 2rem;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.form-description {
+    color: #6B7280;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.request-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.form-label i {
+    color: var(--primary);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.form-error {
+    color: #DC2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+.guarantee-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E5E7EB;
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.guarantee-notice i {
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .service-request-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .request-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .service-details {
+        position: static;
+    }
+}
+</style>
 
 {% endblock content %}

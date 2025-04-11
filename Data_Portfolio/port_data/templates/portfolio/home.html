@@ -1,54 +1,71 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+
+{% block title %}Accueil - Eric KOULODJI{% endblock %}
+
 {% block content %}
+<div class="home-container">
+    <!-- Hero Section -->
     <header class="hero-section">
         <div class="hero-content">
-            <div class="skills-container">
-                <span class="skill-badge">Analyse de données</span>
+            <div class="skills-badges">
+                <span class="skill-badge">Data Science</span>
                 <span class="skill-badge">Machine Learning</span>
-                <span class="skill-badge">Data Scientist</span>
                 <span class="skill-badge">Deep Learning</span>
-                <span class="skill-badge">Développement Web Django</span>
+                <span class="skill-badge">Django</span>
                 <span class="skill-badge">Computer Vision</span>
-                <span class="skill-badge">Pythoner-Communauté PythonBénin</span>
-                <span class="skill-badge">@10000 Codeurs</span>
+                <span class="skill-badge">Python</span>
+                <span class="skill-badge">PythonBénin</span>
+                <span class="skill-badge">@10000Codeurs</span>
             </div>
-            <h2 class="gradient-text" style="font-size: 2.5rem; margin: 1.5rem 0;">Get online and grow fast</h2>
-            <p style="font-size: 1.5rem; color: var(--text); margin-bottom: 5rem;">Can I help you?</p>
-            <div style="display: flex; gap: 1rem; justify-content: flex-start;">
-                <a href="{% url 'about' %}" style="background: var(--primary); color: rgb(249, 249, 249); padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; transition: transform 0.3s ease;">About-me</a>
-                <a href="{% url 'projects' %}" style="border: 2px solid var(--primary); color: var(--primary); padding: 0.9rem 1.5rem; border-radius: 5px; text-decoration: none; transition: transform 0.3s ease;">Projects</a>
+            
+            <h1 class="hero-title">
+                <span class="gradient-text">Transformez vos données en solutions intelligentes</span>
+            </h1>
+            
+            <p class="hero-subtitle">Data Scientist, Developpeur Django & Machine Learning Specialist.
+                Passionné de l'Intelligence Artificielle.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="{% url 'about' %}" class="btn btn-primary">En savoir plus</a>
+                <a href="{% url 'projects' %}" class="btn btn-outline">Voir mes projets</a>
             </div>
         </div>
         
         <div class="profile-container">
-            <img src="{% static 'images/profile.jpg' %}" alt="Profile" class="profile-image">
+            <div class="profile-wrapper">
+                <img src="{% static 'images/profile.jpg' %}" alt="Eric KOULODJI" class="profile-image">
+                <div class="profile-background"></div>
+            </div>
         </div>
     </header>
 
+    <!-- About Section -->
     <section class="about-section">
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Qui Suis-Je ?</h2>
-            <p style="font-size: 1.5rem; margin-bottom: 1rem;">Hey! I'm Eric KOULODJI Dona.</p>
-            <p style="color: var(--text); line-height: 1.8;">Data Scientist Jr, Machine Learning Specialist, Développeur Django & Titulaire du Passeport Numérique 10000Codeurs.
-                Passionné de l'Intelligence Artificielle, je possède une double casquette en Physique-Chimie et
-                en Sciences des données. Mes compétences acquises me permettent de concevoir
-                des solutions simples et efficaces, de résoudre des problèmes et d'apporter une
-                plus-value à la nation africaine. Toujours à la recherche de nouveaux défis, 
-                j'aime créer des projets innovants où je peux combiner data science et développement.</p>  
+        <div class="about-content">
+            <h2 class="section-title">Qui suis-je ?</h2>
+            <div class="about-text">
+                <p class="about-intro">Hey! Je suis Eric KOULODJI Dona.</p>
+                <p class="about-description">
+                    Data Scientist Jr, Machine Learning Specialist et Développeur Django. Je suis titulaire du Passeport Numérique 10000Codeurs.
+                    Passionné par l'Intelligence Artificielle, je possède une double expertise en Physique-Chimie et en Sciences des données.
+                    Mes compétences me permettent de concevoir des solutions innovantes et efficaces, contribuant ainsi au développement technologique de l'Afrique.
+                </p>
+            </div>
         </div>
     </section>
 
-    <section class="about-section">
-        <div flex:2 style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Timely Entertainment !</h2>
-            <div class="profile-asset-container">
-                <div class="profile-asset" flex:1>
-                    <img src="{% static 'images/vlog.jpg' %}" alt="divertissment-profile" class="divertissment-profile">
-                    <img src="{% static 'images/back-up.jpg' %}" alt="divertissment-profile" class="divertissment-profile">
-                </div>
+    <!-- Entertainment Section -->
+    <section class="entertainment-section">
+        <div class="entertainment-content">
+            <h2 class="section-title">Timely Moment</h2>
+            <div class="entertainment-grid">
+                <img src="{% static 'images/vlog.jpg' %}" alt="Moment de détente" class="entertainment-image">
+                <img src="{% static 'images/back-up.jpg' %}" alt="Moment de détente" class="entertainment-image">
             </div>
-            <p class="profile-asset-text" style="color: var(--text); line-height: 1.8;">Mes moments de distraction sont comme des éclats 
+            <p class="entertainment-text">
+                Mes moments de distraction sont comme des éclats 
                 de lumière furtifs dans le tumulte de tes projets ambitieux. 
                 Ils surgissent lorsque mon esprit, saturé d’analyses et d’algorithmes, s’octroie une échappée, un souffle hors du cadre rigide des codes et des modèles. 
                 Ce sont ces instants où, porté par le vague à l’âme du génie créatif, 
@@ -56,14 +73,261 @@
                 Parfois, une simple pensée hors sujet devient un sentier sinueux que j'explore, le temps d’un détour mental.
                 D’autres fois, mon regard s’attarde sur une idée fugace, un détail anodin qui, sans crier gare, 
                 me captive et suspend l’élan de ton travail. Ces moments, loin d’être inutiles, sont des pauses invisibles où mon esprit, 
-                tel un instrument finement accordé, se ressource pour mieux vibrer à la prochaine inspiration.</p>  
+                tel un instrument finement accordé, se ressource pour mieux vibrer à la prochaine inspiration.
+            </p>
         </div>
     </section>
 
-    
-    <div class="content">
-        <a href="{% url 'about' %}" class="btn-learn-more">About-me</a>
+    <div class="cta-section">
+        <a href="{% url 'about' %}" class="btn btn-primary btn-large">Découvrir mon parcours</a>
     </div>
+</div>
 
-    <script src="{% static 'js/scripts.js' %}"></script>
+<style>
+.home-container {
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding: 4rem 0;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.skills-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.skill-badge {
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.skill-badge:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    border-radius: 0.5rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border-radius: 1.2rem;
+}
+
+.btn-primary:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.profile-container {
+    position: relative;
+}
+
+.profile-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+}
+
+.profile-image {
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2rem;
+    z-index: 2;
+}
+
+.profile-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    border-radius: 2rem;
+    transform: rotate(-5deg);
+}
+
+/* About Section */
+.about-section {
+    padding: 3rem 0;
+    background: #212830;
+    border-radius: 2rem;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.about-intro {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.about-description {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text);
+}
+
+/* Entertainment Section */
+.entertainment-section {
+    padding: 6rem 0;
+}
+
+.entertainment-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.entertainment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.entertainment-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.entertainment-image:hover {
+    transform: scale(1.05);
+}
+
+.entertainment-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+/* CTA Section */
+.cta-section {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.btn-large {
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    border-radius: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .hero-content {
+        margin: 0 auto;
+    }
+
+    .skills-badges {
+        justify-content: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .profile-wrapper {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .entertainment-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+}
+</style>
+
 {% endblock content %}

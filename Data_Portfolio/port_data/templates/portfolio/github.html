@@ -1,65 +1,413 @@
 <!-- github.html -->
 {% extends "portfolio/base.html" %}
 {% load static %}
+{% load custom_filters %}
+
+{% block title %}Projets GitHub - Eric KOULODJI{% endblock %}
 
 {% block content %}
-<div class="github-dashboard">
-    <!-- Section Statistiques -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <h3>⭐ Total Stars</h3>
-            <p>{{ total_stars }}</p>
-        </div>
-        <div class="stat-card">
-            <h3>📚 Total Forks</h3>
-            <p>{{ total_forks }}</p>
-        </div>
-        <div class="stat-card">
-            <h3>📦 Projets</h3>
-            <p>{{ repos|length }}</p>
-        </div>
-    </div>
+<div class="github-container">
+    <header class="github-header">
+        <h1 class="page-title">Projets GitHub</h1>
+        <p class="page-description">Découvrez mes projets open source et contributions</p>
+        
+        <!-- Search and Filter -->
+        <div class="filter-section">
+            <form action="{% url 'github' %}" method="GET" class="search-form">
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        name="q" 
+                        placeholder="Rechercher un projet..." 
+                        value="{{ request.GET.q }}"
+                        class="search-input"
+                    >
+                    <button type="submit" class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
 
-    <!-- Graphique des langages -->
-    <div class="chart-container">
-        <canvas id="languageChart"></canvas>
-    </div>
-
-    <!-- Liste des projets -->
-    <div class="repo-grid">
-        {% for repo in repos %}
-        <div class="repo-card">
-            <div class="repo-header">
-                <h3><a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a></h3>
-                <span class="language-badge">{{ repo.language }}</span>
-            </div>
-            <p>{{ repo.description }}</p>
-            <div class="repo-stats">
-                <span>⭐ {{ repo.stars }}</span>
-                <span>📚 {{ repo.forks }}</span>
-                <span>🔄 {{ repo.updated_at|date:"d M Y" }}</span>
+            <div class="filter-buttons">
+                <button class="filter-button active" data-filter="all">
+                    <i class="bi bi-grid"></i>
+                    Tous
+                </button>
+                <button class="filter-button" data-filter="python">
+                    <i class="bi bi-filetype-py"></i>
+                    Python
+                </button>
+                <button class="filter-button" data-filter="javascript">
+                    <i class="bi bi-filetype-js"></i>
+                    JavaScript
+                </button>
+                <button class="filter-button" data-filter="django">
+                    <i class="bi bi-filetype-html"></i>
+                    Django
+                </button>
             </div>
         </div>
-        {% endfor %}
+    </header>
+
+    <div class="projects-grid">
+        {% if repositories %}
+            {% for repo in repositories %}
+                <article class="project-card" data-languages="{{ repo.languages|join:',' }}">
+                    <div class="project-header">
+                        <h2 class="project-title">
+                            <a href="{{ repo.html_url }}" target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-github"></i>
+                                {{ repo.name }}
+                            </a>
+                        </h2>
+                        <span class="project-date">
+                            <i class="bi bi-calendar"></i>
+                            {{ repo.updated_at|date:"d M Y" }}
+                        </span>
+                    </div>
+
+                    <p class="project-description">{{ repo.description }}</p>
+
+                    <div class="project-stats">
+                        <div class="stat-item">
+                            <i class="bi bi-star"></i>
+                            <span>{{ repo.stargazers_count }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-diagram-2"></i>
+                            <span>{{ repo.forks_count }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="bi bi-eye"></i>
+                            <span>{{ repo.watchers_count }}</span>
+                        </div>
+                    </div>
+
+                    <div class="project-languages">
+                        {% for language in repo.languages|split:',' %}
+                            <span class="language-badge" data-color="{{ language.color }}">
+                                {{ language.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="project-links">
+                        <a href="{{ repo.html_url }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-github"></i>
+                            Code source
+                        </a>
+                        {% if repo.homepage %}
+                            <a href="{{ repo.homepage }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                                Démo
+                            </a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="no-projects">
+                <i class="bi bi-github"></i>
+                <p>Aucun projet disponible pour le moment.</p>
+                <a href="https://github.com/dona-eric" class="github-profile-link" target="_blank" rel="noopener noreferrer">
+                    Visiter mon profil GitHub
+                </a>
+            </div>
+        {% endif %}
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.github-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.github-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+}
+
+/* Filter Section */
+.filter-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-form {
+    margin-bottom: 2rem;
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.search-button {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.search-button:hover {
+    transform: scale(1.1);
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 9999px;
+    background: white;
+    color: var(--text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-button:hover,
+.filter-button.active {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.project-title a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.project-title a:hover {
+    color: var(--primary);
+}
+
+.project-date {
+    color: #6B7280;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.project-description {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.project-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.project-languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.language-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.language-badge[data-color] {
+    background-color: var(--language-color);
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.3s ease;
+}
+
+.project-link:hover {
+    gap: 0.75rem;
+}
+
+.no-projects {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 0;
+    color: #6B7280;
+}
+
+.no-projects i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.github-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: gap 0.3s ease;
+}
+
+.github-profile-link:hover {
+    gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .github-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-buttons {
+        justify-content: flex-start;
+    }
+}
+</style>
+
 <script>
-    // Graphique des langages
-    const ctx = document.getElementById('languageChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: {{ languages|safe|default:"[]"}}.map(l => l.language || 'Other'),
-            datasets: [{
-                data: {{ languages|safe|default:"[]" }}.map(l => l.count),
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
-                    '#9966FF', '#FF9F40', '#FFCD56', '#C9CBCF'
-                ]
-            }]
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const filter = this.dataset.filter;
+
+            projectCards.forEach(card => {
+                if (filter === 'all' || card.dataset.languages.includes(filter)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Set language badge colors
+    document.querySelectorAll('.language-badge').forEach(badge => {
+        const color = badge.getAttribute('data-color');
+        if (color) {
+            badge.style.setProperty('--language-color', color);
         }
     });
+});
 </script>
-{% endblock %}
+
+{% endblock content %}

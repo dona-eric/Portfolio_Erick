@@ -1,57 +1,350 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
-{% block content %}
 
-<title>Contacts</title>
-<section class="contact-section">
+{% block title %}Contact - Eric KOULODJI{% endblock %}
+
+{% block content %}
     <div class="contact-container">
-        <h2 class="text-center mb-8">Contactez-moi</h2>
+    <header class="contact-header">
+        <h1 class="page-title">Contactez-moi</h1>
+        <p class="page-description">Discutons de vos projets en Data Science, Machine Learning et Développement Web</p>
+    </header>
         
+    <div class="contact-grid">
+        <!-- Contact Form -->
+        <section class="contact-form-section">
         <form class="contact-form" method="POST">
             {% csrf_token %}
-            <div class="space-y-6">
-                <!-- Nom -->
+                
                 <div class="form-group">
-                    <label class="form-label">Nom :</label>
+                    <label class="form-label" for="{{ form.name.id_for_label }}">
+                        <i class="bi bi-person"></i>
+                        Nom complet
+                    </label>
                     {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="form-error">
+                            {{ form.name.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
 
-                <!-- Email -->
                 <div class="form-group">
-                    <label class="form-label">Email :</label>
+                    <label class="form-label" for="{{ form.email.id_for_label }}">
+                        <i class="bi bi-envelope"></i>
+                        Email
+                    </label>
                     {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="form-error">
+                            {{ form.email.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
 
-                <!-- Message -->
                 <div class="form-group">
-                    <label class="form-label">Message :</label>
+                    <label class="form-label" for="{{ form.message.id_for_label }}">
+                        <i class="bi bi-chat-dots"></i>
+                        Message
+                    </label>
                     {{ form.message }}
+                    {% if form.message.errors %}
+                        <div class="form-error">
+                            {{ form.message.errors|join:", " }}
+                        </div>
+                    {% endif %}
                 </div>
 
-                <!-- Submit -->
-                <div class="text-center">
-                    <button type="submit" class="submit-btn">
-                        Envoyer le message ✨
+                <button type="submit" class="submit-button">
+                    <i class="bi bi-send"></i>
+                    Envoyer le message
                     </button>
+            </form>
+        </section>
+
+        <!-- Contact Info -->
+        <section class="contact-info-section">
+            <div class="info-card">
+                <h2 class="info-title">Informations de contact</h2>
+                
+                <div class="info-item">
+                    <i class="bi bi-geo-alt"></i>
+                    <div>
+                        <h3>Localisation</h3>
+                        <p>Abomey-Calavi, Zogbadjè</p>
+                        <p>Bénin</p>
+                    </div>
                 </div>
+
+                <div class="info-item">
+                    <i class="bi bi-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <a href="mailto:donaerickoulodji@gmail.com">donaerickoulodji@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <i class="bi bi-phone"></i>
+                    <div>
+                        <h3>Téléphone</h3>
+                        <p>+229 01-51-34-42-89</p>
+                        <p>+229 01-41-73-02-40</p>
+                    </div>
+                </div>
+
+               <!-- <div class="social-links">
+                    <a href="https://www.linkedin.com/in/dona-erick" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/dona-eric" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a href="https://twitter.com/ErickKoulodji" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </div> -->
             </div>
-        </form>
-    </div>
-    <div class="info-section">
-        <!-- Vision du futur de l'IA -->
-        <div class="info-box">
-            <h3>Vision du futur de l'IA</h3>
-            <p>Atantlique<br>Abomey-Calavi, Zogbadjè<br>Bénin</p>
-            <p>Email : donaerickoulodji@gmail.com</p>
-            <p>Téléphone : +229 01~51~34~42~89 || +229 01-41-73-02-40</p>
-        </div>
+        </section>
     </div>
      
-    <div class="mt-8 text-center">
-        <a href="{% url 'display/services' %}" class="contact-button inline-block px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white font-semibold transition-colors duration-300">Mes Services</a>
+    <div class="services-cta">
+        <a href="{% url 'display/services' %}" class="cta-button">
+            Découvrir mes services
+            <i class="bi bi-arrow-right"></i>
+        </a>
     </div>
-</section>
+</div>
 
+<style>
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
-<script src="{% static 'js/contacts.js' %}"></script>
+.contact-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+/* Contact Form Styles */
+.contact-form-section {
+    background: rgb(151, 147, 147);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.form-label i {
+    color: var(--primary);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #86888b;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.form-error {
+    color: #DC2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+/* Contact Info Styles */
+.contact-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-card {
+    background: rgb(221, 216, 216);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.info-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.info-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.info-item p,
+.info-item a {
+    color: #6B7280;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-item a:hover {
+    color: var(--primary);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #F3F4F6;
+    color: var(--text);
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* CTA Section */
+.services-cta {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.cta-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+</style>
+
 {% endblock content %}

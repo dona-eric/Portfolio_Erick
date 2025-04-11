@@ -6,4 +6,13 @@ app/lib/python3.12/site-packages/tensorflow/
 app/lib/python3.12/site-packages/cv2/
 .vscode
 .idea
-app/
+app
+*.pdf
+*.docx
+*.doc
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+../static/portfolio/styles.css
+.env

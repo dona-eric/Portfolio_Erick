@@ -1,62 +1,329 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+{% load custom_filters %}
+
+{% block title %}Mes Projets - Eric KOULODJI{% endblock %}
 
 {% block content %}
-<section class="projects-section py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-    <div class="container px-5">
-        <h1 class="text-center text-4xl font-bold text-indigo-500 mb-8">Mes Projets</h1>
+<div class="projects-container">
+    <header class="projects-header">
+        <h1 class="page-title">Mes Projets</h1>
+        <p class="page-description">Découvrez mes réalisations en Data Science, Machine Learning et Développement web</p>
+        
+        <!-- Search Form -->
+        <form action="{% url 'projects' %}" method="GET" class="search-form">
+            <div class="search-input-wrapper">
+                <input 
+                    type="text" 
+                    name="q" 
+                    placeholder="Rechercher un projet..." 
+                    value="{{ request.GET.q }}"
+                    class="search-input"
+                >
+                <button type="submit" class="search-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </header>
+
+    <section class="projects-grid">
         {% if projects %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for project in projects %}
-            <div class="project-card rounded-lg shadow-md overflow-hidden bg-gray-700 hover:shadow-lg transition-shadow duration-300">
+                <article class="project-card">
+                    <div class="project-image">
                 {% if project.image_project %}
-                    <img src="{{ project.image_project.url }}" alt="{{ project.title }}" class="project-image w-full h-48 object-cover">
+                            <img src="{{ project.image_project.url }}" alt="{{ project.title }}" loading="lazy">
                 {% else %}
-                    <img src="{% static 'images/opti.png' %}" alt="default" class="project-image w-full h-48 object-cover" weight="90" height="80">
+                            <img src="{% static 'images/opti.png' %}" alt="Default project image" loading="lazy">
                 {% endif %}
-                <div class="p-4">
-                    <h2 class="project-title text-xl font-semibold mb-2">{{ project.title }}</h2>
-                    <p class="project-description text-gray-300">{{ project.description|truncatechars:100 }}</p>
-                    <p class="project-skills text-sm mt-2">
-                        <strong class="text-indigo-400">Techs Stacks:</strong> {{ project.skills_used }}</p>
-                    <div class="project-links mt-4 flex justify-between">
+                    </div>
+                    
+                    <div class="project-content">
+                        <h2 class="project-title">{{ project.title }}</h2>
+                        <p class="project-description">{{ project.description|truncatechars:100 }}</p>
+                        
+                        <div class="project-tech">
+                            <h3 class="tech-title">Technologies utilisées :</h3>
+                            <div class="tech-stack">
+                                {% for skill in project.skills_used|split:"," %}
+                                    <span class="tech-badge">{{ skill|split }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="project-links">
                         {% if project.github_link %}
-                            <a href="{{ project.github_link }}" target="_blank" class="github-button px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300">
-                                Github
+                                <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="project-link github">
+                                    <i class="bi bi-github"></i>
+                                    <span>Code source</span>
                             </a>
                         {% endif %}
+                            
                         {% if project.url_project %}
-                            <a href="{{ project.url_project }}" target="_blank" class="demo-button px-4 py-2 rounded-md bg-gray-600 hover:bg-gray-700 transition-colors duration-300">
-                                Démo
+                                <a href="{{ project.url_project }}" target="_blank" rel="noopener noreferrer" class="project-link demo">
+                                    <i class="bi bi-box-arrow-up-right"></i>
+                                    <span>Démo live</span>
                             </a>
                         {% endif %}
                     </div>
                 </div>
-            </div>
+                </article>
             {% endfor %}
-        </div>
         {% else %}
-            <p class="text-center text-gray-400 mt-8">Aucun projet disponible.</p>
+            <div class="no-projects">
+                <i class="bi bi-folder2-open"></i>
+                <p>Aucun projet disponible pour le moment.</p>
+            </div>
         {% endif %}
-        <div class="mt-8 text-center">
-            <a href="{% url 'contacts-us' %}" class="contact-button inline-block px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-600 text-white font-semibold transition-colors duration-300">Contactez-moi →</a>
-        </div>
-    </div>
 </section>
 
-<section class="recherche-project py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-    <div class="container px-5">
-        <h3 class="text-center text-4xl font-bold text-indigo-500 mb-8">Recherche de projet</h3>
-        
-        <form action="{% url 'projects' %}" method="GET" class="flex justify-center">
-            <input type="text" name="q" placeholder="Rechercher un projet..." value="{{ request.GET.q }}">
-            <button type="submit">🔍Rechercher</button>
-        </form>     
+    <div class="contact-cta">
+        <p>Intéressé par mon travail ?</p>
+        <a href="{% url 'contacts-us' %}" class="contact-button">
+            Me contacter
+            <i class="bi bi-arrow-right"></i>
+        </a>
     </div>
-</section>
+</div>
 
-<script src="{% static 'js/projects.js' %}"></script>
+<style>
+.projects-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
+.projects-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+}
+
+.search-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.search-button {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.search-button:hover {
+    transform: scale(1.1);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.project-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.project-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+}
+
+.project-description {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.tech-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech-badge {
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.project-link.github {
+    background: #24292E;
+    color: white;
+}
+
+.project-link.demo {
+    background: var(--primary);
+    color: white;
+}
+
+.project-link:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.no-projects {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 0;
+    color: #6B7280;
+}
+
+.no-projects i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-cta {
+    text-align: center;
+    padding: 4rem 0;
+    background: #F8FAFC;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.contact-cta p {
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+}
+
+.contact-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .projects-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 
 {% endblock content %}
 

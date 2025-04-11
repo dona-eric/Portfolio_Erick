@@ -92,7 +92,7 @@ MAILTRAP_API_TOKEN = os.getenv('MAILTRAP_API_TOKEN')
 #EMAIL_ADMIN = "donaerickoulodji@gmail.com"  # Ton email d'admin pour recevoir les messages
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.65.42", ".onrender.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost",".onrender.com"]
 
 # Application definition
 
@@ -147,8 +147,13 @@ DATABASES = {
         default=DATABASE_URL
     )
 }
-
-""" DATABASES = {
+"""DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}"""
+"""DATABASES = {
     "default":
         {
             "ENGINE":"django.db.backends.postgresql",
