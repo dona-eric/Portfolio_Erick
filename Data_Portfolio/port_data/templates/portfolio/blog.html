@@ -1,40 +1,231 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
-{% block content %}
-<section class="articles-section">
-    <div class="container px-5">
-        <div class="articles-header">
-            <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Articles</span></h1>
-            <p class="text-muted">Découvrez mes dernières réflexions et analyses sur divers sujets.</p>
-        </div>
 
-        {% if articles %}
-            <div class="row gx-5 justify-content-center">
-                {% for article in articles %}
-                    <div class="col-lg-6 col-xl-4 mb-4">
-                        <div class="card-body">
-                            <h3 class="card-title fw-bolder text-indigo-600">{{ article.title }}</h3>
-                            <p class="card-text text-gray-700">{{ article.content|truncatewords:30 }}</p>
-                            <a href="{% url 'blog_detail' article.pk %}">{{ article.title}}</a>
-                            <p class="mt-2 text-sm text-muted">Catégorie: {{ article.categorie }}</p>
-                            <p class="mt-2 text-sm text-muted">Publié le {{ article.date_published|date:"d M Y" }}</p>
-                        </div>
-                        <div class="card shadow-sm rounded-lg border-0 h-100">
-                            {% if article.image_article %}
-                                <img src="{{ article.image_article.url }}" class="card-img-top img-fluid rounded-top" alt="Image de l'article : {{ article.title }}" aria-label="Image de l'article : {{ article.title }}">
-                            {% else %}
-                                <img src="{% static 'images/etu.jpg' %}" class="card-img-top img-fluid rounded-top" alt="Image de l'article : {{ article.title }}" aria-label="Image de l'article : {{ article.title }}">
-                            {% endif %}
+{% block title %}Blog - Eric KOULODJI{% endblock %}
+
+{% block content %}
+<div class="blog-container">
+    <header class="blog-header">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-description">Découvrez mes articles sur la Data Science, le Machine Learning et l'IA</p>
+    </header>
+
+    {% if articles %}
+        <div class="articles-grid">
+            {% for article in articles %}
+                <article class="article-card">
+                    <div class="article-image">
+                        {% if article.image_article %}
+                            <img src="{{ article.image_article.url }}" alt="{{ article.title }}" loading="lazy">
+                        {% else %}
+                            <img src="{% static 'images/etu.jpg' %}" alt="Image par défaut" loading="lazy">
+                        {% endif %}
+                        <div class="article-category">{{ article.categorie }}</div>
+                    </div>
+
+                    <div class="article-content">
+                        <h2 class="article-title">
+                            <a href="{% url 'blog_detail' article.pk %}">{{ article.title }}</a>
+                        </h2>
+
+                        <p class="article-excerpt">
+                            {{ article.content|truncatewords:30 }}
+                        </p>
+
+                        <div class="article-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-calendar"></i>
+                                <span>{{ article.date_published|date:"d M Y" }}</span>
+                            </div>
+                            <a href="{% url 'blog_detail' article.pk %}" class="read-more">
+                                Lire la suite
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-center text-gray-600">Aucun article disponible pour le moment.</p> 
-            <a href="https://medium.com/@koulodjiric" target="_blank" rel="noopener noreferrer">Click here</a>.</p>
-        {% endif %}
-    </div>
-</section>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-articles">
+            <i class="bi bi-journal-text"></i>
+            <p>Aucun article disponible pour le moment.</p>
+            <p>Retrouvez mes articles sur 
+                <a href="https://medium.com/@koulodjiric" target="_blank" rel="noopener noreferrer" class="medium-link">
+                    <i class="bi bi-medium"></i>
+                    Medium
+                </a>
+            </p>
+        </div>
+    {% endif %}
+</div>
 
-<script src="{% static 'js/articles.js' %}"></script>
+<style>
+.blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.blog-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.article-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.article-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-category {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(79, 70, 229, 0.9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.article-content {
+    padding: 1.5rem;
+}
+
+.article-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.article-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.article-title a:hover {
+    color: var(--primary);
+}
+
+.article-excerpt {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.read-more {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: gap 0.3s ease;
+}
+
+.read-more:hover {
+    gap: 0.75rem;
+}
+
+.no-articles {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6B7280;
+}
+
+.no-articles i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.medium-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: color 0.3s ease;
+}
+
+.medium-link:hover {
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .blog-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .articles-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
 {% endblock content %}

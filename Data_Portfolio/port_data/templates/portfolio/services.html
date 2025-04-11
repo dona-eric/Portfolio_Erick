@@ -1,49 +1,189 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+
+{% block title %}Mes Services - Eric KOULODJI{% endblock %}
+
 {% block content %}
-    <h2 class="text-3xl font-semibold text-indigo-600 text-center py-6">Mes Services</h2>
+<div class="services-container">
+    <header class="services-header">
+        <h1 class="page-title">Mes Services</h1>
+        <p class="page-description">Des solutions sur mesure en Data Science et Machine Learning</p>
+    </header>
 
-    <section class="section-services py-8 px-6 bg-gray-50">
-        <div class="text-center mb-8">
-            <p class="text-lg text-gray-700">Nous vous proposons une gamme variée de services adaptés à vos besoins.</p>
-        </div>
-
-        {% if services %}
-            <div class="services-container">
-                {% for service in services %}
-                    <div class="service-card">
-                        <!-- Icon -->
+    {% if services %}
+        <div class="services-grid">
+            {% for service in services %}
+                <article class="service-card">
+                    <div class="service-icon">
                         {% if service.icon %}
-                            <div class="service-icon">
-                                <i class="{{ service.icon }}"></i>
-                            </div>
+                            <i class="{{ service.icon }}"></i>
+                        {% else %}
+                            <i class="bi bi-code-square"></i>
                         {% endif %}
-                        
-                        <!-- Title -->
-                        <h3 class="service-title">{{ service.title }}</h3>
-                        
-                        <!-- Description -->
+                    </div>
+
+                    <div class="service-content">
+                        <h2 class="service-title">{{ service.title }}</h2>
                         <p class="service-description">{{ service.description }}</p>
                         
-                        <!-- Price -->
-                        <p class="service-price">
-                            <strong>Prix 🤑:</strong> {{ service.price }}€
-                        </p>
-                        <!-- Detail sur un service spécifique -->
-                        <div>
-                            <button type="button" class="btn btn-primary">
-                                <p class="detail-service">
-                                    <a href="{% url 'detail/display/services' service.pk %}">Know here 🥵</a>
-                                </p>
-                            </button>
+                        <div class="service-price">
+                            <span class="price-label">Prix</span>
+                            <span class="price-amount">{{ service.price }}€</span>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-center text-gray-600 mt-8">Aucun service disponible pour le moment.</p>
-        {% endif %}
-    </section>
 
-    <script src="{% static 'js/services.js' %}"></script>
+                        <a href="{% url 'detail/display/services' service.pk %}" class="service-link">
+                            En savoir plus
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-services">
+            <i class="bi bi-tools"></i>
+            <p>Aucun service disponible pour le moment.</p>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.services-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.service-icon {
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.service-icon i {
+    font-size: 3rem;
+}
+
+.service-content {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.service-description {
+    color: #6B7280;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex: 1;
+}
+
+.service-price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.price-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6B7280;
+}
+
+.price-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.service-link:hover {
+    gap: 0.75rem;
+}
+
+.no-services {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6B7280;
+}
+
+.no-services i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .services-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
 {% endblock content %}

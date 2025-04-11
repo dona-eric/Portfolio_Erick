@@ -1,29 +1,251 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
-{% block content %}
 
-<section>
+{% block title %}{{ services_detail.title }} - Eric KOULODJI{% endblock %}
+
+{% block content %}
+<div class="service-detail-container">
     {% if services_detail %}
-        <div class="detail--services">
+        <header class="service-header">
+            <a href="{% url 'display/services' %}" class="back-link">
+                <i class="bi bi-arrow-left"></i>
+                Retour aux services
+            </a>
+            <h1 class="page-title">{{ services_detail.title }}</h1>
+        </header>
+
+        <div class="service-content">
             <div class="service-card">
-                <h3 class="service-title">{{ services_detail.title }}</h3>
-                <p class="service-description">{{ services_detail.description }}</p>
-                <p class="service-price">
-                    <strong>Prix 🤑:</strong> {{ services_detail.price }}€
-                </p>
+                <div class="service-icon">
+                    {% if services_detail.icon %}
+                        <i class="{{ services_detail.icon }}"></i>
+                    {% else %}
+                        <i class="bi bi-code-square"></i>
+                    {% endif %}
+                </div>
+
+                <div class="service-info">
+                    <div class="service-description">
+                        {{ services_detail.description|linebreaks }}
+                    </div>
+
+                    <div class="service-price">
+                        <span class="price-label">Prix</span>
+                        <span class="price-amount">{{ services_detail.price }}€</span>
+                    </div>
+
+                    <div class="service-features">
+                        <h2 class="features-title">Ce qui est inclus :</h2>
+                        <ul class="features-list">
+                            <li>
+                                <i class="bi bi-check-circle"></i>
+                                <span>Analyse approfondie de vos besoins</span>
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle"></i>
+                                <span>Solution personnalisée</span>
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle"></i>
+                                <span>Support technique</span>
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle"></i>
+                                <span>Documentation détaillée</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="{% url 'services/requested' pk=services_detail.id %}" class="request-button">
+                        <i class="bi bi-send"></i>
+                        Demander ce service
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="demande service">
-            <button class="btn btn-primary">
-                <a href="{% url 'services/requested' pk=services_detail.id %}"> Demander ce service</a>
-            </button>
-        </div>
-
     {% else %}
-        <p class="text-center text-gray-600 mt-8">Aucun service disponible pour le moment.</p>
+        <div class="no-service">
+            <i class="bi bi-exclamation-circle"></i>
+            <p>Ce service n'est pas disponible pour le moment.</p>
+            <a href="{% url 'display/services' %}" class="back-link">Retour aux services</a>
+        </div>
     {% endif %}
-</section>
-    <script src="{% static 'js/services.js' %}"></script>
+</div>
 
+<style>
+.service-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.service-header {
+    margin-bottom: 3rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.service-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.service-icon {
+    background: linear-gradient(135deg, var(--primary), #9333EA);
+    color: white;
+    padding: 3rem;
+    text-align: center;
+}
+
+.service-icon i {
+    font-size: 4rem;
+}
+
+.service-info {
+    padding: 2rem;
+}
+
+.service-description {
+    color: var(--text);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.service-price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #F8FAFC;
+    border-radius: 0.5rem;
+}
+
+.price-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6B7280;
+}
+
+.price-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.service-features {
+    margin-bottom: 2rem;
+}
+
+.features-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.features-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text);
+}
+
+.features-list i {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.request-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.request-button:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+}
+
+.no-service {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6B7280;
+}
+
+.no-service i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #DC2626;
+}
+
+@media (max-width: 768px) {
+    .service-detail-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .service-icon {
+        padding: 2rem;
+    }
+
+    .service-icon i {
+        font-size: 3rem;
+    }
+
+    .service-info {
+        padding: 1.5rem;
+    }
+
+    .service-description {
+        font-size: 1rem;
+    }
+
+    .price-amount {
+        font-size: 1.5rem;
+    }
+}
+</style>
 
 {% endblock content %}

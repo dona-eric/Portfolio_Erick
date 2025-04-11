@@ -6,13 +6,11 @@ from django.core.validators import validate_email
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from django.conf import settings
-import warnings,requests, json, os
+import warnings,requests, json, os, traceback
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
-import traceback
-from django.db.models import Q
-from django.db import models
+from django.db.models import Q,Model
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView, ListView
 # Page d'accueil
