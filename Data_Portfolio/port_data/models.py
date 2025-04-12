@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
+from django.utils import timezone
 """ Here we create other that the models of database of website
 portfolio """
 
@@ -39,12 +40,6 @@ class Skill(models.Model):
     ]
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default="Category", verbose_name="Catégorie")
     skills_name = models.CharField(max_length=100, verbose_name="Nom de la compétence")
-    level = models.IntegerField(
-        default=50,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name="Niveau de maîtrise",
-        help_text="Niveau de maîtrise en pourcentage (0-100)"
-    )
     description = models.TextField(null=True, blank=True, verbose_name="Description")
 
     def __str__(self):
@@ -123,12 +118,17 @@ class Service(models.Model):
 
 class ServiceRequest(models.Model):
     service = models.ForeignKey("Service", on_delete=models.CASCADE, related_name='requests')
-    name_client = models.CharField(max_length=100,verbose_name="Nom du client")
-    email_client = models.EmailField(verbose_name="Adresse email du client", unique=True)
+    nom = models.CharField(max_length=100,verbose_name="Nom du client")
+    email = models.EmailField(verbose_name="Adresse email du client", unique=True)
+    téléphone = models.CharField(max_length=100, verbose_name="Téléphone du client",default="0000000000")
+    entreprise = models.CharField(max_length=100, verbose_name="Entreprise",null=True, blank=True)
+    details_project = models.TextField(verbose_name="Détails du projet", null=True, blank=True)
+    budget_estimated = models.DecimalField(decimal_places=2, max_digits=10, default=0.00, verbose_name="Budget estimé")
+    delai_livraison = models.CharField(max_length=100, verbose_name="Delai de livraison", null=True, blank=True)
     date_requested = models.DateTimeField(auto_now_add=True, verbose_name="Date de la demande")
 
     def __str__(self):
-        return f"Demande de service de {self.name_client} + {self.email_client} pour {self.service.title}"
+        return f"Demande de service de {self.name} + {self.email} pour {self.details_project}"
 
 
 

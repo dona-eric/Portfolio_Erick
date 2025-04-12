@@ -44,14 +44,14 @@
                     {% csrf_token %}
                     
                     <div class="form-group">
-                        <label class="form-label" for="{{ form.name.id_for_label }}">
+                        <label class="form-label" for="{{ form.nom.id_for_label }}">
                             <i class="bi bi-person"></i>
                             Nom complet
                         </label>
-                        {{ form.name }}
-                        {% if form.name.errors %}
+                        {{ form.nom }}
+                        {% if form.nom.errors %}
                             <div class="form-error">
-                                {{ form.name.errors|join:", " }}
+                                {{ form.nom.errors|join:", " }}
                             </div>
                         {% endif %}
                     </div>
@@ -70,35 +70,35 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="{{ form.phone.id_for_label }}">
+                        <label class="form-label" for="{{ form.téléphone.id_for_label }}">
                             <i class="bi bi-phone"></i>
                             Téléphone
                         </label>
-                        {{ form.phone }}
-                        {% if form.phone.errors %}
+                        {{ form.téléphone }}
+                        {% if form.téléphone.errors %}
                             <div class="form-error">
-                                {{ form.phone.errors|join:", " }}
+                                {{ form.téléphone.errors|join:", " }}
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="{{ form.company.id_for_label }}">
+                        <label class="form-label" for="{{ form.entreprise.id_for_label }}">
                             <i class="bi bi-building"></i>
                             Entreprise (optionnel)
                         </label>
-                        {{ form.company }}
+                        {{ form.entreprise }}
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="{{ form.message.id_for_label }}">
+                        <label class="form-label" for="{{ form.details_project.id_for_label }}">
                             <i class="bi bi-chat-dots"></i>
                             Détails du projet
                         </label>
-                        {{ form.message }}
-                        {% if form.message.errors %}
+                            {{ form.details_project }}
+                        {% if form.details_project.errors %}
                             <div class="form-error">
-                                {{ form.message.errors|join:", " }}
+                                {{ form.details_project.errors|join:", " }}
                             </div>
                         {% endif %}
                     </div>
@@ -108,23 +108,23 @@
                             <i class="bi bi-currency-euro"></i>
                             Budget estimé
                         </label>
-                        {{ form.budget }}
-                        {% if form.budget.errors %}
+                        {{ form.budget_estimated }}
+                        {% if form.budget_estimated.errors %}
                             <div class="form-error">
-                                {{ form.budget.errors|join:", " }}
+                                {{ form.budget_estimated.errors|join:", " }}
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="{{ form.timeline.id_for_label }}">
+                        <label class="form-label" for="{{ form.delai_livraison.id_for_label }}">
                             <i class="bi bi-calendar"></i>
                             Délai souhaité
                         </label>
-                        {{ form.timeline }}
-                        {% if form.timeline.errors %}
+                        {{ form.delai_livraison }}
+                        {% if form.delai_livraison.errors %}
                             <div class="form-error">
-                                {{ form.timeline.errors|join:", " }}
+                                {{ form.delai_livraison.errors|join:", " }}
                             </div>
                         {% endif %}
                     </div>

@@ -86,7 +86,7 @@ class ProjectListView(ListView):
     
 # Page des contacts
 
-def send_email_via_mailtrap(nom, message, recipient_email):
+def send_email_via_mailtrap(subject, body, recipient_email):
     url = "https://sandbox.api.mailtrap.io/api/send/3448761"  # l'api de maitrip pour recevoir des mail des contacts et des newsletters
 
     headers = {
@@ -95,14 +95,27 @@ def send_email_via_mailtrap(nom, message, recipient_email):
     }
     
     data = {
-        "from": {"email": settings.EMAIL_ADMIN, "name": "DataWorld"},
-        "to": [{"email": recipient_email}],  
-        "Adresse": nom,
-        "text": message
+        "from": {
+            "email": settings.EMAIL_ADMIN,
+            "name": "DataWorld"
+        },
+        "to": [
+            {
+                "email": recipient_email
+            }
+        ],
+        "subject": subject,
+        "text": body
     }
 
-    response = requests.post(url, headers=headers, json=data)  
-    return response.status_code == 200
+    response = requests.post(url, headers=headers, json=data)
+
+    if response.status_code == 200:
+        print("✅ Email envoyé avec succès via Mailtrap API")
+        return True
+    else:
+        print("❌ Échec de l'envoi :", response.status_code, response.text)
+        return False
 
 
 ## vue pour les contacts en utilisant les formulaires de django et les vues generiques
@@ -117,24 +130,23 @@ def contacts(request):
             try:
                 nom = form.cleaned_data["name"]
                 email = form.cleaned_data["email"]
-                content_message = form.cleaned_data["message"]
-                print(f"✔ Formulaire validé : {nom}, {email}, {content_message}")
+                message = form.cleaned_data["message"]
+                print(f"✔ Formulaire validé : {nom}, {email}, {message}")
 
                 # Construction des messages
-                message_admin = f"Message de {nom}, ({email}):\n\n{content_message}"
+                message_admin = f"Message de {nom}, ({email}):\n\n{message}"
                 message_user = f"Bonjour {nom},\n\nMerci de nous avoir contactés. Nous avons bien reçu votre message et vous répondrons sous peu.\n\nCordialement,\nL'équipe."
 
                 # Envoi des emails
                 mail_admin = send_email_via_mailtrap(
-                    nom = f"📩 Nouveau message de : {email}",
-                    message = message_admin,
-                    recipient_email=settings.EMAIL_ADMIN
+                    subject = f"📩 Nouveau message de : {email}",
+                    body = message_admin,
+                    recipient_email = settings.EMAIL_ADMIN
                 )
-
                 mail_user = send_email_via_mailtrap(
-                    nom ="📩 Votre message a bien été reçu !",
-                    message = message_user,
-                    recipient_email=email
+                    subject = "📩 Votre message a bien été reçu !",
+                    body = message_user,
+                    recipient_email = email
                 )
 
                 if mail_admin and mail_user:

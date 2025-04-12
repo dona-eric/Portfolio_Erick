@@ -41,6 +41,59 @@
         </div>
     </header>
 
+    <!-- Streaming Section -->
+    <section class="streaming-section">
+        <div class="streaming-content">
+            <h2 class="section-title">Mes Activités en Direct</h2>
+            <div class="streaming-container">
+                <div class="streaming-slider">
+                    <div class="streaming-slide">
+                        <div class="streaming-header">
+                            <i class="bi bi-github"></i>
+                            <h3>Projets GitHub</h3>
+                        </div>
+                        <div class="streaming-iframe">
+                            <iframe 
+                                src="https://github-readme-stats.vercel.app/api?username=dona-eric&show_icons=true&theme=radical" 
+                                frameborder="0" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    
+                    <div class="streaming-slide">
+                        <div class="streaming-header">
+                            <i class="bi bi-code-slash"></i>
+                            <h3>Activités de Code</h3>
+                        </div>
+                        <div class="streaming-iframe">
+                            <iframe 
+                                src="https://github.com/dona-eric/Gestion-des-ventes&layout=compact&theme=radical" 
+                                frameborder="0" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <div class="streaming-slide">
+                        <div class="streaming-header">
+                            <i class="bi bi-git"></i>
+                            <h3>Derniers Projets</h3>
+                        </div>
+                        <div class="streaming-iframe">
+                            <iframe 
+                                src="https://github.com/dona-eric/Gestion-des-ventes" 
+                                frameborder="0" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="streaming-dots"></div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section class="about-section">
         <div class="about-content">
@@ -67,12 +120,12 @@
             <p class="entertainment-text">
                 Mes moments de distraction sont comme des éclats 
                 de lumière furtifs dans le tumulte de tes projets ambitieux. 
-                Ils surgissent lorsque mon esprit, saturé d’analyses et d’algorithmes, s’octroie une échappée, un souffle hors du cadre rigide des codes et des modèles. 
-                Ce sont ces instants où, porté par le vague à l’âme du génie créatif, 
+                Ils surgissent lorsque mon esprit, saturé d'analyses et d'algorithmes, s'octroie une échappée, un souffle hors du cadre rigide des codes et des modèles. 
+                Ce sont ces instants où, porté par le vague à l'âme du génie créatif, 
                 je laisse mon attention voguer vers des rivages imprévus, oscillant entre rêverie et curiosité.
-                Parfois, une simple pensée hors sujet devient un sentier sinueux que j'explore, le temps d’un détour mental.
-                D’autres fois, mon regard s’attarde sur une idée fugace, un détail anodin qui, sans crier gare, 
-                me captive et suspend l’élan de ton travail. Ces moments, loin d’être inutiles, sont des pauses invisibles où mon esprit, 
+                Parfois, une simple pensée hors sujet devient un sentier sinueux que j'explore, le temps d'un détour mental.
+                D'autres fois, mon regard s'attarde sur une idée fugace, un détail anodin qui, sans crier gare, 
+                me captive et suspend l'élan de ton travail. Ces moments, loin d'être inutiles, sont des pauses invisibles où mon esprit, 
                 tel un instrument finement accordé, se ressource pour mieux vibrer à la prochaine inspiration.
             </p>
         </div>
@@ -289,6 +342,88 @@
     border-radius: 2rem;
 }
 
+/* Streaming Section */
+.streaming-section {
+    padding: 6rem 0;
+    background: #F8FAFC;
+}
+
+.streaming-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.streaming-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 3rem;
+}
+
+.streaming-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.streaming-slide {
+    min-width: 100%;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.streaming-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.streaming-header i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.streaming-header h3 {
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.streaming-iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.streaming-iframe iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.streaming-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #CBD5E1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background: var(--primary);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .hero-section {
@@ -327,7 +462,52 @@
     .section-title {
         font-size: 2rem;
     }
+
+    .streaming-iframe {
+        height: 250px;
+    }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.streaming-slider');
+    const slides = document.querySelectorAll('.streaming-slide');
+    const dotsContainer = document.querySelector('.streaming-dots');
+    let currentSlide = 0;
+    const slideInterval = 10000; // 10 secondes
+
+    // Créer les points de navigation
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        updateSlider();
+    }
+
+    function updateSlider() {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlider();
+    }
+
+    // Démarrer le défilement automatique
+    setInterval(nextSlide, slideInterval);
+});
+</script>
 
 {% endblock content %}

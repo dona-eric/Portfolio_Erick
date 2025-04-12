@@ -32,7 +32,7 @@
             {% for project in projects %}
                 <article class="project-card">
                     <div class="project-image">
-                {% if project.image_project %}
+                {% if project.image_project and project.image_project.url %}
                             <img src="{{ project.image_project.url }}" alt="{{ project.title }}" loading="lazy">
                 {% else %}
                             <img src="{% static 'images/opti.png' %}" alt="Default project image" loading="lazy">
@@ -46,8 +46,8 @@
                         <div class="project-tech">
                             <h3 class="tech-title">Technologies utilisées :</h3>
                             <div class="tech-stack">
-                                {% for skill in project.skills_used|split:"," %}
-                                    <span class="tech-badge">{{ skill|split }}</span>
+                                {% for skill in project.skills_used.all %}
+                                    <span class="tech-badge">{{ skill.skills_name }}</span>
                                 {% endfor %}
                             </div>
                         </div>
