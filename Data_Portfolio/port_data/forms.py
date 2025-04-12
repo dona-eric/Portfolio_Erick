@@ -55,40 +55,56 @@ class ServiceForms(forms.ModelForm):
 class ServiceRequestForms(forms.ModelForm):
     class Meta:
         model = ServiceRequest
-        fields = ['name_client','email_client', 'service']
+        fields = ['nom','email', 'téléphone', 'entreprise', 'details_project', 'budget_estimated', 'delai_livraison']
     widgets = {
-            'name_client': forms.TextInput(attrs={
+            'nom': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Votre nom complet'
             }),
-            'email_client': forms.EmailInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'email du client'
             }),
-            'service': forms.Select(attrs={
+            'téléphone': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'service demandé'
-            })
+                'placeholder': 'téléphone du client'
+            }),
+            'entreprise': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'entreprise du client'
+            }),
+            'details_project': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'détails du projet'
+            }),
+            'budget_estimated': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'budget estimé'
+            }),
+            'delai_livraison': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'delai de livraison'
+            }),
         }
     labels = {
-            'name_client': 'Nom complet',
-            'email_client': 'Adresse email',
-            'service': 'Service demandé',
+            'nom': 'Nom complet',
+            'email': 'Adresse email',
+            'téléphone': 'Téléphone',
+            'entreprise': 'Entreprise',
+            'details_project': 'Détails du projet',
+            'budget_estimated': 'Budget estimé',
+            'delai_livraison': 'Delai de livraison'
         }
                 
                 
 class SkillForms(forms.ModelForm):
     class Meta:
         model = Skill
-        fields = ['skills_name', 'level', 'description']
+        fields = ['skills_name', 'description']
     widgets = {
             'skills_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Nom de la compétence'
-            }),
-            'level': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Niveau de la compétence'
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -98,7 +114,6 @@ class SkillForms(forms.ModelForm):
         }
     labels = {
             'skills_name': 'Nom de la compétence',
-            'level': 'Niveau de maîtrise',
             'description': 'Description'
         }
 

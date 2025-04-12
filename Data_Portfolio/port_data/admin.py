@@ -22,9 +22,9 @@ class ServiceAdmin(admin.ModelAdmin):
 admin.site.register(Service, ServiceAdmin)
 
 class ServiceRequestdmin(admin.ModelAdmin):
-    list_display = ("name_client","email_client", "service", "date_requested")
-    list_filter =("service", "name_client", 'email_client')
-    search_fields = ("service", 'name_client')
+    list_display = ("nom","email", "téléphone", "entreprise", "details_project", "budget_estimated", "delai_livraison", "date_requested")
+    list_filter =("service", "nom", 'email', 'entreprise')
+    search_fields = ("service", 'nom')
 
 admin.site.register(ServiceRequest, ServiceRequestdmin)
 
@@ -45,8 +45,8 @@ admin.site.register(Newsletter, NewsletterAdmin)
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('category', 'skills_name', "level")
-    search_fields = ('category', "level", "description")
+    list_display = ('category', 'skills_name',)
+    search_fields = ('category', "description")
 admin.site.register(Skill, SkillAdmin)
 
 
