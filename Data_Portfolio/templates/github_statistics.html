@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Statistiques GitHub de {{ username }}</h1>
+    
+    <!-- Vue d'ensemble -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Projets</h5>
+                    <p class="card-text display-4">{{ total_repos }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Étoiles</h5>
+                    <p class="card-text display-4">{{ total_stars }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Langages utilisés -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Langages utilisés</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for lang, count in languages.items %}
+                <div class="col-md-3 mb-3">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ count|div:total_repos|mul:100 }}%"
+                             aria-valuenow="{{ count }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="{{ total_repos }}">
+                            {{ lang }} ({{ count }})
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Contributions -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Contributions cette année</h5>
+        </div>
+        <div class="card-body">
+            <div class="contributions-calendar">
+                {% for date, count in contributions.items %}
+                <div class="contribution-cell" 
+                     style="background-color: rgba(0, 255, 0, {{ count|div:10 }})"
+                     title="{{ date }}: {{ count }} contributions">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Top 5 langages -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Top 5 langages</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for lang, count in top_languages.items %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ lang }}</h6>
+                            <p class="card-text">{{ count }} projets</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.contributions-calendar {
+    display: grid;
+    grid-template-columns: repeat(52, 1fr);
+    gap: 2px;
+}
+
+.contribution-cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.progress {
+    height: 25px;
+}
+
+.progress-bar {
+    background-color: #28a745;
+}
+</style>
+{% endblock %} 
