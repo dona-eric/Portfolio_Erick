@@ -11,9 +11,14 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.db.models import Q,Model
+from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView, ListView
-# Page d'accueil
+from django.http import JsonResponse
+from .utils import get_github_statistics
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # message d'alerte
 warnings.filterwarnings("ignore", message="StreamingHttpResponse must consume synchronous iterators")
@@ -278,7 +283,7 @@ def newsletters(request):
         "description": "Restez informé de nos dernières actualités"
     })
 
-#def newsletters(request):
+"""def newsletters(request):
     if request.method == 'POST':
         form = NewsletterForms(request.POST)
         if form.is_valid():
@@ -326,7 +331,7 @@ def newsletters(request):
         "description": "Restez informé de nos dernières actualités"
     })
 
-
+"""
             
 
 """ Une fonction qui valide tout les formulaires de la base avec get ou post"""
@@ -362,17 +367,25 @@ def newsletters(request):
 
 ## vue pur les repos github
 def github_activity(request):
-    repos = GitHubRepo.objects.all().order_by('-stars')
-    recent_activities = GitHubActivity.objects.all().order_by('-timestamp')[:10]
+    username = os.getenv('USERNAME')
+    token = os.getenv('GITHUB_TOKEN')
     
-    # Statistiques
-    languages = GitHubRepo.objects.values('language').annotate(count=models.Count('language'))
-    context = {
-        'repos': repos,
-        'activities': recent_activities,
-        'languages': languages,
-        'total_stars': sum(repo.stars for repo in repos),
-        'total_forks': sum(repo.forks for repo in repos)
-    }
-    return render(request, 'portfolio/github.html', context)
-
+    # Debug information
+    print(f"Username: {username}")
+    print(f"Token exists: {bool(token)}")
+    print(f"Token length: {len(token) if token else 0}")
+    print(f"Token format: {token[:10] if token else 'None'}")
+    
+    if not username or not token:
+        return render(request, 'portfolio/error.html', {
+            'error_message': f"Configuration GitHub manquante. Veuillez vérifier les variables d'environnement: {'USERNAME' if not username else ''} {'GITHUB_TOKEN' if not token else ''}"
+        })
+    
+    try:
+        stats = get_github_statistics(username, token)
+        return render(request, 'portfolio/github.html', {'stats': stats})
+    except Exception as e:
+        print(f"Error fetching GitHub stats: {str(e)}")
+        return render(request, 'portfolio/error.html', {
+            'error_message': f"Erreur lors de la récupération des statistiques GitHub: {str(e)}"
+        })
