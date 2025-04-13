@@ -1,0 +1,352 @@
+    <!-- GitHub Stats Section -->
+    <section class="github-stats-section">
+        <div class="github-stats-content">
+            <h2 class="section-title">Mes Activités GitHub</h2>
+            <div class="github-stats-container">
+                <div class="github-stats-grid">
+                    <!-- Statistiques Générales -->
+                    <div class="github-stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-git"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Repositories</h3>
+                            <p class="stats-value" id="total-repos">0</p>
+                        </div>
+                    </div>
+
+                    <div class="github-stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Stars</h3>
+                            <p class="stats-value" id="total-stars">0</p>
+                        </div>
+                    </div>
+
+                    <div class="github-stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-diagram-2"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Forks</h3>
+                            <p class="stats-value" id="total-forks">0</p>
+                        </div>
+                    </div>
+
+                    <div class="github-stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-code-square"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Commits</h3>
+                            <p class="stats-value" id="total-commits">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Langages -->
+                <div class="github-languages">
+                    <h3>Top Langages</h3>
+                    <div class="languages-grid">
+                        {% for lang, count in stats.top_languages.items %}
+                        <div class="language-item">
+                            <span class="language-name">{{ lang }}</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: {{ count }}%">
+                                    {{ count }}%
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Derniers Repositories -->
+                <div class="github-repos">
+                    <h3>Derniers Repositories</h3>
+                    <div class="repos-grid">
+                        {% for repo in stats.repositories|slice:":6" %}
+                        <div class="repo-card">
+                            <div class="repo-header">
+                                <i class="bi bi-github"></i>
+                                <a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>
+                            </div>
+                            <p class="repo-description">{{ repo.description|default:"No description" }}</p>
+                            <div class="repo-stats">
+                                <span><i class="bi bi-star"></i> {{ repo.stargazers_count }}</span>
+                                <span><i class="bi bi-diagram-2"></i> {{ repo.forks_count }}</span>
+                                <span><i class="bi bi-code-square"></i> {{ repo.commits }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<style>
+/* GitHub Stats Section */
+.github-stats-section {
+    padding: 6rem 0;
+    background: #F8FAFC;
+}
+
+.github-stats-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.github-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.github-stats-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.github-stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.stats-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+.stats-content h3 {
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.stats-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+}
+
+.github-languages {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.languages-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.language-item {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.language-name {
+    font-weight: 500;
+    color: var(--text);
+}
+
+.progress {
+    height: 1rem;
+    background: #E5E7EB;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: var(--primary);
+    color: white;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 1s ease;
+}
+
+.github-repos {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.repos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.repo-card {
+    background: #F8FAFC;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.repo-card:hover {
+    transform: translateY(-5px);
+}
+
+.repo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.repo-header i {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.repo-header a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.repo-header a:hover {
+    color: var(--primary);
+}
+
+.repo-description {
+    color: #6B7280;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.repo-stats {
+    display: flex;
+    gap: 1rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.repo-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .github-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .repos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour animer les valeurs
+    function animateValue(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            element.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Fonction pour mettre à jour les statistiques
+    function updateStats() {
+        fetch('/github-stats/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Erreur:', data.error);
+                    return;
+                }
+
+                // Mettre à jour les statistiques générales
+                animateValue(document.getElementById('total-repos'), 0, data.total_repos, 2000);
+                animateValue(document.getElementById('total-stars'), 0, data.total_stars, 2000);
+                animateValue(document.getElementById('total-forks'), 0, data.total_forks, 2000);
+                animateValue(document.getElementById('total-commits'), 0, data.total_commits, 2000);
+
+                // Mettre à jour les langages
+                const languagesGrid = document.querySelector('.languages-grid');
+                languagesGrid.innerHTML = '';
+                Object.entries(data.top_languages).forEach(([lang, count]) => {
+                    const languageItem = document.createElement('div');
+                    languageItem.className = 'language-item';
+                    languageItem.innerHTML = `
+                        <span class="language-name">${lang}</span>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: ${count}%">
+                                ${count}%
+                            </div>
+                        </div>
+                    `;
+                    languagesGrid.appendChild(languageItem);
+                });
+
+                // Mettre à jour les repositories
+                const reposGrid = document.querySelector('.repos-grid');
+                reposGrid.innerHTML = '';
+                data.repositories.forEach(repo => {
+                    const repoCard = document.createElement('div');
+                    repoCard.className = 'repo-card';
+                    repoCard.innerHTML = `
+                        <div class="repo-header">
+                            <i class="bi bi-github"></i>
+                            <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                        </div>
+                        <p class="repo-description">${repo.description || 'No description'}</p>
+                        <div class="repo-stats">
+                            <span><i class="bi bi-star"></i> ${repo.stargazers_count}</span>
+                            <span><i class="bi bi-diagram-2"></i> ${repo.forks_count}</span>
+                            <span><i class="bi bi-code-square"></i> ${repo.commits}</span>
+                        </div>
+                    `;
+                    reposGrid.appendChild(repoCard);
+                });
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des statistiques:', error);
+            });
+    }
+
+    // Mise à jour initiale
+    updateStats();
+
+    // Mise à jour périodique (toutes les 5 minutes)
+    setInterval(updateStats, 300000);
+
+    // Ajouter une animation de chargement
+    const statsSection = document.querySelector('.github-stats-section');
+    statsSection.style.opacity = '0';
+    statsSection.style.transition = 'opacity 1s ease-in-out';
+    setTimeout(() => {
+        statsSection.style.opacity = '1';
+    }, 100);
+});
+</script> 
