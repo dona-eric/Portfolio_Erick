@@ -5,117 +5,151 @@
 
 {% block title %}Projets GitHub - Eric KOULODJI{% endblock %}
 
-{% block content %}
-<div class="github-container">
-    <header class="github-header">
-        <h1 class="page-title">Projets GitHub</h1>
-        <p class="page-description">Découvrez mes projets open source et contributions</p>
-        
-        <!-- Search and Filter -->
-        <div class="filter-section">
-            <form action="{% url 'github' %}" method="GET" class="search-form">
-                <div class="search-input-wrapper">
-                    <input 
-                        type="text" 
-                        name="q" 
-                        placeholder="Rechercher un projet..." 
-                        value="{{ request.GET.q }}"
-                        class="search-input"
-                    >
-                    <button type="submit" class="search-button">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-            </form>
 
-            <div class="filter-buttons">
-                <button class="filter-button active" data-filter="all">
-                    <i class="bi bi-grid"></i>
-                    Tous
-                </button>
-                <button class="filter-button" data-filter="python">
-                    <i class="bi bi-filetype-py"></i>
-                    Python
-                </button>
-                <button class="filter-button" data-filter="javascript">
-                    <i class="bi bi-filetype-js"></i>
-                    JavaScript
-                </button>
-                <button class="filter-button" data-filter="django">
-                    <i class="bi bi-filetype-html"></i>
-                    Django
-                </button>
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">GitHub Activity</h1>
+    
+    {% if stats %}
+    <div class="row">
+        <!-- Statistiques générales -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Statistiques Générales</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Total Repositories: {{ stats.total_repos }}</li>
+                        <li class="list-group-item">Total Stars: {{ stats.total_stars }}</li>
+                        <li class="list-group-item">Total Forks: {{ stats.total_forks }}</li>
+                        <li class="list-group-item">Total Commits: {{ stats.total_commits }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </header>
 
-    <div class="projects-grid">
-        {% if repositories %}
-            {% for repo in repositories %}
-                <article class="project-card" data-languages="{{ repo.languages|join:',' }}">
-                    <div class="project-header">
-                        <h2 class="project-title">
-                            <a href="{{ repo.html_url }}" target="_blank" rel="noopener noreferrer">
-                                <i class="bi bi-github"></i>
-                                {{ repo.name }}
-                            </a>
-                        </h2>
-                        <span class="project-date">
-                            <i class="bi bi-calendar"></i>
-                            {{ repo.updated_at|date:"d M Y" }}
-                        </span>
-                    </div>
-
-                    <p class="project-description">{{ repo.description }}</p>
-
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <i class="bi bi-star"></i>
-                            <span>{{ repo.stargazers_count }}</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="bi bi-diagram-2"></i>
-                            <span>{{ repo.forks_count }}</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="bi bi-eye"></i>
-                            <span>{{ repo.watchers_count }}</span>
-                        </div>
-                    </div>
-
-                    <div class="project-languages">
-                        {% for language in repo.languages|split:',' %}
-                            <span class="language-badge" data-color="{{ language.color }}">
-                                {{ language.name }}
-                            </span>
+        <!-- Top Langages -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top Langages</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for lang, count in stats.top_languages.items %}
+                        <li class="list-group-item">{{ lang }}: {{ count }}%</li>
                         {% endfor %}
-                    </div>
-
-                    <div class="project-links">
-                        <a href="{{ repo.html_url }}" class="project-link" target="_blank" rel="noopener noreferrer">
-                            <i class="bi bi-github"></i>
-                            Code source
-                        </a>
-                        {% if repo.homepage %}
-                            <a href="{{ repo.homepage }}" class="project-link" target="_blank" rel="noopener noreferrer">
-                                <i class="bi bi-box-arrow-up-right"></i>
-                                Démo
-                            </a>
-                        {% endif %}
-                    </div>
-                </article>
-            {% endfor %}
-        {% else %}
-            <div class="no-projects">
-                <i class="bi bi-github"></i>
-                <p>Aucun projet disponible pour le moment.</p>
-                <a href="https://github.com/dona-eric" class="github-profile-link" target="_blank" rel="noopener noreferrer">
-                    Visiter mon profil GitHub
-                </a>
+                    </ul>
+                </div>
             </div>
-        {% endif %}
+        </div>
+
+        <!-- Derniers Repositories -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Derniers Repositories</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for repo in stats.repositories|slice:":5" %}
+                        <li class="list-group-item">
+                            <a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>
+                            <br>
+                            <small>Stars: {{ repo.stargazers_count }} | Forks: {{ repo.forks_count }}</small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Contributions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Contributions</h5>
+                    <div class="row">
+                        <!-- Contributions par année -->
+                        <div class="col-md-4">
+                            <h6>Par Année</h6>
+                            <ul class="list-group">
+                                {% for year, count in stats.contributions.yearly.items %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ year }}
+                                    <span class="badge bg-primary rounded-pill">{{ count }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        <!-- Contributions par jour -->
+                        <div class="col-md-4">
+                            <h6>Par Jour (7 derniers jours)</h6>
+                            <ul class="list-group">
+                                {% for day, count in stats.contributions.daily.items|slice:":7" %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ day }}
+                                    <span class="badge bg-primary rounded-pill">{{ count }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        <!-- Contributions par heure -->
+                        <div class="col-md-4">
+                            <h6>Par Heure (24 dernières heures)</h6>
+                            <ul class="list-group">
+                                {% for hour, count in stats.contributions.hourly.items|slice:":24" %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ hour }}
+                                    <span class="badge bg-primary rounded-pill">{{ count }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activités Récentes -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Activités Récentes</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Repository</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for activity in stats.recent_activities %}
+                                <tr>
+                                    <td>{{ activity.created_at|date:"Y-m-d H:i" }}</td>
+                                    <td>{{ activity.type }}</td>
+                                    <td>{{ activity.repo.name }}</td>
+                                    <td>{{ activity.payload.action|default:"" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        Aucune donnée GitHub disponible pour le moment.
+    </div>
+    {% endif %}
 </div>
+{% endblock %}
 
 <style>
 .github-container {
@@ -374,6 +408,107 @@
         justify-content: flex-start;
     }
 }
+
+.live-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.stat-label {
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+.contributions-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.contributions-calendar {
+    display: grid;
+    grid-template-columns: repeat(52, 1fr);
+    gap: 2px;
+    margin-top: 1rem;
+}
+
+.contribution-cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+}
+
+.contribution-cell:hover {
+    transform: scale(1.5);
+}
+
+.contributions-chart {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    height: 200px;
+    margin-top: 1rem;
+}
+
+.chart-bar {
+    flex: 1;
+    background: var(--primary);
+    border-radius: 4px;
+    position: relative;
+    transition: height 0.3s ease;
+}
+
+.hour-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #6B7280;
+}
 </style>
 
 <script>
@@ -407,7 +542,46 @@ document.addEventListener('DOMContentLoaded', function() {
             badge.style.setProperty('--language-color', color);
         }
     });
+
+    // Animation des statistiques
+    function animateValue(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            element.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Animer les statistiques au chargement
+    const stats = {
+        'total-repos': {{ total_repos }},
+        'total-stars': {{ total_stars }},
+        'total-forks': {{ total_forks }},
+        'total-commits': {{ total_commits }}
+    };
+
+    Object.entries(stats).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        animateValue(element, 0, value, 2000);
+    });
+
+    // Mise à jour en temps réel (toutes les 5 minutes)
+    setInterval(() => {
+        fetch('/github-stats/')
+            .then(response => response.json())
+            .then(data => {
+                Object.entries(data).forEach(([id, value]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        animateValue(element, parseInt(element.innerHTML), value, 1000);
+                    }
+                });
+            });
+    }, 300000); // 5 minutes
 });
 </script>
-
-{% endblock content %}

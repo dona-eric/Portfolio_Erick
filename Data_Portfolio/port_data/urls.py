@@ -20,7 +20,8 @@ urlpatterns = [
     path('services/<int:pk>/demande/', ServiceRequestView.as_view(), name='services/requested'),
     path('contacts-us/', views.contacts, name='contacts-us'),
     path('news/', views.newsletters, name = 'news'),
-    path('github/', views.github_activity, name = 'github'),
+    path('github/', views.github_activity, name='github'),
+    path('github/stats/', views.github_activity, name='github_stats'),
 ]
 
 if settings.DEBUG:
