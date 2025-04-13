@@ -104,7 +104,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "port_data",
-    "Authentification",
 ]
 
 MIDDLEWARE = [
