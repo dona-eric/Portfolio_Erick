@@ -42,7 +42,6 @@ def fetch_medium_articles(username):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
     }
-
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
         print(f"Erreur : Impossible d'accéder au profil Medium (code {response.status_code})")
@@ -76,15 +75,6 @@ def fetch_medium_articles(username):
             }
         )
 
-def _map_event_type(event_type):
-    """Map les types d'événements GitHub vers des noms plus lisibles"""
-    mapping = {
-        'PushEvent': 'Push',
-        'PullRequestEvent': 'PullRequest',
-        'IssuesEvent': 'Issue',
-        'CreateEvent': 'Create'
-    }
-    return mapping.get(event_type)
 
 def get_github_statistics(username, token):
     """Récupère et calcule les statistiques GitHub détaillées en temps réel"""
@@ -270,6 +260,7 @@ def fetch_github_data(username, token):
             )
             
 def _map_event_type(event_type):
+    """Map les types d'événements GitHub vers des noms plus lisibles"""
     mapping = {
         'PushEvent': 'Push',
         'PullRequestEvent': 'PullRequest',

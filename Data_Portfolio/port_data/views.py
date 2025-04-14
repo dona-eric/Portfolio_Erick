@@ -11,11 +11,13 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.db.models import Q,Model
+from django.utils.decorators import method_decorator, sync_and_async_middleware, sync_only_middleware
 from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView, ListView
 from django.http import JsonResponse
 from .utils import get_github_statistics
+from asgiref.sync import sync_to_async
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -48,6 +50,7 @@ class AboutView(DetailView):
 
 
 # vues pour les blogs ou articles et les details des blogs
+@method_decorator(sync_only_middleware, name='dispatch')
 class ArticleListView(ListView):
     model = Article
     template_name = 'portfolio/blog.html'
@@ -98,7 +101,6 @@ def send_email_via_mailtrap(subject, body, recipient_email):
         "Authorization": f"Bearer {settings.MAILTRAP_API_TOKEN}",
         "Content-Type": "application/json"
     }
-    
     data = {
         "from": {
             "email": settings.EMAIL_ADMIN,
