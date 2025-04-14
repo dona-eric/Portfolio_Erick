@@ -61,35 +61,10 @@ EMAIL_ADMIN = os.getenv("EMAIL_ADMIN")
 MAILTRAP_API_TOKEN = os.getenv('MAILTRAP_API_TOKEN')
 
 
-
-#EMAIL_HOST = os.getenv("EMAIL_HOST")
-#EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-#EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-#EMAIL_PORT = os.getenv("EMAIL_PORT")
-#EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
-#EMAIL_USE_SSL= os.getenv("EMAIL_USE_SSL")
-#DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-#EMAIL_ADMIN = os.getenv('EMAIL_ADMIN')
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-
-#LOGIN_URL, LOGIN_REDIRECT_URL = os.getenv("LOGIN_URL"), os.getenv("LOGIN_REDIRECT_URL")
-
-#EMAIL_LIST = os.getenv("EMAIL_LIST")
-# SECURITY WARNING: don't run with debug turned on in production!
-#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-#EMAIL_HOST = "smtp-relay.brevo.com"  # Serveur SMTP de Brevo
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#EMAIL_HOST_USER = "855728001@smtp-brevo.com"  # Remplace par ton email Brevo
-#EMAIL_HOST_PASSWORD = "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"  # Remplace par le mot de passe de l'application
-#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-#EMAIL_ADMIN = "donaerickoulodji@gmail.com"  # Ton email d'admin pour recevoir les messages
 
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost",".onrender.com"]
