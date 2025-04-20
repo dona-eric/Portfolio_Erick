@@ -67,7 +67,7 @@ MAILTRAP_API_TOKEN = os.getenv('MAILTRAP_API_TOKEN')
 # SECURITY WARNING: keep the secret key used in production secret!
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost",".onrender.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost",".onrender.com","dona-erick.pythonanywhere.com"]
 
 # Application definition
 
