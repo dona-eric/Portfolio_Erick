@@ -1,7 +1,7 @@
 db.sqlite3
 __pycache__/
 *.pyc
-#app
+app
 app/lib/python3.12/site-packages/tensorflow/
 app/lib/python3.12/site-packages/cv2/
 .vscode
@@ -16,3 +16,6 @@ app
 *.pptx
 ../static/portfolio/styles.css
 .env
+.idea
+*.DS_Store
+templatetags/

@@ -41,7 +41,6 @@ DEBUG=os.getenv("DEBUG")
 EMAIL_LIST=os.getenv("EMAIL_LIST")
 
 USER_ID=os.getenv("USER_ID")
-#ALLOWED_HOSTS=.onrender.com
 
 # BASE DE DONNÉES POSTGRESQL
 DATABASE_URL=os.getenv("DATABASE_URL")
