@@ -101,4 +101,85 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
-  
+  document.addEventListener('DOMContentLoaded', () => {
+    showMessage("Bonjour ! Je suis l'assistant IA de Eric KOULODJI. Souhaites-tu en savoir plus sur mon parcours, mes projets ou mes compétences ?", 'bot');
+});
+
+function showMessage(text, sender) {
+    const chat = document.getElementById('chat-messages');
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${sender}`;
+    bubble.innerText = text;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    showMessage(text, 'user');
+    input.value = '';
+
+    fetch('/ask-ai/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'  // Assure-toi que tu as le token dans ton template
+        },
+        body: JSON.stringify({ question: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        showMessage(data.answer, 'bot');
+    })
+    .catch(error => {
+        console.error('Erreur :', error);
+        showMessage("Désolé, une erreur est survenue.", 'bot');
+    });
+}
+  document.getElementById('send-button').addEventListener('click', sendMessage);
+  document.getElementById('user-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  });
+// Fonction pour afficher le message de l'assistant
+function showMessage(text, sender) {
+    const chat = document.getElementById('chat-messages');
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${sender}`;
+    bubble.innerText = text;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+}
+// Fonction pour envoyer le message de l'utilisateur
+function sendMessage() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    showMessage(text, 'user');
+    input.value = '';
+
+    fetch('/ask-ai/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'  // Assure-toi que tu as le token dans ton template
+        },
+        body: JSON.stringify({ question: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        showMessage(data.answer, 'bot');
+    })
+    .catch(error => {
+        console.error('Erreur :', error);
+        showMessage("Désolé, une erreur est survenue.", 'bot');
+    });
+}
+// Écouteur d'événement pour le bouton d'envoi
+document.getElementById('send-button').addEventListener('click', sendMessage);
+// Écouteur d'événement pour la touche "Entrée"

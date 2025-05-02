@@ -22,6 +22,7 @@ urlpatterns = [
     path('news/', views.newsletters, name = 'news'),
     path('github/', views.github_activity, name='github'),
     path('github/stats/', views.github_activity, name='github_stats'),
+    path('ask-ai/', views.assistant_ai, name="ask_ia"),
 ]
 
 if settings.DEBUG:

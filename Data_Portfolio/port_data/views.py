@@ -6,6 +6,7 @@ from django.core.validators import validate_email
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt 
 import warnings,requests, json, os, traceback
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
@@ -18,6 +19,8 @@ from django.views.generic import TemplateView, DetailView, ListView
 from django.http import JsonResponse
 from .utils import get_github_statistics
 from asgiref.sync import sync_to_async
+import openai, json, httpx
+from mistralai import Mistral
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -391,3 +394,45 @@ def github_activity(request):
         return render(request, 'portfolio/error.html', {
             'error_message': f"Erreur lors de la récupération des statistiques GitHub: {str(e)}"
         })
+        
+        
+        
+"""ASSIISTANT IA AVEC MISTRAL API"""
+
+api_mistral=os.getenv('API_MISTRAL')
+@csrf_exempt
+def assistant_ai(request):
+    if request.method=="POST":
+        data = json.loads(request.body)
+        user_input = data.get("question", )
+        system_prompt = """
+    Tu es l'assistant personnel de Eric Koulodji. Réponds aux questions à propos de :
+    - Ses projets (Gestion des stocks et de ventes des articles téléphoniques,
+    Annotation automatique d'images africaines,  Risque Scoring de crédit bancaire etc.).
+    - Son CV (Data Scientist, Développeur Web Django & Machine Learning Specialist).
+    - Ses stacks (Django, FastAPI, React, Python, etc.).
+    Sois clair, précis et utile.
+        """
+
+        headers = {
+            "Authorization": f"Bearer {api_mistral}",
+            "Content-Type": "application/json"
+        }
+
+        payload = {
+            "model": "mistral-small-latest",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_input}
+            ]
+        }
+
+        with httpx.Client(timeout=7) as client:
+            response = client.post(
+                "https://api.mistral.ai/v1/chat/completions",
+                headers=headers,
+                json=payload
+            )
+
+        answer = response.json()["choices"][0]["message"]["content"]
+        return JsonResponse({"answer": answer})

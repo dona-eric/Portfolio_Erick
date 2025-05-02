@@ -25,10 +25,11 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary: #4F46E5;
-            --text: #374151;
-            --background: #F9FAFB;
+            --primary: #5332e9;       /* Violet */
+            --text: #E5E7EB;          /* Gris clair (presque blanc pour contraste sur fond sombre) */
+            --background: #121826;    /* Gris-bleu foncé élégant */
         }
+
         
         body {
             background-color: var(--background);
@@ -118,6 +119,67 @@
                 text-align: center;
             }
         }
+            #chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 320px;
+        max-height: 500px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        font-family: sans-serif;
+    }
+
+        #chat-messages {
+            padding: 10px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .chat-bubble {
+            padding: 10px 14px;
+            margin: 8px;
+            border-radius: 16px;
+            max-width: 80%;
+            clear: both;
+        }
+
+        .chat-bubble.user {
+            background-color: #888a86;
+            align-self: flex-end;
+            float: right;
+        }
+
+        .chat-bubble.bot {
+            background-color: #7a6d6d;
+            align-self: flex-start;
+            float: left;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        #chat-input button {
+            background-color: #7d0a88;
+            color: rgb(121, 112, 112);
+            border:#121826;
+            padding: 0 16px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -151,7 +213,15 @@
             <span>Medium</span>
         </a>
     </div>
-
+    <!--MON assistant ia avec mistral-->
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Avez vous une question pour moi ?...">
+            <button onclick="sendMessage()">Envoyer</button>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
