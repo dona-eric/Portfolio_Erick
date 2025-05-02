@@ -6,7 +6,6 @@ app/lib/python3.12/site-packages/tensorflow/
 app/lib/python3.12/site-packages/cv2/
 .vscode
 .idea
-app
 *.pdf
 *.docx
 *.doc
@@ -18,7 +17,9 @@ app
 .env
 .idea
 *.DS_Store
-templatetags/
+/templatetags/
 *.log
 *.csv
 .env
+.env
+/media/
