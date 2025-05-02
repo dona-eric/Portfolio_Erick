@@ -1,4 +1,5 @@
-# 🏆 Portfolio de Erick DONA
+# 🏆 Dona Eric KOULODJI
+![eric koulodji](image.png)
 
 ![Welcome](https://img.shields.io/badge/Bienvenue-Welcome-brightgreen)
 
@@ -57,25 +58,26 @@ Je suis **KOULODJI Dona Eric**, un **Data scientist, Developpeur Django** et **P
 
 ## 🚀 Ce que je peux faire pour vous:
 ✅ Développer des solutions de **Machine Learning** et **Deep Learning**  
-✅ Construire des **API** avec **Django et FastAPI**  
+✅ Conception des **API** avec **Django et FastAPI**  
 ✅ Concevoir vos applications avec **Django**  
 ✅ Automatiser des pipelines avec **MLflow & Airflow**  
 ✅ Mettre en place un **dashboard interactif** avec Streamlit  
 ✅ Déployer des modèles ML sur **serveurs & cloud**  
 ✅ Construire des **systèmes de recommandation**  
 ✅ Analyser des **données textuelles (NLP)** et des **séries temporelles**
+✅ Mettre en place des **Agents IA, Assistant IA pour vos entreprises**
 
 ---
 
 ## 📫 Me Contacter
-📧 Email : **donaerickoulodji@gmail.com**  
+📧 Email : **dona.koulodji@10000codeurs.com**  
 💼 LinkedIn : [Mon Profil](https://www.linkedin.com/in/dona-erick)  
 🌍 Portfolio : [www.donaeric.com](https://portfolio-erick.onrender.com/)  
 🐦 Twitter : [@ErickDona](https://twitter.com/ericschrodinger)  
 📜 Medium : [@erickoulodji](https://medium.com/@koulodjiric)
 
 
-Pour en savoir plus sur moi, vous visitez mon site web : [www.donaeric.com](https://portfolio-erick.onrender.com/) 
+Pour en savoir plus sur moi, vous visitez mon site web : [www.donaeric.com](https://portfolio-erick.onrender.com) 
 
 ---
 

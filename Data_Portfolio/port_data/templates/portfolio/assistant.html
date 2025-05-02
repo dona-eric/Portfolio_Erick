@@ -1,0 +1,122 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+
+{% block title %} Mon Assistant AI {% endblock title %}
+
+{% block content %}
+<h1>Mon Assistant AI</h1>
+<div id="chat-container">
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+        <input type="text" id="user-input" placeholder="Avez vous une question pour moi ?...">
+        <button onclick="sendMessage()">Envoyer</button>
+    </div>
+</div>
+
+<style>
+    #chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    max-height: 500px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+    #chat-messages {
+        padding: 10px;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    .chat-bubble {
+        padding: 10px 14px;
+        margin: 8px;
+        border-radius: 16px;
+        max-width: 80%;
+        clear: both;
+    }
+
+    .chat-bubble.user {
+        background-color: #DCF8C6;
+        align-self: flex-end;
+        float: right;
+    }
+
+    .chat-bubble.bot {
+        background-color: #F1F0F0;
+        align-self: flex-start;
+        float: left;
+    }
+
+    #chat-input {
+        display: flex;
+        border-top: 1px solid #ddd;
+    }
+
+    #chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        outline: none;
+    }
+
+    #chat-input button {
+        background-color: #0084FF;
+        color: white;
+        border: none;
+        padding: 0 16px;
+        cursor: pointer;
+    }
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    showMessage("Bonjour ! Je suis l'assistant IA de Eric KOULODJI. Souhaites-tu en savoir plus sur mon parcours, mes projets ou mes compétences ?", 'bot');
+});
+
+function showMessage(text, sender) {
+    const chat = document.getElementById('chat-messages');
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${sender}`;
+    bubble.innerText = text;
+    chat.appendChild(bubble);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    showMessage(text, 'user');
+    input.value = '';
+
+    fetch('/ask-ai/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'  // Assure-toi que tu as le token dans ton template
+        },
+        body: JSON.stringify({ question: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        showMessage(data.answer, 'bot');
+    })
+    .catch(error => {
+        console.error('Erreur :', error);
+        showMessage("Désolé, une erreur est survenue.", 'bot');
+    });
+}
+
+</script>
+{% endblock content %}

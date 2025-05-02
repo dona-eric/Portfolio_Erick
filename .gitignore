@@ -21,4 +21,4 @@ app
 templatetags/
 *.log
 *.csv
-*.json.env
+.env
