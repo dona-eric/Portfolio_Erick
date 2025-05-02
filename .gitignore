@@ -23,3 +23,5 @@ app/lib/python3.12/site-packages/cv2/
 .env
 .env
 /media/
+.env
+.env
