@@ -17,7 +17,7 @@ from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, DetailView, ListView
 from django.http import JsonResponse
-from .utils import get_github_statistics
+from .utils import get_github_statistics, fetch_medium_articles
 from asgiref.sync import sync_to_async
 import openai, json, httpx
 from mistralai import Mistral
@@ -61,6 +61,8 @@ class ArticleListView(ListView):
     paginate_by = 5  # Affiche 5 articles par page
     ordering = ['-date_published']  # Tri par date de publication
     queryset = Article.objects.all().order_by('-date_published')
+
+
 
 
 ## pour les details sur les articles ou blogs

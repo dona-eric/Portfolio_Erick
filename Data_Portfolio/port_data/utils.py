@@ -4,11 +4,11 @@ from datetime import datetime
 from django.utils.timezone import make_aware
 from .models import Article
 from dotenv import load_dotenv
-import requests
 from django.db import transaction
 from dateutil.parser import parse as date_parse
 from django.utils import timezone
 from datetime import datetime
+from asgiref.sync import sync_to_async
 from .models import GitHubRepo, GitHubActivity
 load_dotenv()
 
@@ -36,6 +36,7 @@ def make_github_request(url, headers=None):
     except Exception as e:
         raise Exception(f"Erreur lors de la connexion à GitHub: {str(e)}")
 
+@sync_to_async
 def fetch_medium_articles(username):
     """Récupère les articles Medium de l'utilisateur"""
     url = f'https://medium.com/@{username}/latest'
@@ -188,8 +189,8 @@ def get_github_statistics(username, token):
     }
 
 # Appeler la fonction pour récupérer les articles Medium
-if username:
-    fetch_medium_articles(username)
+#if username:
+ #   fetch_medium_articles(username)
 
 # github_api.py
 def fetch_github_data(username, token):

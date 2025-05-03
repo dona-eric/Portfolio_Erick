@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "port_data",
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
