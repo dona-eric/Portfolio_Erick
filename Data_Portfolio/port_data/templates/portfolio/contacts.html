@@ -133,7 +133,7 @@
 .page-title {
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--primary), #9333EA);
+    background: linear-gradient(135deg, var(--primary), #22083a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
@@ -153,7 +153,7 @@
 
 /* Contact Form Styles */
 .contact-form-section {
-    background: rgb(214, 186, 186);
+    background: rgb(61, 59, 59);
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -188,7 +188,7 @@ input[type="email"],
 textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 2px solid #bec2c9;
+    border: 2px solid #d5d8dd;
     border-radius: 0.5rem;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -229,7 +229,7 @@ textarea {
 }
 
 .submit-button:hover {
-    background: #4338CA;
+    background: #0d0a30;
     transform: translateY(-2px);
 }
 
@@ -241,10 +241,15 @@ textarea {
 }
 
 .info-card {
-    background: rgb(221, 216, 216);
+    background: rgb(61, 59, 59);
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition-delay: 100ms;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
+    will-change: transform, opacity;
 }
 
 .info-title {
@@ -274,7 +279,7 @@ textarea {
 
 .info-item p,
 .info-item a {
-    color: #6B7280;
+    color: #bac2d4;
     text-decoration: none;
     transition: color 0.3s ease;
 }

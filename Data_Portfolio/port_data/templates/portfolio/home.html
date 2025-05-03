@@ -15,8 +15,9 @@
                 <span class="skill-badge">Django</span>
                 <span class="skill-badge">Computer Vision</span>
                 <span class="skill-badge">Python</span>
-                <span class="skill-badge">PythonBénin</span>
+                <span class="skill-badge">@PythonBénin</span>
                 <span class="skill-badge">@10000Codeurs</span>
+                <span class="skill-badge">Artificial Intelligence</span>
             </div>
             
             <h1 class="hero-title">
@@ -42,7 +43,7 @@
     </header>
 
     <!-- Streaming Section -->
-    <section class="streaming-section">
+<!--   <section class="streaming-section">
         <div class="streaming-content">
             <h2 class="section-title">Mes Activités en Direct</h2>
             <div class="streaming-container">
@@ -92,8 +93,7 @@
             </div>
             <div class="streaming-dots"></div>
         </div>
-    </section>
-
+    </section> -->
     <!-- About Section -->
     <section class="about-section">
         <div class="about-content">
@@ -113,7 +113,7 @@
     <section class="about-section">
         <div class="about-content">
             <h2 class="section-title">Que puis-je faire pour vous ?</h2>
-            <div class="about-text">
+            <div class="scroll-container">
                 <p class="about-description">
                     
                     <ul>🎯 Bonjour/Bonsoir, Je suis Eric KOULODJI Dona, Data Scientist et passionné d’Intelligence Artificielle. 
@@ -239,7 +239,7 @@
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--primary), #9333EA);
+    background: linear-gradient(135deg, var(--primary), #2a183b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -273,7 +273,7 @@
 }
 
 .btn-primary:hover {
-    background: #4338CA;
+    background: #0c092e;
     transform: translateY(-2px);
 }
 
@@ -311,7 +311,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--primary), #9333EA);
+    background: linear-gradient(135deg, var(--primary), #524261);
     border-radius: 2rem;
     transform: rotate(-5deg);
 }
@@ -319,7 +319,7 @@
 /* About Section */
 .about-section {
     padding: 3rem 0;
-    background: #787b7e;
+    background: #141516;
     border-radius: 2rem;
 }
 
@@ -328,6 +328,8 @@
     margin: 0 auto;
     text-align: center;
     transform: rotateX(30);
+    transition: ease 3s;
+    transition-delay: 0.5s;
 }
 
 .section-title {
@@ -350,6 +352,18 @@
     transform: rotateX(30);
     transition: ease 3s;
 
+}
+
+.scroll-container {
+  max-height: 800px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  padding: 10px;
+  background: rgb(39, 33, 33);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transform: rotateX(8deg); /* effet léger */
 }
 
 /* Entertainment Section */
