@@ -1,4 +1,4 @@
-import requests, os
+import requests, os, feedparser
 from bs4 import BeautifulSoup
 from datetime import datetime
 from django.utils.timezone import make_aware
@@ -38,33 +38,27 @@ def make_github_request(url, headers=None):
 
 @sync_to_async
 def fetch_medium_articles(username):
-    """Récupère les articles Medium de l'utilisateur"""
-    url = f'https://medium.com/@{username}/latest'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-    }
-    response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        print(f"Erreur : Impossible d'accéder au profil Medium (code {response.status_code})")
+    """Récupère les articles Medium via le flux RSS"""
+    feed_url = f'https://medium.com/feed/@{username}'
+    feed = feedparser.parse(feed_url)
+
+    if not feed.entries:
+        print(f"Aucun article trouvé pour l'utilisateur Medium @{username}")
         return
 
-    soup = BeautifulSoup(response.text, 'html.parser')
-    articles = soup.find_all('article')
-    
-    for article in articles:
-        title_element = article.find('h2')
-        title = title_element.text.strip() if title_element else "Titre non trouvé"
+    for entry in feed.entries:
+        title = entry.title
+        url_blog = entry.link
+        content = entry.summary
 
-        link_element = article.find('a', href=True)
-        url_blog = 'https://medium.com' + link_element['href'] if link_element else None
+        # Convertir la date de publication
+        try:
+            date_published = make_aware(datetime(*entry.published_parsed[:6]))
+        except:
+            date_published = None
 
-        date_element = article.find('time')
-        date_published = make_aware(datetime.strptime(date_element['datetime'], '%Y-%m-%dT%H:%M:%S.%fZ')) if date_element else None
-
-        content_element = article.find('p')
-        content = content_element.text.strip() if content_element else "Contenu non trouvé"
-
-        tags = [tag.text for tag in article.find_all('a', class_='pw-tag')]
+        # Tags optionnels
+        tags = [tag.term for tag in entry.tags] if 'tags' in entry else []
 
         Article.objects.update_or_create(
             title=title,
@@ -75,6 +69,7 @@ def fetch_medium_articles(username):
                 'categorie': ', '.join(tags) if tags else None,
             }
         )
+
 
 
 def get_github_statistics(username, token):
