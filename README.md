@@ -72,15 +72,20 @@ Je suis **KOULODJI Dona Eric**, un **Data scientist, Developpeur Django** et **P
 ## 📫 Me Contacter
 📧 Email : **dona.koulodji@10000codeurs.com**  
 💼 LinkedIn : [Mon Profil](https://www.linkedin.com/in/dona-erick)  
-🌍 Portfolio : [www.donaeric.com](https://portfolio-erick.onrender.com/)  
+🌍 Portfolio : [www.donaeric.com](https://portfolio-erick.onrender.com)  
 🐦 Twitter : [@ErickDona](https://twitter.com/ericschrodinger)  
 📜 Medium : [@erickoulodji](https://medium.com/@koulodjiric)
+🌍 Youtube : [DataWorld](https://youtube.com/@data-world-o4u?si=8_X-nsAUqmKGfpFQ)
 
 
 Pour en savoir plus sur moi, vous visitez mon site web : [www.donaeric.com](https://portfolio-erick.onrender.com) 
 
 ---
 
+## 📫 Ma Chaine Youtube 
+Lien :[DataWorld](https://youtube.com/@data-world-o4u?si=8_X-nsAUqmKGfpFQ)
+
+---
 ## 🔥 Let's Work Together!
 
 Je suis toujours à la recherche de **nouvelles opportunités**, de **collaborations** et de **défis techniques** passionnants. Que vous soyez une entreprise, une startup ou un recruteur, n'hésitez pas à me contacter. 🚀
